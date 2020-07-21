@@ -10,7 +10,7 @@ import SwiftUI
 struct SegmentedControl: View {
     
     @State private var currentSectionIndex = 0
-    private let sections = ["All", "Top", "Ask", "Show", "Job"]
+    private let sections = ["All", "Top", "Ask", "Show", "Jobs"]
     
     var body: some View {
         VStack {
