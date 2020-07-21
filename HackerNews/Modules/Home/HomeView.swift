@@ -14,14 +14,16 @@ struct HomeView: View {
                 SegmentedControl()
                     .padding()
                 Spacer()
-                ScrollView {
-                    HStack {
-                        Text("One")
-                        Text("Two")
+                GeometryReader { geo in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            AllView().frame(width: geo.size.width, height: geo.size.height)
+                            TopView().frame(width: geo.size.width, height: geo.size.height)
+                        }
                     }
                 }
-                Spacer()
-            }.navigationBarTitle("Home")
+            }
+            .navigationBarTitle("Home")
         }
     }
 }
