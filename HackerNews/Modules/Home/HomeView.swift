@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @State private var currentTabIndex = 0
+    
     var body: some View {
         NavigationView {
             VStack {
-                SegmentedControl()
+                SegmentedControl(currentTabIndex: $currentTabIndex)
                     .padding()
                 Spacer()
-                GeometryReader { geo in
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            AllView().frame(width: geo.size.width, height: geo.size.height)
-                            TopView().frame(width: geo.size.width, height: geo.size.height)
-                        }
-                    }
+                TabView(selection: $currentTabIndex) {
+                    AllView().tag(0)
+                    TopView().tag(1)
                 }
+                .tabViewStyle(PageTabViewStyle())
             }
             .navigationBarTitle("Home")
         }
