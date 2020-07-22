@@ -10,16 +10,16 @@ import SwiftUI
 struct HomeView: View {
     
     @State private var currentTabIndex = 0
+    private let sections = ["Top", "All", "Ask", "Show", "Jobs"]
     
     var body: some View {
         NavigationView {
             VStack {
-                SegmentedControl(currentTabIndex: $currentTabIndex)
-                    .padding()
-                Spacer()
+                SegmentedControl(selectedSegmentIndex: $currentTabIndex)
                 TabView(selection: $currentTabIndex) {
-                    AllView().tag(0)
-                    TopView().tag(1)
+                    ForEach(0..<sections.count) { index in
+                        ContainerView(text: sections[index])
+                    }
                 }
                 .tabViewStyle(PageTabViewStyle())
             }

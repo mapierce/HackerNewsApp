@@ -1,5 +1,5 @@
 //
-//  SegmentedControl.swift
+//  CustomSegmentedControl.swift
 //  HackerNews
 //
 //  Created by Matthew Pierce on 21/07/2020.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SegmentedControl: View {
+struct CustomSegmentedControl: View {
     
     private struct Constants {
         
@@ -38,7 +38,7 @@ struct SegmentedControl: View {
     
 }
 
-private extension SegmentedControl {
+private extension CustomSegmentedControl {
     
     func getSegmentView(for index: Int) -> some View {
         guard index < sections.count else { return EmptyView().eraseToAnyView() }
@@ -62,7 +62,7 @@ private extension SegmentedControl {
     
 }
 
-struct SegmentedControl_Previews: PreviewProvider {
+struct CustomSegmentedControl_Previews: PreviewProvider {
     
     static var previews: some View {
         PreviewWrapper()
@@ -73,7 +73,7 @@ struct SegmentedControl_Previews: PreviewProvider {
         @State private var currentTabIndex = 0
         
         var body: some View {
-            SegmentedControl(currentTabIndex: $currentTabIndex)
+            CustomSegmentedControl(currentTabIndex: $currentTabIndex)
         }
     }
     

@@ -26,9 +26,10 @@
 		349633F124C8B2340047CE77 /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633F024C8B2340047CE77 /* SizePreferenceKey.swift */; };
 		349633F324C8B2560047CE77 /* BackgroundGeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633F224C8B2560047CE77 /* BackgroundGeometryReader.swift */; };
 		349633F524C8B26A0047CE77 /* SizeAwareModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633F424C8B26A0047CE77 /* SizeAwareModifier.swift */; };
-		34AE837A24C75FA400BE8049 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AE837924C75FA400BE8049 /* SegmentedControl.swift */; };
-		34AE837C24C7614300BE8049 /* AllView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AE837B24C7614300BE8049 /* AllView.swift */; };
-		34AE837E24C7620600BE8049 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AE837D24C7620600BE8049 /* TopView.swift */; };
+		34AE837A24C75FA400BE8049 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AE837924C75FA400BE8049 /* CustomSegmentedControl.swift */; };
+		34D1374524C8D42B002CA0EC /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D1374424C8D42B002CA0EC /* SegmentedControl.swift */; };
+		34D1374924C8D703002CA0EC /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D1374824C8D703002CA0EC /* ContainerView.swift */; };
+		34D1374C24C8D8F9002CA0EC /* AllViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D1374B24C8D8F9002CA0EC /* AllViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,9 +75,10 @@
 		349633F024C8B2340047CE77 /* SizePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferenceKey.swift; sourceTree = "<group>"; };
 		349633F224C8B2560047CE77 /* BackgroundGeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundGeometryReader.swift; sourceTree = "<group>"; };
 		349633F424C8B26A0047CE77 /* SizeAwareModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeAwareModifier.swift; sourceTree = "<group>"; };
-		34AE837924C75FA400BE8049 /* SegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
-		34AE837B24C7614300BE8049 /* AllView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllView.swift; sourceTree = "<group>"; };
-		34AE837D24C7620600BE8049 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
+		34AE837924C75FA400BE8049 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		34D1374424C8D42B002CA0EC /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		34D1374824C8D703002CA0EC /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
+		34D1374B24C8D8F9002CA0EC /* AllViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,21 +273,22 @@
 			isa = PBXGroup;
 			children = (
 				34144B2C24C751E50056ABF6 /* HomeView.swift */,
-				349633EC24C8B1560047CE77 /* SegmentedControl */,
-				34AE837B24C7614300BE8049 /* AllView.swift */,
-				34AE837D24C7620600BE8049 /* TopView.swift */,
+				34D1374424C8D42B002CA0EC /* SegmentedControl.swift */,
+				34D1374824C8D703002CA0EC /* ContainerView.swift */,
+				34D1374A24C8D8E1002CA0EC /* Container View Models */,
+				349633EC24C8B1560047CE77 /* CustomSegmentedControl */,
 			);
 			path = Home;
 			sourceTree = "<group>";
 		};
-		349633EC24C8B1560047CE77 /* SegmentedControl */ = {
+		349633EC24C8B1560047CE77 /* CustomSegmentedControl */ = {
 			isa = PBXGroup;
 			children = (
-				34AE837924C75FA400BE8049 /* SegmentedControl.swift */,
+				34AE837924C75FA400BE8049 /* CustomSegmentedControl.swift */,
 				349633ED24C8B1690047CE77 /* ActiveSegmentView.swift */,
 				349633EF24C8B21B0047CE77 /* Sizing */,
 			);
-			path = SegmentedControl;
+			path = CustomSegmentedControl;
 			sourceTree = "<group>";
 		};
 		349633EF24C8B21B0047CE77 /* Sizing */ = {
@@ -296,6 +299,14 @@
 				349633F424C8B26A0047CE77 /* SizeAwareModifier.swift */,
 			);
 			path = Sizing;
+			sourceTree = "<group>";
+		};
+		34D1374A24C8D8E1002CA0EC /* Container View Models */ = {
+			isa = PBXGroup;
+			children = (
+				34D1374B24C8D8F9002CA0EC /* AllViewModel.swift */,
+			);
+			path = "Container View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,19 +438,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34AE837E24C7620600BE8049 /* TopView.swift in Sources */,
 				34144B6724C7579A0056ABF6 /* Reponse.swift in Sources */,
 				34144B6924C757C10056ABF6 /* URLRequest+Init.swift in Sources */,
-				34AE837A24C75FA400BE8049 /* SegmentedControl.swift in Sources */,
+				34D1374924C8D703002CA0EC /* ContainerView.swift in Sources */,
+				34AE837A24C75FA400BE8049 /* CustomSegmentedControl.swift in Sources */,
 				34144B7124C758C40056ABF6 /* StatusCodeCheckingTransport.swift in Sources */,
 				349633F324C8B2560047CE77 /* BackgroundGeometryReader.swift in Sources */,
+				34D1374524C8D42B002CA0EC /* SegmentedControl.swift in Sources */,
 				349633F124C8B2340047CE77 /* SizePreferenceKey.swift in Sources */,
+				34D1374C24C8D8F9002CA0EC /* AllViewModel.swift in Sources */,
 				34144B2D24C751E50056ABF6 /* HomeView.swift in Sources */,
 				34144B6524C757340056ABF6 /* String+format.swift in Sources */,
 				349633EE24C8B1690047CE77 /* ActiveSegmentView.swift in Sources */,
 				34144B6024C752ED0056ABF6 /* HTTPRequestMethod.swift in Sources */,
 				34144B6224C753080056ABF6 /* Path.swift in Sources */,
-				34AE837C24C7614300BE8049 /* AllView.swift in Sources */,
 				349633EB24C8A70D0047CE77 /* View+erasure.swift in Sources */,
 				349633F524C8B26A0047CE77 /* SizeAwareModifier.swift in Sources */,
 				34144B6E24C7583F0056ABF6 /* NetworkError.swift in Sources */,
