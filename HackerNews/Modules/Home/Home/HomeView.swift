@@ -10,15 +10,15 @@ import SwiftUI
 struct HomeView: View {
     
     @State private var currentTabIndex = 0
-    private let sections = ["Top", "All", "Ask", "Show", "Jobs"]
+    let viewModel = HomeViewModel()
     
     var body: some View {
         NavigationView {
             VStack {
-                SegmentedControl(selectedSegmentIndex: $currentTabIndex)
+                SegmentedControl(selectedSegmentIndex: $currentTabIndex, segmentNames: viewModel.sections)
                 TabView(selection: $currentTabIndex) {
-                    ForEach(0..<sections.count) { index in
-                        ContainerView(text: sections[index])
+                    ForEach(0..<viewModel.sections.count) { index in
+                        SectionView()
                     }
                 }
                 .tabViewStyle(PageTabViewStyle())

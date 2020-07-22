@@ -10,7 +10,7 @@ import SwiftUI
 struct SegmentedControl: View {
     
     @Binding var selectedSegmentIndex: Int
-    private let segmentNames = ["All", "Top", "Ask", "Show", "Jobs"]
+    let segmentNames: [String]
     
     var body: some View {
         Picker("Home Section Picker", selection: $selectedSegmentIndex) {
@@ -32,9 +32,10 @@ struct SegmentedControl_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         
         @State private var selectedSegmentIndex = 0
+        private let segmentNames = ["Top", "All", "Ask", "Show", "Jobs"]
         
         var body: some View {
-            SegmentedControl(selectedSegmentIndex: $selectedSegmentIndex)
+            SegmentedControl(selectedSegmentIndex: $selectedSegmentIndex, segmentNames: segmentNames)
         }
     }
     
