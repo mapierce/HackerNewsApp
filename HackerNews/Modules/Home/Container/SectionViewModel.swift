@@ -25,14 +25,19 @@ class SectionViewModel: ObservableObject {
     
     private func fetchIds() {
         let request = URLRequest(path: .topStories)
-        transport.checkingStatusCode().send(request: request).receive(on: DispatchQueue.main).sink { completion in
-            switch completion {
-            case .failure(let error): print(error.localizedDescription)
-            case .finished: break
-            }
+        transport
+            .checkingStatusCode()
+            .send(request: request)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .failure(let error): print(error.localizedDescription)
+                case .finished: break
+                }
         } receiveValue: { response in
             self.itemIds = response
         }
         .store(in: &cancellables)
     }
+    
 }

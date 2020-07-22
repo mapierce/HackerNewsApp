@@ -21,6 +21,7 @@ struct SegmentedControl: View {
         .pickerStyle(SegmentedPickerStyle())
         .padding()
     }
+    
 }
 
 struct SegmentedControl_Previews: PreviewProvider {
