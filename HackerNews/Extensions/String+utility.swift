@@ -1,5 +1,5 @@
 //
-//  String+format.swift
+//  String+utility.swift
 //  HackerNews
 //
 //  Created by Matthew Pierce on 21/07/2020.
@@ -19,6 +19,14 @@ extension String {
             return "(null)"
         } as [CVarArg]
         return String(format: self, arguments: args)
+    }
+    
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).uppercased() + lowercased().dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
     }
     
 }

@@ -19,12 +19,13 @@
 		34144B4824C751E60056ABF6 /* HackerNewsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B4724C751E60056ABF6 /* HackerNewsUITests.swift */; };
 		34144B6024C752ED0056ABF6 /* HTTPRequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B5F24C752ED0056ABF6 /* HTTPRequestMethod.swift */; };
 		34144B6224C753080056ABF6 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B6124C753080056ABF6 /* Path.swift */; };
-		34144B6524C757340056ABF6 /* String+format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B6424C757340056ABF6 /* String+format.swift */; };
+		34144B6524C757340056ABF6 /* String+utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B6424C757340056ABF6 /* String+utility.swift */; };
 		34144B6724C7579A0056ABF6 /* Reponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B6624C7579A0056ABF6 /* Reponse.swift */; };
 		34144B6924C757C10056ABF6 /* URLRequest+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B6824C757C10056ABF6 /* URLRequest+Init.swift */; };
 		34144B6B24C758130056ABF6 /* Transport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B6A24C758130056ABF6 /* Transport.swift */; };
 		34144B6E24C7583F0056ABF6 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B6D24C7583F0056ABF6 /* NetworkError.swift */; };
 		34144B7124C758C40056ABF6 /* StatusCodeCheckingTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B7024C758C40056ABF6 /* StatusCodeCheckingTransport.swift */; };
+		3450C9C824C99BA3004AABB3 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3450C9C724C99BA3004AABB3 /* Segment.swift */; };
 		349633EB24C8A70D0047CE77 /* View+erasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633EA24C8A70D0047CE77 /* View+erasure.swift */; };
 		349633EE24C8B1690047CE77 /* ActiveSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633ED24C8B1690047CE77 /* ActiveSegmentView.swift */; };
 		349633F124C8B2340047CE77 /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633F024C8B2340047CE77 /* SizePreferenceKey.swift */; };
@@ -71,12 +72,13 @@
 		34144B4924C751E60056ABF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34144B5F24C752ED0056ABF6 /* HTTPRequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestMethod.swift; sourceTree = "<group>"; };
 		34144B6124C753080056ABF6 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
-		34144B6424C757340056ABF6 /* String+format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+format.swift"; sourceTree = "<group>"; };
+		34144B6424C757340056ABF6 /* String+utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+utility.swift"; sourceTree = "<group>"; };
 		34144B6624C7579A0056ABF6 /* Reponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reponse.swift; sourceTree = "<group>"; };
 		34144B6824C757C10056ABF6 /* URLRequest+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Init.swift"; sourceTree = "<group>"; };
 		34144B6A24C758130056ABF6 /* Transport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
 		34144B6D24C7583F0056ABF6 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		34144B7024C758C40056ABF6 /* StatusCodeCheckingTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCodeCheckingTransport.swift; sourceTree = "<group>"; };
+		3450C9C724C99BA3004AABB3 /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		349633EA24C8A70D0047CE77 /* View+erasure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+erasure.swift"; sourceTree = "<group>"; };
 		349633ED24C8B1690047CE77 /* ActiveSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSegmentView.swift; sourceTree = "<group>"; };
 		349633F024C8B2340047CE77 /* SizePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferenceKey.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			children = (
 				34144B2C24C751E50056ABF6 /* HomeView.swift */,
 				3412742E24C8FC6F0049824D /* HomeViewModel.swift */,
+				3450C9C724C99BA3004AABB3 /* Segment.swift */,
 				3412743224C8FD590049824D /* Views */,
 			);
 			path = Home;
@@ -281,7 +284,7 @@
 		34144B6324C757200056ABF6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				34144B6424C757340056ABF6 /* String+format.swift */,
+				34144B6424C757340056ABF6 /* String+utility.swift */,
 				349633EA24C8A70D0047CE77 /* View+erasure.swift */,
 			);
 			path = Extensions;
@@ -475,6 +478,7 @@
 				3412742F24C8FC6F0049824D /* HomeViewModel.swift in Sources */,
 				34144B6924C757C10056ABF6 /* URLRequest+Init.swift in Sources */,
 				34D1374924C8D703002CA0EC /* SectionView.swift in Sources */,
+				3450C9C824C99BA3004AABB3 /* Segment.swift in Sources */,
 				34AE837A24C75FA400BE8049 /* CustomSegmentedControl.swift in Sources */,
 				34144B7124C758C40056ABF6 /* StatusCodeCheckingTransport.swift in Sources */,
 				349633F324C8B2560047CE77 /* BackgroundGeometryReader.swift in Sources */,
@@ -482,7 +486,7 @@
 				349633F124C8B2340047CE77 /* SizePreferenceKey.swift in Sources */,
 				3412742C24C8F6A90049824D /* URLSession+Transport.swift in Sources */,
 				34144B2D24C751E50056ABF6 /* HomeView.swift in Sources */,
-				34144B6524C757340056ABF6 /* String+format.swift in Sources */,
+				34144B6524C757340056ABF6 /* String+utility.swift in Sources */,
 				349633EE24C8B1690047CE77 /* ActiveSegmentView.swift in Sources */,
 				3412743124C8FD180049824D /* SectionViewModel.swift in Sources */,
 				34144B6024C752ED0056ABF6 /* HTTPRequestMethod.swift in Sources */,
