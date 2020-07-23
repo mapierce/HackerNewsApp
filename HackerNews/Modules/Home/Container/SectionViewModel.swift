@@ -12,19 +12,21 @@ class SectionViewModel: ObservableObject {
     
     @Published private(set) var itemIds = [Int]()
     private let transport: Transport
+    private let segment: Segment
     private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Initialization
     
-    init(transport: Transport = URLSession.shared) {
+    init(transport: Transport = URLSession.shared, segment: Segment) {
         self.transport = transport
+        self.segment = segment
         fetchIds()
     }
     
     // MARK: - Private methods
     
     private func fetchIds() {
-        let request = URLRequest(path: .topStories)
+        let request = URLRequest(path: segment.associatedPath)
         transport
             .checkingStatusCode()
             .send(request: request)

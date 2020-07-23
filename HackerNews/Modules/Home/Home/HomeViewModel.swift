@@ -9,6 +9,6 @@ import Foundation
 
 class HomeViewModel {
     
-    let sections = ["Top", "All", "Ask", "Show", "Jobs"]
+    let segments: [Segment] = Segment.allCases
     
 }

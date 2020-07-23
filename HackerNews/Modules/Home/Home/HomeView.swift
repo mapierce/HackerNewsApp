@@ -15,10 +15,10 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             VStack {
-                SegmentedControl(selectedSegmentIndex: $currentTabIndex, segmentNames: viewModel.sections)
+                SegmentedControl(selectedSegmentIndex: $currentTabIndex, segments: viewModel.segments)
                 TabView(selection: $currentTabIndex) {
-                    ForEach(0..<viewModel.sections.count) { index in
-                        SectionView()
+                    ForEach(0..<viewModel.segments.count) { index in
+                        SectionView(viewModel: SectionViewModel(segment: viewModel.segments[index]) )
                     }
                 }
                 .tabViewStyle(PageTabViewStyle())

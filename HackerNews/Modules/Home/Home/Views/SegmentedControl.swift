@@ -10,12 +10,12 @@ import SwiftUI
 struct SegmentedControl: View {
     
     @Binding var selectedSegmentIndex: Int
-    let segmentNames: [String]
+    let segments: [Segment]
     
     var body: some View {
         Picker("Home Section Picker", selection: $selectedSegmentIndex) {
-            ForEach(0..<segmentNames.count) { index in
-                Text(segmentNames[index]).tag(index)
+            ForEach(0..<segments.count) { index in
+                Text(segments[index].rawValue.capitalizingFirstLetter()).tag(index)
             }
         }
         .pickerStyle(SegmentedPickerStyle())
@@ -33,10 +33,10 @@ struct SegmentedControl_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         
         @State private var selectedSegmentIndex = 0
-        private let segmentNames = ["Top", "All", "Ask", "Show", "Jobs"]
+        private let segments = Segment.allCases
         
         var body: some View {
-            SegmentedControl(selectedSegmentIndex: $selectedSegmentIndex, segmentNames: segmentNames)
+            SegmentedControl(selectedSegmentIndex: $selectedSegmentIndex, segments: segments)
         }
     }
     
