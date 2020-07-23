@@ -18,7 +18,7 @@ struct HomeView: View {
                 SegmentedControl(selectedSegmentIndex: $currentTabIndex, segments: viewModel.segments)
                 TabView(selection: $currentTabIndex) {
                     ForEach(0..<viewModel.segments.count) { index in
-                        SectionView(viewModel: SectionViewModel(segment: viewModel.segments[index]) )
+                        ItemView(viewModel: ItemViewModel(segment: viewModel.segments[index]) )
                     }
                 }
                 .tabViewStyle(PageTabViewStyle())

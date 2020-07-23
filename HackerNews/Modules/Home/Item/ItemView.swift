@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct SectionView: View {
+struct ItemView: View {
     
-    @ObservedObject var viewModel: SectionViewModel
+    @ObservedObject var viewModel: ItemViewModel
     
     var body: some View {
         List(viewModel.itemIds, id: \.self) { id in
@@ -23,6 +23,6 @@ struct SectionView: View {
 
 struct SectionView_Previews: PreviewProvider {
     static var previews: some View {
-        SectionView(viewModel: SectionViewModel(segment: .top))
+        ItemView(viewModel: ItemViewModel(segment: .top))
     }
 }

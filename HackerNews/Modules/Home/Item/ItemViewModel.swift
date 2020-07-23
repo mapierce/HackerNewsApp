@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class SectionViewModel: ObservableObject {
+class ItemViewModel: ObservableObject {
     
     @Published private(set) var itemIds = [Int]()
     private let transport: Transport
