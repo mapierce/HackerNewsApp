@@ -1,5 +1,5 @@
 //
-//  SectionViewModel.swift
+//  SegmentViewModel.swift
 //  HackerNews
 //
 //  Created by Matthew Pierce on 23/07/2020.
@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class ItemViewModel: ObservableObject {
+class SegmentViewModel: ObservableObject {
     
     @Published private(set) var itemIds = [Int]()
     private let transport: Transport

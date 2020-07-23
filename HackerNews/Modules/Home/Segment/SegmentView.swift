@@ -1,5 +1,5 @@
 //
-//  SectionView.swift
+//  SegmentView.swift
 //  HackerNews
 //
 //  Created by Matthew Pierce on 22/07/2020.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ItemView: View {
+struct SegmentView: View {
     
-    @ObservedObject var viewModel: ItemViewModel
+    @ObservedObject var viewModel: SegmentViewModel
     
     var body: some View {
         List(viewModel.itemIds, id: \.self) { id in
@@ -21,8 +21,8 @@ struct ItemView: View {
     
 }
 
-struct SectionView_Previews: PreviewProvider {
+struct SegmentView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemView(viewModel: ItemViewModel(segment: .top))
+        SegmentView(viewModel: SegmentViewModel(segment: .top))
     }
 }
