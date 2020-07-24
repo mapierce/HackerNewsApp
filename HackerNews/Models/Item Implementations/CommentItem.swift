@@ -1,0 +1,38 @@
+//
+//  CommentItem.swift
+//  HackerNews
+//
+//  Created by Matthew Pierce on 24/07/2020.
+//
+
+import Foundation
+
+struct CommentItem: ItemInterface {
+    
+    let id: Int
+    let deleted: Bool?
+    var type: ItemType { .comment }
+    let by: String?
+    let time: Int?
+    let dead: Bool?
+    let kids: [Int]?
+    let parent: Int?
+    let text: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case id, deleted, by, time, dead, kids, parent, text
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int.self, forKey: .id)
+        deleted = try container.decodeIfPresent(Bool.self, forKey: .deleted)
+        by = try container.decodeIfPresent(String.self, forKey: .by)
+        time = try container.decodeIfPresent(Int.self, forKey: .time)
+        dead = try container.decodeIfPresent(Bool.self, forKey: .dead)
+        kids = try container.decodeIfPresent([Int].self, forKey: .kids)
+        parent = try container.decodeIfPresent(Int.self, forKey: .parent)
+        text = try container.decodeIfPresent(String.self, forKey: .text)
+    }
+    
+}

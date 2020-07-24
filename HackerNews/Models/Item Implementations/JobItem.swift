@@ -1,0 +1,40 @@
+//
+//  JobItem.swift
+//  HackerNews
+//
+//  Created by Matthew Pierce on 24/07/2020.
+//
+
+import Foundation
+
+struct JobItem: ItemInterface {
+    
+    let id: Int
+    let deleted: Bool?
+    var type: ItemType { .job }
+    let by: String?
+    let time: Int?
+    let dead: Bool?
+    let kids: [Int]?
+    let text: String?
+    let url: String?
+    let title: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case id, deleted, by, time, dead, kids, text, url, title
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int.self, forKey: .id)
+        deleted = try container.decodeIfPresent(Bool.self, forKey: .deleted)
+        by = try container.decodeIfPresent(String.self, forKey: .by)
+        time = try container.decodeIfPresent(Int.self, forKey: .time)
+        dead = try container.decodeIfPresent(Bool.self, forKey: .dead)
+        kids = try container.decodeIfPresent([Int].self, forKey: .kids)
+        text = try container.decodeIfPresent(String.self, forKey: .text)
+        url = try container.decodeIfPresent(String.self, forKey: .url)
+        title = try container.decodeIfPresent(String.self, forKey: .title)
+    }
+    
+}
