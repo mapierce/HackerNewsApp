@@ -14,7 +14,7 @@ struct SegmentView: View {
     var body: some View {
         List(viewModel.itemIds, id: \.self) { id in
             VStack {
-                Text("\(id)")
+                ItemView(viewModel: ItemViewModel(itemId: id))
             }
         }
     }

@@ -10,8 +10,12 @@ import Foundation
 extension URLRequest {
     
     init(path: Path, method: HTTPRequestMethod = .get) {
-        assert(URL(string: URLRequest.baseURL + path.rawValue) != nil)
-        var request = URLRequest(url: URL(string: URLRequest.baseURL + path.rawValue)!)
+        self = URLRequest(path: path.rawValue, method: method)
+    }
+    
+    init(path: String, method: HTTPRequestMethod = .get) {
+        assert(URL(string: URLRequest.baseURL + path) != nil)
+        var request = URLRequest(url: URL(string: URLRequest.baseURL + path)!)
         request.httpMethod = method.rawValue
         self = request
     }
