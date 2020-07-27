@@ -8,7 +8,11 @@
 import Foundation
 
 @dynamicMemberLookup
-enum Item: Decodable {
+enum Item: Decodable, Identifiable {
+    
+    var id: Int {
+        self.uuid
+    }
     
     case job(JobItem)
     case story(StoryItem)

@@ -9,7 +9,7 @@ import Foundation
 
 struct PollOptionItem: ItemInterface {
     
-    let id: Int
+    let uuid: Int
     let deleted: Bool?
     var type: ItemType { .pollopt }
     let by: String?
@@ -25,7 +25,7 @@ struct PollOptionItem: ItemInterface {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(Int.self, forKey: .id)
+        uuid = try container.decode(Int.self, forKey: .id)
         deleted = try container.decodeIfPresent(Bool.self, forKey: .deleted)
         by = try container.decodeIfPresent(String.self, forKey: .by)
         time = try container.decodeIfPresent(Int.self, forKey: .time)

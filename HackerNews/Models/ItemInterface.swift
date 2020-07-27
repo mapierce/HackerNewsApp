@@ -9,7 +9,7 @@ import Foundation
 
 protocol ItemInterface: Decodable {
     
-    var id: Int { get }
+    var uuid: Int { get }
     var deleted: Bool? { get }
     var type: ItemType { get }
     var by: String? { get }
