@@ -11,12 +11,12 @@ import Combine
 class ItemViewModel: ObservableObject {
     
     @Published private(set) var item: Item?
-    private let repository: ItemRespositoryBase
+    private let repository: ItemRespository
     private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Initialization
     
-    init(repository: ItemRespositoryBase = ItemRespositoryBase(), itemId: Int) {
+    init(repository: ItemRespository = ItemRespository(), itemId: Int) {
         self.repository = repository
         repository.publisher.sink { completion in
             switch completion {

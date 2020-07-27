@@ -12,10 +12,6 @@ final class ItemCache: Cache {
     static let shared = ItemCache()
     private var cache: [Int: Item] = [:]
     
-    // MARK: - Initialization
-    
-    private init() {}
-    
     // MARK: - Cache methods
     
     func write(_ item: Item) {

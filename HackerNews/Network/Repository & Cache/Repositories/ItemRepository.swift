@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class ItemRespositoryBase: Repository, ObservableObject {
+class ItemRespository: Repository, ObservableObject {
     
     private let subject = PassthroughSubject<Item, Error>()
     private let transport: Transport

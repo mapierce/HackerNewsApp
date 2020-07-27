@@ -21,7 +21,25 @@ struct ItemView: View {
 }
 
 struct ItemView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        ItemView(viewModel: ItemViewModel(itemId: 23940626))
+        PreviewWrapper().previewLayout(.fixed(width: 300, height: 300))
     }
+    
+    struct PreviewWrapper: View {
+        
+        var body: some View {
+            ItemView(viewModel: ItemViewModel(repository: setupRepository(), itemId: 8863))
+        }
+        
+        func setupRepository() -> ItemRespository {
+            let cache = ItemCache()
+            let story: StoryItem = load("story.json")
+            let item: Item = .story(story)
+            cache.write(item)
+            return ItemRespository(cache: cache)
+        }
+        
+    }
+    
 }
