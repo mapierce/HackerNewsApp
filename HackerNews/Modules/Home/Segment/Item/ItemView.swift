@@ -13,7 +13,7 @@ struct ItemView: View {
     
     var body: some View {
         if let item = viewModel.item {
-            Text(item.type.rawValue)
+            Text("\(item.by ?? "No author")")
         } else {
             ProgressView()
         }

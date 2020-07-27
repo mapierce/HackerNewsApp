@@ -16,9 +16,18 @@ class ItemViewModel: ObservableObject {
     
     // MARK: - Initialization
     
-    init(repository: ItemRespositoryBase = ItemRespositoryBase.shared, itemId: Int) {
+    init(repository: ItemRespositoryBase = ItemRespositoryBase(), itemId: Int) {
         self.repository = repository
-        self.item = repository.storedResponse?[itemId]
+        repository.publisher.sink { completion in
+            switch completion {
+            case .failure(let error): print(error.localizedDescription)
+            case .finished: break
+            }
+        } receiveValue: { [weak self] item in
+            self?.item = item
+        }
+        .store(in: &cancellables)
+
         repository.fetch(itemId: itemId, forceRefresh: false)
     }
 
