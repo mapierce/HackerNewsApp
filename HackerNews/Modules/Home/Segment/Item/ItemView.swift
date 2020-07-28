@@ -72,7 +72,7 @@ struct ItemView: View {
     
     var bellButton: some View {
         Button(action: {
-            print("Bookmark tapped")
+            print("Bell tapped")
         }) {
             Image(systemName: Constants.emptyBellImageName)
         }
