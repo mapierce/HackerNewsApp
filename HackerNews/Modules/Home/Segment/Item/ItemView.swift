@@ -14,6 +14,7 @@ struct ItemView: View {
         static let imageFrameHeight: CGFloat = 155
         static let singleSpace: CGFloat = 8
         static let doubleSpace: CGFloat = 16
+        static let iconSize: CGFloat = 20
         static let emptyBookmarkImageName = "bookmark"
         static let emptyBellImageName = "bell"
         static let backgroundColorName = "itemBackgroundColor"
@@ -26,21 +27,25 @@ struct ItemView: View {
         VStack(alignment: .leading) {
             itemImage
             Spacer()
-            HStack {
+            HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     ItemTitle(title: viewModel.title)
                     Spacer()
-                        .frame(height: Constants.singleSpace)
                     ItemMetadata(metadata: viewModel.metadata)
                 }
-                .padding(.leading, Constants.doubleSpace)
                 Spacer()
                 VStack {
                     bookmarkButton
+                    Spacer()
                     bellButton
                 }
-                .padding(.trailing, Constants.doubleSpace)
+                .font(.system(size: Constants.iconSize, weight: .light))
+                .foregroundColor(.primary)
             }
+            .padding(EdgeInsets(top: 0.0,
+                                leading: Constants.doubleSpace,
+                                bottom: Constants.singleSpace,
+                                trailing: Constants.doubleSpace))
             Spacer()
         }
         .background(Color(Constants.backgroundColorName))
@@ -62,10 +67,7 @@ struct ItemView: View {
             print("Bookmark tapped")
         }) {
             Image(systemName: Constants.emptyBookmarkImageName)
-                .font(Font.title.weight(.light))
-                .foregroundColor(.primary)
         }
-        .padding(.bottom, Constants.doubleSpace)
     }
     
     var bellButton: some View {
@@ -73,8 +75,6 @@ struct ItemView: View {
             print("Bookmark tapped")
         }) {
             Image(systemName: Constants.emptyBellImageName)
-                .font(Font.title.weight(.light))
-                .foregroundColor(.primary)
         }
     }
     
