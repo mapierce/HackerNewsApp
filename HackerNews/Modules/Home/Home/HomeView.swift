@@ -21,7 +21,7 @@ struct HomeView: View {
                         SegmentView(viewModel: SegmentViewModel(segment: viewModel.segments[index]) )
                     }
                 }
-                .tabViewStyle(PageTabViewStyle())
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             }
             .navigationBarTitle("Home")
         }
