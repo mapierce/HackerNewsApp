@@ -12,9 +12,14 @@ struct SegmentView: View {
     @ObservedObject var viewModel: SegmentViewModel
     
     var body: some View {
-        List(viewModel.itemIds, id: \.self) { id in
-            VStack {
-                ItemView(viewModel: ItemViewModel(itemId: id))
+        ScrollView {
+            LazyVStack {
+                ForEach(viewModel.itemIds, id: \.self) { id in
+                    ItemView(viewModel: ItemViewModel(itemId: id))
+                        .cornerRadius(15)
+                        .padding()
+                        .shadow(radius: 3)
+                }
             }
         }
     }
