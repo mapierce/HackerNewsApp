@@ -44,7 +44,6 @@
 		34AE837A24C75FA400BE8049 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AE837924C75FA400BE8049 /* CustomSegmentedControl.swift */; };
 		34BF61C724CF476900236C65 /* ItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BF61C624CF476900236C65 /* ItemRepository.swift */; };
 		34BF61C924CF47A700236C65 /* ItemCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BF61C824CF47A700236C65 /* ItemCache.swift */; };
-		34BF61CD24CF4E2E00236C65 /* PreviewProvider+load.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BF61CC24CF4E2E00236C65 /* PreviewProvider+load.swift */; };
 		34BF61D024CF4EA000236C65 /* story.json in Resources */ = {isa = PBXBuildFile; fileRef = 34BF61CF24CF4EA000236C65 /* story.json */; };
 		34D1374524C8D42B002CA0EC /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D1374424C8D42B002CA0EC /* SegmentedControl.swift */; };
 		34D1374924C8D703002CA0EC /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D1374824C8D703002CA0EC /* SegmentView.swift */; };
@@ -112,7 +111,6 @@
 		34AE837924C75FA400BE8049 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		34BF61C624CF476900236C65 /* ItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRepository.swift; sourceTree = "<group>"; };
 		34BF61C824CF47A700236C65 /* ItemCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCache.swift; sourceTree = "<group>"; };
-		34BF61CC24CF4E2E00236C65 /* PreviewProvider+load.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreviewProvider+load.swift"; sourceTree = "<group>"; };
 		34BF61CF24CF4EA000236C65 /* story.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = story.json; sourceTree = "<group>"; };
 		34D1374424C8D42B002CA0EC /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		34D1374824C8D703002CA0EC /* SegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
@@ -342,7 +340,6 @@
 			children = (
 				34144B6424C757340056ABF6 /* String+utility.swift */,
 				349633EA24C8A70D0047CE77 /* View+erasure.swift */,
-				34BF61CC24CF4E2E00236C65 /* PreviewProvider+load.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -582,7 +579,6 @@
 				340D032824CB317E000A128C /* ItemViewModel.swift in Sources */,
 				340D031824CB3077000A128C /* JobItem.swift in Sources */,
 				34144B7124C758C40056ABF6 /* StatusCodeCheckingTransport.swift in Sources */,
-				34BF61CD24CF4E2E00236C65 /* PreviewProvider+load.swift in Sources */,
 				349633F324C8B2560047CE77 /* BackgroundGeometryReader.swift in Sources */,
 				340D031C24CB30A5000A128C /* CommentItem.swift in Sources */,
 				34D1374524C8D42B002CA0EC /* SegmentedControl.swift in Sources */,
