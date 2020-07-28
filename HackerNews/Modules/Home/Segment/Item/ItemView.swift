@@ -14,7 +14,6 @@ struct ItemView: View {
         static let imageFrameHeight: CGFloat = 155
         static let singleSpace: CGFloat = 8
         static let doubleSpace: CGFloat = 16
-        static let authorFontSize: CGFloat = 12
         static let emptyBookmarkImageName = "bookmark"
         static let emptyBellImageName = "bell"
         static let backgroundColorName = "itemBackgroundColor"
@@ -24,30 +23,29 @@ struct ItemView: View {
     @ObservedObject var viewModel: ItemViewModel
     
     var body: some View {
-        if let item = viewModel.item {
-            VStack(alignment: .leading) {
-                itemImage
-                Spacer()
-                HStack {
-                    VStack(alignment: .leading) {
-                        itemTitle
-                        Spacer()
-                            .frame(height: Constants.singleSpace)
-                        itemAuthor
-                    }
-                    .padding(.leading, Constants.doubleSpace)
+        VStack(alignment: .leading) {
+            itemImage
+            Spacer()
+            HStack {
+                VStack(alignment: .leading) {
+                    ItemTitle(title: viewModel.title)
                     Spacer()
-                    VStack {
-                        bookmarkButton
-                        bellButton
-                    }
-                    .padding(.trailing, Constants.doubleSpace)
+                        .frame(height: Constants.singleSpace)
+                    ItemMetadata(metadata: viewModel.metadata)
                 }
+                .padding(.leading, Constants.doubleSpace)
                 Spacer()
+                VStack {
+                    bookmarkButton
+                    bellButton
+                }
+                .padding(.trailing, Constants.doubleSpace)
             }
-            .background(Color(Constants.backgroundColorName))
-        } else {
-            ProgressView()
+            Spacer()
+        }
+        .background(Color(Constants.backgroundColorName))
+        .applyIf(viewModel.loading) {
+            $0.redacted(reason: .placeholder)
         }
     }
     
@@ -57,22 +55,6 @@ struct ItemView: View {
             .scaledToFill()
             .frame(height: Constants.imageFrameHeight)
             .clipped()
-    }
-    
-    var itemTitle: some View {
-        Text("It's easier to manage four people than one person")
-            .font(.system(size: Constants.doubleSpace))
-            .fontWeight(.semibold)
-            .multilineTextAlignment(.leading)
-            .lineLimit(2)
-    }
-    
-    var itemAuthor: some View {
-        Text("104 points by chesterarthur 2 hours ago")
-            .fontWeight(.thin)
-            .font(.system(size: Constants.authorFontSize))
-            .italic()
-            .lineLimit(1)
     }
     
     var bookmarkButton: some View {
