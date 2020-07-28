@@ -9,6 +9,12 @@ import SwiftUI
 
 struct SegmentedControl: View {
     
+    private struct Constants {
+        
+        static let padding: CGFloat = 16
+        
+    }
+    
     @Binding var selectedSegmentIndex: Int
     let segments: [Segment]
     
@@ -19,7 +25,7 @@ struct SegmentedControl: View {
             }
         }
         .pickerStyle(SegmentedPickerStyle())
-        .padding()
+        .padding(EdgeInsets(top: Constants.padding, leading: Constants.padding, bottom: 0, trailing: Constants.padding))
     }
     
 }
