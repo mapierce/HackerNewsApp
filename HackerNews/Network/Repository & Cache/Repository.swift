@@ -11,10 +11,11 @@ import Combine
 protocol Repository {
     
     associatedtype RepositoryItem
+    associatedtype Identifier
     
     var publisher: AnyPublisher<RepositoryItem, Error> { get }
     
-    func fetch(itemId: Int, forceRefresh: Bool)
+    func fetch(by identifier: Identifier, forceRefresh: Bool)
     func clearCache()
     
 }
