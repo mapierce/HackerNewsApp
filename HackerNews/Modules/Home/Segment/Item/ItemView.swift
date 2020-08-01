@@ -107,7 +107,7 @@ struct ItemView_Previews: PreviewProvider {
             let cache = ItemCache()
             let story: StoryItem = load("story.json")
             let item: Item = .story(story)
-            cache.write(item)
+            cache.write(item, for: item.id)
             return ItemRespository(cache: cache)
         }
         

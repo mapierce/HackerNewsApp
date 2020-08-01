@@ -28,12 +28,12 @@ class ItemRespository: Repository, ObservableObject {
     
     // MARK: - Repository methods
     
-    func fetch(itemId: Int, forceRefresh: Bool = false) {
-        if let existingItem = cache.read(id: itemId) {
+    func fetch(by identifier: Int, forceRefresh: Bool = false) {
+        if let existingItem = cache.read(id: identifier) {
             subject.send(existingItem)
             return
         }
-        let request = URLRequest(path: Path.item.rawValue.format(itemId))
+        let request = URLRequest(path: Path.item.rawValue.format(identifier))
         transport
             .checkingStatusCode()
             .send(request: request)
@@ -56,7 +56,7 @@ class ItemRespository: Repository, ObservableObject {
     // MARK: - Private methods
     
     private func updateStoredResponse(_ item: Item) {
-        cache.write(item)
+        cache.write(item, for: item.id)
         subject.send(item)
     }
     

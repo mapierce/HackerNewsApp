@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class ItemViewModel: ObservableObject {
     
@@ -31,6 +32,7 @@ class ItemViewModel: ObservableObject {
     
     @Published private(set) var title = "Placeholder text going in here just for the redaction"
     @Published private(set) var metadata = "Placeholder text going in here just for the redaction"
+    @Published private(set) var image: Image?
     @Published private(set) var loading = true
     private let repository: ItemRespository
     private var cancellables: Set<AnyCancellable> = []
@@ -45,6 +47,10 @@ class ItemViewModel: ObservableObject {
     
     // MARK: - Private methods
     
+    private func fetch(_ itemId: Int) {
+        repository.fetch(by: itemId, forceRefresh: false)
+    }
+    
     private func handleRepository() {
         repository.publisher.sink { completion in
             switch completion {
@@ -55,10 +61,6 @@ class ItemViewModel: ObservableObject {
             self?.handle(item: item)
         }
         .store(in: &cancellables)
-    }
-    
-    private func fetch(_ itemId: Int) {
-        repository.fetch(itemId: itemId, forceRefresh: false)
     }
     
     private func handle(item: Item) {
@@ -85,6 +87,8 @@ class ItemViewModel: ObservableObject {
         }
         buildMetadata(from: score, by: by, time: time)
     }
+    
+    // MARK: - Formatters
     
     private func buildMetadata(from score: Int?, by: String?, time: Int?) {
         var metadataString = ""
