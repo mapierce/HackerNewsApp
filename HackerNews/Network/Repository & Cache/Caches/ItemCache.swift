@@ -14,8 +14,8 @@ final class ItemCache: Cache {
     
     // MARK: - Cache methods
     
-    func write(_ item: Item) {
-        cache[item.id] = item
+    func write(_ item: Item, for id: Int) {
+        cache[id] = item
     }
     
     func read(id: Int) -> Item? {

@@ -10,9 +10,9 @@ import Foundation
 protocol Cache {
     
     associatedtype ID
-    associatedtype CacheItem: Identifiable where CacheItem.ID == ID
+    associatedtype CacheItem
     
-    func write(_ item: CacheItem)
+    func write(_ item: CacheItem, for id: ID)
     func read(id: ID) -> CacheItem?
     func clear()
     
