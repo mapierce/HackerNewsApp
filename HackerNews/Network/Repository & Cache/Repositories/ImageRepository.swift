@@ -12,8 +12,8 @@ import LinkPresentation
 class ImageRepository: Repository, ObservableObject {
     
     private let subject = PassthroughSubject<Image, Error>()
-    private let metadataProvider = LPMetadataProvider()
     private let cache: ImageCache
+    private let placeholderImageLoader: PlaceholderImageLoader
     private var cancellables: Set<AnyCancellable> = []
     
     var publisher: AnyPublisher<Image, Error> {
@@ -22,13 +22,18 @@ class ImageRepository: Repository, ObservableObject {
     
     // MARK: - Initializer
     
-    init(cache: ImageCache = ImageCache.shared) {
+    init(cache: ImageCache = ImageCache.shared, placeholderImageLoader: PlaceholderImageLoader = PlaceholderImageLoader.shared) {
         self.cache = cache
+        self.placeholderImageLoader = placeholderImageLoader
     }
 
     // MARK: - Repository methods
     
-    func fetch(by identifier: URL, forceRefresh: Bool) {
+    func fetch(by identifier: URL?, forceRefresh: Bool) {
+        guard let identifier = identifier else {
+            subject.send(placeholderImageLoader.getNextPlaceholderImage())
+            return
+        }
         if let existingImage = cache.read(id: identifier) {
             subject.send(existingImage)
             return
@@ -55,7 +60,8 @@ class ImageRepository: Repository, ObservableObject {
     
     private func getMetadata(from url: URL) -> Future<NSItemProvider, Error> {
         return Future { [unowned self] promise in
-            self.metadataProvider.startFetchingMetadata(for: url) { metadata, error in
+            let metadataProvider = LPMetadataProvider()
+            metadataProvider.startFetchingMetadata(for: url) { metadata, error in
                 if let error = error {
                     promise(.failure(error))
                     return

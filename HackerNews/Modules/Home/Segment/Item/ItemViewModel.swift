@@ -49,7 +49,8 @@ class ItemViewModel: ObservableObject {
         self.itemRepository = itemRepository
         self.imageRepository = imageRepository
         self.itemId = itemId
-        handleRepository()
+        handleItemRepository()
+        handleImageRepository()
     }
     
     // MARK: - Public methods
@@ -68,7 +69,7 @@ class ItemViewModel: ObservableObject {
         itemRepository.fetch(by: itemId, forceRefresh: false)
     }
     
-    private func handleRepository() {
+    private func handleItemRepository() {
         itemRepository.publisher.sink { completion in
             switch completion {
             case .failure(let error): print(error.localizedDescription)
@@ -80,9 +81,21 @@ class ItemViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
+    private func handleImageRepository() {
+        imageRepository.publisher.sink { completion in
+            switch completion {
+            case .failure(let error): print(error.localizedDescription)
+            case .finished: break
+            }
+        } receiveValue: { [weak self] image in
+            self?.image = image
+        }.store(in: &cancellables)
+    }
+    
     private func handle(item: Item) {
         loading = false
         var score: Int? = nil
+        var url: String? = nil
         let by: String?
         let time: Int?
         switch item {
@@ -90,10 +103,12 @@ class ItemViewModel: ObservableObject {
             score = storyItem.score
             by = storyItem.by
             time = storyItem.time
+            url = storyItem.url
             title = storyItem.title ?? Constants.fallbackStoryTitle
         case .job(let jobItem):
             by = jobItem.by
             time = jobItem.time
+            url = jobItem.url
             title = jobItem.title ?? Constants.fallbackJobTitle
         case .poll(let pollItem):
             score = pollItem.score
@@ -103,6 +118,17 @@ class ItemViewModel: ObservableObject {
         default: return
         }
         buildMetadata(from: score, by: by, time: time)
+        loadImage(for: url)
+    }
+    
+    private func loadImage(for url: String?) {
+        let imageUrl: URL?
+        if let url = url {
+            imageUrl = URL(string: url)
+        } else {
+            imageUrl = nil
+        }
+        imageRepository.fetch(by: imageUrl, forceRefresh: false)
     }
     
     // MARK: - Formatters
