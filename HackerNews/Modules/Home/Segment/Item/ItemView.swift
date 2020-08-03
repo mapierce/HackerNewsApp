@@ -52,6 +52,12 @@ struct ItemView: View {
         .applyIf(viewModel.loading) {
             $0.redacted(reason: .placeholder)
         }
+        .onAppear {
+            viewModel.fetch()
+        }
+        .onDisappear {
+            viewModel.cancel()
+        }
     }
     
     var itemImage: some View {
@@ -100,7 +106,7 @@ struct ItemView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         
         var body: some View {
-            ItemView(viewModel: ItemViewModel(repository: setupRepository(), itemId: 8863))
+            ItemView(viewModel: ItemViewModel(itemRepository: setupRepository(), itemId: 8863))
         }
         
         func setupRepository() -> ItemRespository {

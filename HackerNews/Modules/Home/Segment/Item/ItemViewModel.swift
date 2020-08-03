@@ -34,25 +34,42 @@ class ItemViewModel: ObservableObject {
     @Published private(set) var metadata = "Placeholder text going in here just for the redaction"
     @Published private(set) var image: Image?
     @Published private(set) var loading = true
-    private let repository: ItemRespository
+    private let itemId: Int
+    private let itemRepository: ItemRespository
+    private let imageRepository: ImageRepository
     private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Initialization
     
-    init(repository: ItemRespository = ItemRespository(), itemId: Int) {
-        self.repository = repository
+    init(
+        itemRepository: ItemRespository = ItemRespository(),
+        imageRepository: ImageRepository = ImageRepository(),
+        itemId: Int
+    ) {
+        self.itemRepository = itemRepository
+        self.imageRepository = imageRepository
+        self.itemId = itemId
         handleRepository()
+    }
+    
+    // MARK: - Public methods
+    
+    func fetch() {
         fetch(itemId)
+    }
+    
+    func cancel() {
+        itemRepository.cancel()
     }
     
     // MARK: - Private methods
     
     private func fetch(_ itemId: Int) {
-        repository.fetch(by: itemId, forceRefresh: false)
+        itemRepository.fetch(by: itemId, forceRefresh: false)
     }
     
     private func handleRepository() {
-        repository.publisher.sink { completion in
+        itemRepository.publisher.sink { completion in
             switch completion {
             case .failure(let error): print(error.localizedDescription)
             case .finished: break

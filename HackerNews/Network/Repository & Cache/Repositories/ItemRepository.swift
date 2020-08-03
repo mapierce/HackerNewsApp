@@ -13,7 +13,7 @@ class ItemRespository: Repository, ObservableObject {
     private let subject = PassthroughSubject<Item, Error>()
     private let transport: Transport
     private let cache: ItemCache
-    private var cancellables: Set<AnyCancellable> = []
+    private var cancellable: AnyCancellable?
     
     var publisher: AnyPublisher<Item, Error> {
         subject.eraseToAnyPublisher()
@@ -34,7 +34,7 @@ class ItemRespository: Repository, ObservableObject {
             return
         }
         let request = URLRequest(path: Path.item.rawValue.format(identifier))
-        transport
+        cancellable = transport
             .checkingStatusCode()
             .send(request: request)
             .receive(on: DispatchQueue.main)
@@ -46,11 +46,16 @@ class ItemRespository: Repository, ObservableObject {
             } receiveValue: { [weak self] response in
                 self?.updateStoredResponse(response)
             }
-            .store(in: &cancellables)
     }
     
     func clearCache() {
         cache.clear()
+    }
+    
+    // MARK: - Public methods
+    
+    func cancel() {
+        cancellable?.cancel()
     }
     
     // MARK: - Private methods
