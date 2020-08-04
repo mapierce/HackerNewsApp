@@ -13,6 +13,7 @@ class ImageRepository: Repository, ObservableObject {
     
     private let subject = PassthroughSubject<Image, Error>()
     private let cache: ImageCache
+    private let metadataProvider = LPMetadataProvider()
     private let placeholderImageLoader: PlaceholderImageLoader
     private var cancellables: Set<AnyCancellable> = []
     
@@ -60,8 +61,7 @@ class ImageRepository: Repository, ObservableObject {
     
     private func getMetadata(from url: URL) -> Future<NSItemProvider, Error> {
         return Future { [unowned self] promise in
-            let metadataProvider = LPMetadataProvider()
-            metadataProvider.startFetchingMetadata(for: url) { metadata, error in
+            self.metadataProvider.startFetchingMetadata(for: url) { metadata, error in
                 if let error = error {
                     promise(.failure(error))
                     return
