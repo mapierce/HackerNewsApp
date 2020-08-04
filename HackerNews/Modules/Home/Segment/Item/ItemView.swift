@@ -25,7 +25,15 @@ struct ItemView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            itemImage
+            if let loadedImage = viewModel.image {
+                loadedImage
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: Constants.imageFrameHeight)
+                    .clipped()
+            } else {
+                Text("Loading image").frame(height: Constants.imageFrameHeight)
+            }
             Spacer()
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
@@ -58,14 +66,6 @@ struct ItemView: View {
         .onDisappear {
             viewModel.cancel()
         }
-    }
-    
-    var itemImage: some View {
-        Image("orangeItemPlaceholder")
-            .resizable()
-            .scaledToFill()
-            .frame(height: Constants.imageFrameHeight)
-            .clipped()
     }
     
     var bookmarkButton: some View {
