@@ -38,6 +38,7 @@ class ItemViewModel: ObservableObject {
     private let itemRepository: ItemRespository
     private let imageRepository: ImageRepository
     private var cancellables: Set<AnyCancellable> = []
+    private var fetchCount = 0
     
     // MARK: - Initialization
     
@@ -56,6 +57,8 @@ class ItemViewModel: ObservableObject {
     // MARK: - Public methods
     
     func fetch() {
+        guard fetchCount == 0 else { return }
+        fetchCount += 1
         fetch(itemId)
     }
     
