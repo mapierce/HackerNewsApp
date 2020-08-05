@@ -505,7 +505,6 @@
 				34144B2324C751E50056ABF6 /* Sources */,
 				34144B2424C751E50056ABF6 /* Frameworks */,
 				34144B2524C751E50056ABF6 /* Resources */,
-				01E2C2D4A62165428CCA423B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -622,23 +621,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		01E2C2D4A62165428CCA423B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HackerNews/Pods-HackerNews-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HackerNews/Pods-HackerNews-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HackerNews/Pods-HackerNews-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7EADED317C7101DEF09ED25B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
