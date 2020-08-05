@@ -31,11 +31,14 @@ class ImageRepository: Repository, ObservableObject {
     // MARK: - Repository methods
     
     func fetch(by identifier: URL?, forceRefresh: Bool) {
+        print("-=-=-=-=- Fetching image for: \(identifier?.absoluteString ?? "no identifier provided")")
         guard let identifier = identifier else {
+            print("-=-=-=-=- Identifier is nil, returning placeholder image")
             subject.send(placeholderImageLoader.getNextPlaceholderImage())
             return
         }
         if let existingImage = cache.read(id: identifier) {
+            print("-=-=-=-=- Have existing image for identifier: \(identifier.absoluteString)")
             subject.send(existingImage)
             return
         }
@@ -43,10 +46,15 @@ class ImageRepository: Repository, ObservableObject {
             .flatMap(getImage)
             .sink { completion in
                 switch completion {
-                case .failure(let error): print(error.localizedDescription)
-                case .finished: break
+                case .failure(let error):
+                    print("-=-=-=-=- Entire repo failure for: \(identifier.absoluteString)")
+                    print(error.localizedDescription)
+                case .finished:
+                    print("-=-=-=-=- Entire repo finished for: \(identifier.absoluteString)")
+                    break
                 }
             } receiveValue: { [unowned self] image in
+                print("-=-=-=-=- Entire repo success for: \(identifier.absoluteString)")
                 self.cache.write(image, for: identifier)
                 self.subject.send(image)
             }
@@ -62,14 +70,18 @@ class ImageRepository: Repository, ObservableObject {
     private func getMetadata(from url: URL) -> Future<NSItemProvider, Error> {
         return Future { [unowned self] promise in
             self.metadataProvider.startFetchingMetadata(for: url) { metadata, error in
+                print("-=-=-=-=- Fetching metadata for: \(url.absoluteString)")
                 if let error = error {
+                    print("-=-=-=-=- Error fetching metadata for: \(url.absoluteString)")
                     promise(.failure(error))
                     return
                 }
                 guard let imageProvider = metadata?.imageProvider else {
+                    print("-=-=-=-=- No image provider metadata for: \(url.absoluteString)")
                     promise(.failure(ImageError.noImageProvider))
                     return
                 }
+                print("-=-=-=-=- Got metadata for: \(url.absoluteString)")
                 promise(.success(imageProvider))
             }
         }
@@ -78,10 +90,13 @@ class ImageRepository: Repository, ObservableObject {
     private func getImage(from itemProvider: NSItemProvider) -> Future<Image, Error> {
         return Future { promise in
             itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                print("-=-=-=-=- Loading image...")
                 guard let image = image as? UIImage else {
+                    print("-=-=-=-=- No image found")
                     promise(.failure(ImageError.noImageData))
                     return
                 }
+                print("-=-=-=-=- Returning image")
                 promise(.success(Image(uiImage: image)))
             }
         }
