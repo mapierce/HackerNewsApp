@@ -11,6 +11,7 @@ enum ImageError: Error {
     
     case noImageProvider
     case noImageData
+    case dataToImageFailure
     case other(Error)
     
     static func map(_ error: Error) -> ImageError {
