@@ -18,7 +18,7 @@ class PlaceholderImageLoader {
     // MARK: - Public methods
     
     func getNextPlaceholderImage() -> Image {
-        if currentPlacholderIndex == placeholderImages.count - 1 {
+        if currentPlacholderIndex == placeholderImages.count {
             currentPlacholderIndex = 0
         }
         let placeholderImage = Image(placeholderImages[currentPlacholderIndex])
