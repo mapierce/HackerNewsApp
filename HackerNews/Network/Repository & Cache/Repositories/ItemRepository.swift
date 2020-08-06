@@ -37,10 +37,9 @@ class ItemRespository: Repository, ObservableObject {
         cancellable = transport
             .checkingStatusCode()
             .send(request: request)
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { [weak subject] completion in
                 switch completion {
-                case .failure(let error): print(error.localizedDescription)
+                case .failure(let error): subject?.send(completion: .failure(error))
                 case .finished: break
                 }
             } receiveValue: { [weak self] response in

@@ -64,6 +64,7 @@ class ItemViewModel: ObservableObject {
     
     func cancel() {
         itemRepository.cancel()
+        imageRepository.cancel()
     }
     
     // MARK: - Private methods
@@ -73,15 +74,19 @@ class ItemViewModel: ObservableObject {
     }
     
     private func handleItemRepository() {
-        itemRepository.publisher.sink { completion in
-            switch completion {
-            case .failure(let error): print(error.localizedDescription)
-            case .finished: break
+        itemRepository.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    // MARK: - TODO: Present this via alert
+                    print(error.localizedDescription)
+                case .finished: break
+                }
+            } receiveValue: { [weak self] item in
+                self?.handle(item: item)
             }
-        } receiveValue: { [weak self] item in
-            self?.handle(item: item)
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
     }
     
     private func handleImageRepository() {
@@ -123,17 +128,12 @@ class ItemViewModel: ObservableObject {
         default: return
         }
         buildMetadata(from: score, by: by, time: time)
-        loadImage(for: url)
+        loadImage(for: item.uuid, with: url)
     }
     
-    private func loadImage(for url: String?) {
-        let imageUrl: URL?
-        if let url = url {
-            imageUrl = URL(string: url)
-        } else {
-            imageUrl = nil
-        }
-        imageRepository.fetch(by: imageUrl, forceRefresh: false)
+    private func loadImage(for id: Int, with url: String?) {
+        let imageUrl: URL? = URL(string: url ?? "")
+        imageRepository.fetch(by: (id, imageUrl), forceRefresh: false)
     }
     
     // MARK: - Formatters
