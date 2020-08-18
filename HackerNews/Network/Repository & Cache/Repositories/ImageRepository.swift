@@ -46,26 +46,30 @@ class ImageRepository: Repository, ObservableObject {
     // MARK: - Repository methods
     
     func fetch(by identifier: Identifier, forceRefresh: Bool) {
-        if let existingImage = cache.read(id: identifier.id) {
-            subject.send(existingImage)
-            return
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let strongSelf = self else { return }
+            if let existingImage = strongSelf.cache.read(id: identifier.id) {
+                strongSelf.subject.send(existingImage)
+                return
+            }
+            guard let endpoint = identifier.endpoint, let imageURL = strongSelf.getImageURL(from: endpoint) else {
+                let image = strongSelf.placeholderImageLoader.getNextPlaceholderImage()
+                strongSelf.subject.send(image)
+                strongSelf.cache.write(image, for: identifier.id)
+                return
+            }
+            let request = URLRequest(url: imageURL)
+            strongSelf.cancellable = strongSelf.transport
+                .checkingStatusCode()
+                .send(request: request)
+                .tryMap({ (data, _) -> Image in try strongSelf.dataToImage(data) })
+                .catch({ _ -> Just<Image> in Just(strongSelf.placeholderImageLoader.getNextPlaceholderImage()) })
+                .sink(receiveValue: { image in
+                    strongSelf.subject.send(image)
+                    strongSelf.cache.write(image, for: identifier.id)
+                })
         }
-        guard let endpoint = identifier.endpoint, let imageURL = getImageURL(from: endpoint) else {
-            let image = placeholderImageLoader.getNextPlaceholderImage()
-            subject.send(image)
-            cache.write(image, for: identifier.id)
-            return
-        }
-        let request = URLRequest(url: imageURL)
-        cancellable = transport
-            .checkingStatusCode()
-            .send(request: request)
-            .tryMap({ [unowned self] (data, _) -> Image in try self.dataToImage(data) })
-            .catch({ [unowned placeholderImageLoader] _ -> Just<Image> in Just(placeholderImageLoader.getNextPlaceholderImage()) })
-            .sink(receiveValue: { [unowned self] image in
-                self.subject.send(image)
-                self.cache.write(image, for: identifier.id)
-            })
+        
     }
     
     func clearCache() {

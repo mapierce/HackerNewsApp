@@ -29,22 +29,25 @@ class ItemRespository: Repository, ObservableObject {
     // MARK: - Repository methods
     
     func fetch(by identifier: Int, forceRefresh: Bool = false) {
-        if let existingItem = cache.read(id: identifier) {
-            subject.send(existingItem)
-            return
-        }
-        let request = URLRequest(path: Path.item.rawValue.format(identifier))
-        cancellable = transport
-            .checkingStatusCode()
-            .send(request: request)
-            .sink { [weak subject] completion in
-                switch completion {
-                case .failure(let error): subject?.send(completion: .failure(error))
-                case .finished: break
-                }
-            } receiveValue: { [weak self] response in
-                self?.updateStoredResponse(response)
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let strongSelf = self else { return }
+            if let existingItem = strongSelf.cache.read(id: identifier) {
+                strongSelf.subject.send(existingItem)
+                return
             }
+            let request = URLRequest(path: Path.item.rawValue.format(identifier))
+            strongSelf.cancellable = strongSelf.transport
+                .checkingStatusCode()
+                .send(request: request)
+                .sink { completion in
+                    switch completion {
+                    case .failure(let error): strongSelf.subject.send(completion: .failure(error))
+                    case .finished: break
+                    }
+                } receiveValue: { response in
+                    strongSelf.updateStoredResponse(response)
+                }
+        }
     }
     
     func clearCache() {
