@@ -28,9 +28,7 @@ struct ItemView: View {
             if let loadedImage = viewModel.image {
                 loadedImage
                     .resizable()
-                    .scaledToFill()
                     .frame(height: Constants.imageFrameHeight)
-                    .clipped()
             } else {
                 Text("Loading image").frame(height: Constants.imageFrameHeight)
             }
