@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3404DCCB24EC63AF00D34ACA /* ItemPlaceholderImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3404DCCA24EC63AF00D34ACA /* ItemPlaceholderImage.swift */; };
 		340D031424CB302B000A128C /* ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340D031324CB302B000A128C /* ItemType.swift */; };
 		340D031624CB305F000A128C /* ItemInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340D031524CB305F000A128C /* ItemInterface.swift */; };
 		340D031824CB3077000A128C /* JobItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340D031724CB3077000A128C /* JobItem.swift */; };
@@ -75,6 +76,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3404DCCA24EC63AF00D34ACA /* ItemPlaceholderImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPlaceholderImage.swift; sourceTree = "<group>"; };
 		340D031324CB302B000A128C /* ItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemType.swift; sourceTree = "<group>"; };
 		340D031524CB305F000A128C /* ItemInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInterface.swift; sourceTree = "<group>"; };
 		340D031724CB3077000A128C /* JobItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItem.swift; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 			children = (
 				34B57BB624D0AAEC00BF40EB /* ItemTitle.swift */,
 				34B57BB824D0AB0700BF40EB /* ItemMetadata.swift */,
+				3404DCCA24EC63AF00D34ACA /* ItemPlaceholderImage.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -634,6 +637,7 @@
 				340D031E24CB30B5000A128C /* PollItem.swift in Sources */,
 				34144B2D24C751E50056ABF6 /* HomeView.swift in Sources */,
 				34144B6524C757340056ABF6 /* String+utility.swift in Sources */,
+				3404DCCB24EC63AF00D34ACA /* ItemPlaceholderImage.swift in Sources */,
 				349633EE24C8B1690047CE77 /* ActiveSegmentView.swift in Sources */,
 				3412743124C8FD180049824D /* SegmentViewModel.swift in Sources */,
 				34144B6024C752ED0056ABF6 /* HTTPRequestMethod.swift in Sources */,

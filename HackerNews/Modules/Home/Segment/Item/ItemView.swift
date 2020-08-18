@@ -30,7 +30,7 @@ struct ItemView: View {
                     .resizable()
                     .frame(height: Constants.imageFrameHeight)
             } else {
-                Text("Loading image").frame(height: Constants.imageFrameHeight)
+                ItemPlaceholderImage()
             }
             Spacer()
             HStack(alignment: .top) {
