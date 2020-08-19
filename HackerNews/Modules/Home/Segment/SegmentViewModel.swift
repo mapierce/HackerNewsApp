@@ -11,6 +11,7 @@ import Combine
 class SegmentViewModel: ObservableObject {
     
     @Published private(set) var itemIds = [Int]()
+    @Published private(set) var error = false
     private let transport: Transport
     private let segment: Segment
     private var cancellables: Set<AnyCancellable> = []
@@ -23,6 +24,13 @@ class SegmentViewModel: ObservableObject {
         fetchIds()
     }
     
+    // MARK: - Public methods
+    
+    func retry() {
+        error = false
+        fetchIds()
+    }
+    
     // MARK: - Private methods
     
     private func fetchIds() {
@@ -31,11 +39,9 @@ class SegmentViewModel: ObservableObject {
             .checkingStatusCode()
             .send(request: request)
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
-                case .failure(let error):
-                    // MARK: - TODO: Present this via alert
-                    print(error.localizedDescription)
+                case .failure: self?.error = true
                 case .finished: break
                 }
         } receiveValue: { response in
