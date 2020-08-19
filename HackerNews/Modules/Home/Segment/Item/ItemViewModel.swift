@@ -94,9 +94,7 @@ class ItemViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {
-                case .failure(let error):
-                    // MARK: - TODO: Present this via alert
-                    print(error.localizedDescription)
+                case .failure: return // Won't happen, as repository will return stock image
                 case .finished: break
                 }
             } receiveValue: { [weak self] image in
