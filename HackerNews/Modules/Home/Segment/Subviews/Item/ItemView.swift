@@ -18,16 +18,28 @@ struct ItemView: View {
     @ObservedObject var viewModel: ItemViewModel
     
     var body: some View {
-        VStack(alignment: .leading) {
-            ItemImageView(image: viewModel.image)
-            Spacer()
-            ItemDetailView(title: viewModel.title, metadata: viewModel.metadata)
-            Spacer()
+        ZStack {
+            VStack(alignment: .leading) {
+                ItemImageView(image: viewModel.image)
+                Spacer()
+                ItemDetailView(title: viewModel.title, metadata: viewModel.metadata)
+                Spacer()
+            }
+            .applyIf(viewModel.viewState == .loading) {
+                $0.redacted(reason: .placeholder)
+            }
+        if viewModel.viewState == .error {
+            GeometryReader { geo in
+                ItemReloadView()
+                    .frame(width: geo.size.width, height: geo.size.height)
+                    .onTapGesture {
+                        viewModel.fetch()
+                    }
+                    .background(Color.red)
+                }
+            }
         }
         .background(Color(Constants.backgroundColorName))
-        .applyIf(viewModel.loading) {
-            $0.redacted(reason: .placeholder)
-        }
         .onAppear {
             viewModel.fetch()
         }
