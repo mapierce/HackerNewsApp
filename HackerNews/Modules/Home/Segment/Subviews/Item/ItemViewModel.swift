@@ -33,12 +33,20 @@ class ItemViewModel: ObservableObject {
     @Published private(set) var title = "Placeholder text going in here just for the redaction"
     @Published private(set) var metadata = "Placeholder text going in here just for the redaction"
     @Published private(set) var image: Image?
-    @Published private(set) var loading = true
+    @Published private(set) var viewState: ViewState = .loading
     private let itemId: Int
     private let itemRepository: ItemRespository
     private let imageRepository: ImageRepository
     private var cancellables: Set<AnyCancellable> = []
     private var fetchCount = 0
+    
+    private var viewStateInternal: ViewState = .loading {
+        willSet {
+            withAnimation {
+                viewState = newValue
+            }
+        }
+    }
     
     // MARK: - Initialization
     
@@ -57,8 +65,8 @@ class ItemViewModel: ObservableObject {
     // MARK: - Public methods
     
     func fetch() {
-        guard fetchCount == 0 else { return }
         fetchCount += 1
+        viewStateInternal = .loading
         fetch(itemId)
     }
     
@@ -70,17 +78,16 @@ class ItemViewModel: ObservableObject {
     // MARK: - Private methods
     
     private func fetch(_ itemId: Int) {
-        itemRepository.fetch(by: itemId, forceRefresh: false)
+        let id = fetchCount == 1 ? -100 : itemId
+        itemRepository.fetch(by: id, forceRefresh: false)
     }
     
     private func handleItemRepository() {
         itemRepository.publisher
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
-                case .failure(let error):
-                    // MARK: - TODO: Present this via alert
-                    print(error.localizedDescription)
+                case .failure: self?.viewStateInternal = .error
                 case .finished: break
                 }
             } receiveValue: { [weak self] item in
@@ -98,12 +105,14 @@ class ItemViewModel: ObservableObject {
                 case .finished: break
                 }
             } receiveValue: { [weak self] image in
-                self?.image = image
+                withAnimation {
+                    self?.image = image
+                }
             }.store(in: &cancellables)
     }
     
     private func handle(item: Item) {
-        loading = false
+        viewStateInternal = .complete
         var score: Int? = nil
         var url: String? = nil
         let by: String?
