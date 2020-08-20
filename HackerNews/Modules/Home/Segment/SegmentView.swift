@@ -13,7 +13,7 @@ struct SegmentView: View {
     
     var body: some View {
         VStack {
-            switch (viewModel.viewState) {
+            switch viewModel.viewState {
             case .loading: ProgressView()
             case .error: ErrorView { viewModel.retry() }
             case .complete: ItemListView(itemIds: viewModel.itemIds)
