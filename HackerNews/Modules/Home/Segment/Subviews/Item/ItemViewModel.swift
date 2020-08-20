@@ -34,6 +34,7 @@ class ItemViewModel: ObservableObject {
     @Published private(set) var metadata = "Placeholder text going in here just for the redaction"
     @Published private(set) var image: Image?
     @Published private(set) var viewState: ViewState = .loading
+    @Published private(set) var tags = [TagTypes]()
     private let itemId: Int
     private let itemRepository: ItemRespository
     private let imageRepository: ImageRepository
@@ -72,6 +73,7 @@ class ItemViewModel: ObservableObject {
     func cancel() {
         itemRepository.cancel()
         imageRepository.cancel()
+        tags = []
     }
     
     // MARK: - Private methods
@@ -117,26 +119,25 @@ class ItemViewModel: ObservableObject {
         viewStateInternal = .complete
         var score: Int? = nil
         var url: String? = nil
-        let by: String?
-        let time: Int?
+        let by: String? = item.by
+        let time: Int? = item.time
         switch item {
         case .story(let storyItem):
             score = storyItem.score
-            by = storyItem.by
-            time = storyItem.time
             url = storyItem.url
             title = storyItem.title ?? Constants.fallbackStoryTitle
         case .job(let jobItem):
-            by = jobItem.by
-            time = jobItem.time
             url = jobItem.url
             title = jobItem.title ?? Constants.fallbackJobTitle
+            tags.append(.job)
         case .poll(let pollItem):
             score = pollItem.score
-            by = pollItem.by
-            time = pollItem.time
             title = pollItem.title ?? Constants.fallbackPollTitle
+            tags.append(.poll)
         default: return
+        }
+        if item.dead ?? false {
+            tags.append(.dead)
         }
         buildMetadata(from: score, by: by, time: time)
         loadImage(for: item.uuid, with: url)

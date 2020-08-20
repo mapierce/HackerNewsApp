@@ -20,7 +20,7 @@ struct ItemView: View {
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                ItemImageView(image: viewModel.image)
+                ItemImageView(image: viewModel.image, tags: viewModel.tags)
                 Spacer()
                 ItemDetailView(title: viewModel.title, metadata: viewModel.metadata)
                 Spacer()
