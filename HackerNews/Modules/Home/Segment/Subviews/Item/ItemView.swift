@@ -28,14 +28,14 @@ struct ItemView: View {
             .applyIf(viewModel.viewState == .loading) {
                 $0.redacted(reason: .placeholder)
             }
-        if viewModel.viewState == .error {
-            GeometryReader { geo in
-                ItemReloadView()
-                    .frame(width: geo.size.width, height: geo.size.height)
-                    .background(Color(Constants.backgroundColorName))
-                    .onTapGesture {
-                        viewModel.fetch()
-                    }
+            if viewModel.viewState == .error {
+                GeometryReader { geo in
+                    ItemReloadView()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .background(Color(Constants.backgroundColorName))
+                        .onTapGesture {
+                            viewModel.fetch()
+                        }
                 }
             }
         }
