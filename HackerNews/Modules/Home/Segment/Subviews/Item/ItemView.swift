@@ -11,12 +11,6 @@ struct ItemView: View {
     
     private struct Constants {
         
-        static let imageFrameHeight: CGFloat = 155
-        static let singleSpace: CGFloat = 8
-        static let doubleSpace: CGFloat = 16
-        static let iconSize: CGFloat = 20
-        static let emptyBookmarkImageName = "bookmark"
-        static let emptyBellImageName = "bell"
         static let backgroundColorName = "itemBackgroundColor"
         
     }
@@ -27,25 +21,7 @@ struct ItemView: View {
         VStack(alignment: .leading) {
             ItemImageView(image: viewModel.image)
             Spacer()
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
-                    ItemTitle(title: viewModel.title)
-                    Spacer()
-                    ItemMetadata(metadata: viewModel.metadata)
-                }
-                Spacer()
-                VStack {
-                    bookmarkButton
-                    Spacer()
-                    bellButton
-                }
-                .font(.system(size: Constants.iconSize, weight: .light))
-                .foregroundColor(.primary)
-            }
-            .padding(EdgeInsets(top: 0.0,
-                                leading: Constants.doubleSpace,
-                                bottom: Constants.singleSpace,
-                                trailing: Constants.doubleSpace))
+            ItemDetailView(title: viewModel.title, metadata: viewModel.metadata)
             Spacer()
         }
         .background(Color(Constants.backgroundColorName))
@@ -57,22 +33,6 @@ struct ItemView: View {
         }
         .onDisappear {
             viewModel.cancel()
-        }
-    }
-    
-    var bookmarkButton: some View {
-        Button(action: {
-            print("Bookmark tapped")
-        }) {
-            Image(systemName: Constants.emptyBookmarkImageName)
-        }
-    }
-    
-    var bellButton: some View {
-        Button(action: {
-            print("Bell tapped")
-        }) {
-            Image(systemName: Constants.emptyBellImageName)
         }
     }
     
