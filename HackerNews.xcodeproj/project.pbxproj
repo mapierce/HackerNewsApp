@@ -37,6 +37,7 @@
 		34144B7124C758C40056ABF6 /* StatusCodeCheckingTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34144B7024C758C40056ABF6 /* StatusCodeCheckingTransport.swift */; };
 		3434206424EED8F300905CC5 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3434206324EED8F300905CC5 /* ErrorView.swift */; };
 		3434206724EEDCB000905CC5 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3434206624EEDCB000905CC5 /* ViewState.swift */; };
+		3434206924EEDDDC00905CC5 /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3434206824EEDDDC00905CC5 /* ItemListView.swift */; };
 		3434C37924D850AB000A664D /* PlaceholderImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3434C37824D850AB000A664D /* PlaceholderImageLoader.swift */; };
 		3450C9C824C99BA3004AABB3 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3450C9C724C99BA3004AABB3 /* Segment.swift */; };
 		3455E86524D5D81F00BF46C9 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3455E86424D5D81F00BF46C9 /* ImageCache.swift */; };
@@ -114,6 +115,7 @@
 		34144B7024C758C40056ABF6 /* StatusCodeCheckingTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCodeCheckingTransport.swift; sourceTree = "<group>"; };
 		3434206324EED8F300905CC5 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		3434206624EEDCB000905CC5 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		3434206824EEDDDC00905CC5 /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
 		3434C37824D850AB000A664D /* PlaceholderImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderImageLoader.swift; sourceTree = "<group>"; };
 		3450C9C724C99BA3004AABB3 /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		3455E86424D5D81F00BF46C9 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 			children = (
 				340D032424CB3169000A128C /* Item */,
 				3434206324EED8F300905CC5 /* ErrorView.swift */,
+				3434206824EEDDDC00905CC5 /* ItemListView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -669,6 +672,7 @@
 				340D032624CB3175000A128C /* ItemView.swift in Sources */,
 				349633F524C8B26A0047CE77 /* SizeAwareModifier.swift in Sources */,
 				340D032224CB30E4000A128C /* Item.swift in Sources */,
+				3434206924EEDDDC00905CC5 /* ItemListView.swift in Sources */,
 				34144B6E24C7583F0056ABF6 /* NetworkError.swift in Sources */,
 				34144B2B24C751E50056ABF6 /* HackerNewsApp.swift in Sources */,
 				340D031624CB305F000A128C /* ItemInterface.swift in Sources */,

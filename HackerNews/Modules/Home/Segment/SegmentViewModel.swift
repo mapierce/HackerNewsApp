@@ -5,13 +5,20 @@
 //  Created by Matthew Pierce on 23/07/2020.
 //
 
-import Foundation
+import SwiftUI
 import Combine
 
 class SegmentViewModel: ObservableObject {
     
     @Published private(set) var itemIds = [Int]()
-    @Published private(set) var error = false
+    @Published private(set) var viewState: ViewState = .loading
+    private var viewStateInternal: ViewState = .loading {
+        willSet {
+            withAnimation {
+                viewState = newValue
+            }
+        }
+    }
     private let transport: Transport
     private let segment: Segment
     private var cancellables: Set<AnyCancellable> = []
@@ -27,7 +34,7 @@ class SegmentViewModel: ObservableObject {
     // MARK: - Public methods
     
     func retry() {
-        error = false
+        viewStateInternal = .loading
         fetchIds()
     }
     
@@ -41,13 +48,18 @@ class SegmentViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 switch completion {
-                case .failure: self?.error = true
+                case .failure: self?.viewStateInternal = .error
                 case .finished: break
                 }
-        } receiveValue: { response in
-            self.itemIds = response
+        } receiveValue: { [weak self] response in
+            self?.handle(response: response)
         }
         .store(in: &cancellables)
+    }
+    
+    private func handle(response: [Int]) {
+        itemIds = response
+        viewStateInternal = .complete
     }
     
 }
