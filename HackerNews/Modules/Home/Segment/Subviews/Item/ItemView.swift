@@ -32,10 +32,10 @@ struct ItemView: View {
             GeometryReader { geo in
                 ItemReloadView()
                     .frame(width: geo.size.width, height: geo.size.height)
+                    .background(Color(Constants.backgroundColorName))
                     .onTapGesture {
                         viewModel.fetch()
                     }
-                    .background(Color.red)
                 }
             }
         }

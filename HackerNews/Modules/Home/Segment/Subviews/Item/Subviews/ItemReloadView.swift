@@ -21,7 +21,6 @@ struct ItemReloadView: View {
         VStack {
             Image(systemName: "arrow.clockwise")
                 .resizable()
-                .foregroundColor(Color.primary)
                 .scaledToFit()
                 .frame(width: Constants.imageHeight)
             Spacer().frame(height: Constants.spacerHeight)
@@ -30,6 +29,7 @@ struct ItemReloadView: View {
                 .font(.caption)
                 .multilineTextAlignment(.center)
         }
+        .foregroundColor(.gray)
     }
     
 }
