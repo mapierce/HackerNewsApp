@@ -65,5 +65,7 @@ struct ItemDetailView: View {
 struct ItemDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ItemDetailView(title: "Item title", metadata: "details below about item")
+            .previewLayout(.fixed(width: 343, height: 60))
+            .previewDisplayName("iPhone 11 Pro Max")
     }
 }
