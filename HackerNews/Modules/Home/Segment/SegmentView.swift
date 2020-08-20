@@ -15,7 +15,7 @@ struct SegmentView: View {
         VStack {
             switch (viewModel.viewState) {
             case .loading: ProgressView()
-            case .error: ErrorView { [weak viewModel] in viewModel?.retry() }
+            case .error: ErrorView { viewModel.retry() }
             case .complete: ItemListView(itemIds: viewModel.itemIds)
             }
         }
