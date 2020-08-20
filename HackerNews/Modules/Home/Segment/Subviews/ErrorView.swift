@@ -14,28 +14,34 @@ struct ErrorView: View {
         static let errorImageName = "cactus"
         static let errorText = "Looks like there's nothing here! Maybe try loading again."
         static let retryButtonTitle = "Reload"
+        static let horizontalPadding: CGFloat = 40
         
     }
     
     let action: (() -> Void)?
     
     var body: some View {
-        Image(Constants.errorImageName)
-        Text(Constants.errorText)
-            .font(.title2)
-            .fontWeight(.semibold)
-            .lineLimit(nil)
-            .multilineTextAlignment(.center)
-            .padding()
-            .foregroundColor(Color(red: 126/255, green: 126/255, blue: 126/255))
-        Button(Constants.retryButtonTitle) {
-            action?()
+        VStack {
+            Image(Constants.errorImageName)
+            Text(Constants.errorText)
+                .font(.title2)
+                .fontWeight(.semibold)
+                .lineLimit(nil)
+                .multilineTextAlignment(.center)
+                .padding()
+                .foregroundColor(Color(red: 126/255, green: 126/255, blue: 126/255))
+            Button(action: {
+                action?()
+            }, label: {
+                Text(Constants.retryButtonTitle)
+                    .foregroundColor(.white)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .padding()
+                    .padding(.horizontal, Constants.horizontalPadding)
+                    .background(Capsule().foregroundColor(.blue))
+            })
         }
-        .foregroundColor(.white)
-        .font(.title2)
-        .padding()
-        .padding(.horizontal, 40)
-        .background(Capsule().foregroundColor(.blue))
     }
     
 }
