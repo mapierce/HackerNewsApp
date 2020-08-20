@@ -10,12 +10,12 @@ import Combine
 
 class ItemRespository: Repository, ObservableObject {
     
-    private let subject = PassthroughSubject<Item, Error>()
+    private let subject = PassthroughSubject<Item?, Error>()
     private let transport: Transport
     private let cache: ItemCache
     private var cancellable: AnyCancellable?
     
-    var publisher: AnyPublisher<Item, Error> {
+    var publisher: AnyPublisher<Item?, Error> {
         subject.eraseToAnyPublisher()
     }
     
@@ -39,6 +39,7 @@ class ItemRespository: Repository, ObservableObject {
             strongSelf.cancellable = strongSelf.transport
                 .checkingStatusCode()
                 .send(request: request)
+                .replaceError(with: nil)
                 .sink { completion in
                     switch completion {
                     case .failure(let error): strongSelf.subject.send(completion: .failure(error))
@@ -62,9 +63,10 @@ class ItemRespository: Repository, ObservableObject {
     
     // MARK: - Private methods
     
-    private func updateStoredResponse(_ item: Item) {
+    private func updateStoredResponse(_ item: Item?) {
+        defer { subject.send(item) }
+        guard let item = item else { return }
         cache.write(item, for: item.id)
-        subject.send(item)
     }
     
 }

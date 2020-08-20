@@ -38,7 +38,7 @@ class ItemViewModel: ObservableObject {
     private let itemRepository: ItemRespository
     private let imageRepository: ImageRepository
     private var cancellables: Set<AnyCancellable> = []
-    private var fetchCount = 0
+    private var fetchCount = 0 // remove this and everything related to it
     
     private var viewStateInternal: ViewState = .loading {
         willSet {
@@ -65,7 +65,6 @@ class ItemViewModel: ObservableObject {
     // MARK: - Public methods
     
     func fetch() {
-        fetchCount += 1
         viewStateInternal = .loading
         fetch(itemId)
     }
@@ -78,8 +77,7 @@ class ItemViewModel: ObservableObject {
     // MARK: - Private methods
     
     private func fetch(_ itemId: Int) {
-        let id = fetchCount == 1 ? -100 : itemId
-        itemRepository.fetch(by: id, forceRefresh: false)
+        itemRepository.fetch(by: itemId, forceRefresh: false)
     }
     
     private func handleItemRepository() {
@@ -111,7 +109,11 @@ class ItemViewModel: ObservableObject {
             }.store(in: &cancellables)
     }
     
-    private func handle(item: Item) {
+    private func handle(item: Item?) {
+        guard let item = item else {
+            viewStateInternal = .error
+            return
+        }
         viewStateInternal = .complete
         var score: Int? = nil
         var url: String? = nil
