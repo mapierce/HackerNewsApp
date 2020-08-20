@@ -25,13 +25,7 @@ struct ItemView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if let loadedImage = viewModel.image {
-                loadedImage
-                    .resizable()
-                    .frame(height: Constants.imageFrameHeight)
-            } else {
-                ItemPlaceholderImage()
-            }
+            ItemImageView(image: viewModel.image)
             Spacer()
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
