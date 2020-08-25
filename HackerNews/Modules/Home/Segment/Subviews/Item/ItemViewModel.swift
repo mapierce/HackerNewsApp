@@ -68,12 +68,12 @@ class ItemViewModel: ObservableObject {
     func fetch() {
         viewStateInternal = .loading
         fetch(itemId)
+        tags = []
     }
     
     func cancel() {
         itemRepository.cancel()
         imageRepository.cancel()
-        tags = []
     }
     
     // MARK: - Private methods
