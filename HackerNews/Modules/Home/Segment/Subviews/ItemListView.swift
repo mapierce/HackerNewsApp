@@ -22,10 +22,13 @@ struct ItemListView: View {
         ScrollView {
             LazyVStack {
                 ForEach(itemIds, id: \.self) { id in
-                    ItemView(viewModel: ItemViewModel(itemId: id))
-                        .cornerRadius(Constants.cornerRadius)
-                        .padding()
-                        .shadow(radius: Constants.shadowRadius)
+                    NavigationLink(destination: StoryView(viewModel: StoryViewModel(itemId: id)) ) {
+                        ItemView(viewModel: ItemViewModel(itemId: id))
+                            .cornerRadius(Constants.cornerRadius)
+                            .padding()
+                            .shadow(radius: Constants.shadowRadius)
+                            .foregroundColor(Color.primary)
+                    }
                 }
             }
         }
