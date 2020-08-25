@@ -31,9 +31,11 @@ struct ItemDetailView: View {
             }
             Spacer()
             VStack {
+                Spacer()
                 bookmarkButton
                 Spacer()
                 bellButton
+                Spacer()
             }
             .font(.system(size: Constants.iconSize, weight: .light))
             .foregroundColor(.primary)
