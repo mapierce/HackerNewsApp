@@ -64,6 +64,7 @@
 		34BF61D024CF4EA000236C65 /* story.json in Resources */ = {isa = PBXBuildFile; fileRef = 34BF61CF24CF4EA000236C65 /* story.json */; };
 		34D1374524C8D42B002CA0EC /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D1374424C8D42B002CA0EC /* SegmentedControl.swift */; };
 		34D1374924C8D703002CA0EC /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D1374824C8D703002CA0EC /* SegmentView.swift */; };
+		34EC2E3024F65F7700167A07 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EC2E2F24F65F7700167A07 /* WebView.swift */; };
 		34F354AF24CB3B720090EC9C /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F354AE24CB3B720090EC9C /* Repository.swift */; };
 /* End PBXBuildFile section */
 
@@ -147,6 +148,7 @@
 		34BF61CF24CF4EA000236C65 /* story.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = story.json; sourceTree = "<group>"; };
 		34D1374424C8D42B002CA0EC /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		34D1374824C8D703002CA0EC /* SegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
+		34EC2E2F24F65F7700167A07 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		34F354AE24CB3B720090EC9C /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -428,6 +430,7 @@
 		345750F724F5C36F009718C1 /* Story */ = {
 			isa = PBXGroup;
 			children = (
+				34EC2E2E24F65F6900167A07 /* Subviews */,
 				345750F824F5C388009718C1 /* StoryView.swift */,
 				345750FA24F5C5DF009718C1 /* StoryViewModel.swift */,
 			);
@@ -512,6 +515,14 @@
 				3412743024C8FD180049824D /* SegmentViewModel.swift */,
 			);
 			path = Segment;
+			sourceTree = "<group>";
+		};
+		34EC2E2E24F65F6900167A07 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				34EC2E2F24F65F7700167A07 /* WebView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		34F354AD24CB3B630090EC9C /* Repository & Cache */ = {
@@ -694,6 +705,7 @@
 				34144B2D24C751E50056ABF6 /* HomeView.swift in Sources */,
 				34144B6524C757340056ABF6 /* String+utility.swift in Sources */,
 				3404DCCB24EC63AF00D34ACA /* ItemPlaceholderImage.swift in Sources */,
+				34EC2E3024F65F7700167A07 /* WebView.swift in Sources */,
 				349633EE24C8B1690047CE77 /* ActiveSegmentView.swift in Sources */,
 				3412743124C8FD180049824D /* SegmentViewModel.swift in Sources */,
 				34144B6024C752ED0056ABF6 /* HTTPRequestMethod.swift in Sources */,

@@ -20,6 +20,10 @@ extension URLRequest {
         self = request
     }
     
+    init(string: String) {
+        self = URLRequest(url: URL(string: string)!)
+    }
+    
     private static var baseURL: String {
         return "https://hacker-news.firebaseio.com/v0"
     }
