@@ -16,12 +16,16 @@ struct WebView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
-        webView.load(request)
         webView.addObserver(context.coordinator, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        webView.load(request)
         return webView
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {}
+    
+    static func dismantleUIView(_ uiView: WKWebView, coordinator: Coordinator) {
+        uiView.removeObserver(coordinator, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+    }
     
     func makeCoordinator() -> Coordinator {
         return Coordinator($progress)
