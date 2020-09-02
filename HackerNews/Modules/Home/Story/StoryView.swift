@@ -17,14 +17,20 @@ struct StoryView: View {
             switch viewModel.viewType {
             case .loading: ProgressView()
             case .web(let request):
-                VStack {
-                    ProgressView("", value: stateModel.progress, total: 1)
+                ZStack {
                     WebView(stateModel: stateModel, request: request)
+                    if stateModel.progress < 1 {
+                        VStack {
+                            ProgressView("", value: stateModel.progress, total: 1)
+                            Spacer()
+                        }
+                    }
                 }
             case .native: Text("native")
             case .error: ErrorView { print("retry") }
             }
         }
+        .navigationBarTitle(viewModel.title, displayMode: .inline)
         .onAppear {
             viewModel.fetch()
         }

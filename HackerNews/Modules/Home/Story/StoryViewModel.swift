@@ -26,7 +26,7 @@ class StoryViewModel: ObservableObject {
     }
     
     @Published private(set) var viewType: ViewType = .loading
-    @Published private(set) var title: String?
+    @Published private(set) var title = ""
     private let itemId: Int
     private let itemRepository: ItemRespository
     private var cancellables: Set<AnyCancellable> = []
