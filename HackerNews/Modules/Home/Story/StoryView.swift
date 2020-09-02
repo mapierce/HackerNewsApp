@@ -10,12 +10,17 @@ import SwiftUI
 struct StoryView: View {
     
     @ObservedObject var viewModel: StoryViewModel
+    @State private var progress = 0.0
     
     var body: some View {
         VStack {
             switch viewModel.viewType {
             case .loading: ProgressView()
-            case .web(let request): WebView(request: request)
+            case .web(let request):
+                VStack {
+                    ProgressView("", value: progress, total: 1)
+                    WebView(progress: $progress, request: request)
+                }
             case .native: Text("native")
             case .error: ErrorView { print("retry") }
             }
