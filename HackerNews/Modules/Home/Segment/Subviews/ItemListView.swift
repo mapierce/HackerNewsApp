@@ -22,7 +22,7 @@ struct ItemListView: View {
         ScrollView {
             LazyVStack {
                 ForEach(itemIds, id: \.self) { id in
-                    NavigationLink(destination: StoryView(viewModel: StoryViewModel(itemId: id)) ) {
+                    NavigationLink(destination: StoryView(viewModel: StoryViewModel(itemId: id), stateModel: WebViewStateModel())) {
                         ItemView(viewModel: ItemViewModel(itemId: id))
                             .cornerRadius(Constants.cornerRadius)
                             .padding()

@@ -11,7 +11,7 @@ import SwiftUI
 
 struct WebView: UIViewRepresentable {
     
-    @Binding var progress: Double
+    @ObservedObject var stateModel: WebViewStateModel
     let request: URLRequest
     
     func makeUIView(context: Context) -> WKWebView {
@@ -28,20 +28,25 @@ struct WebView: UIViewRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator($progress)
+        return Coordinator(stateModel: stateModel)
     }
     
     class Coordinator: NSObject {
         
-        var progress: Binding<Double>
+        @ObservedObject var stateModel: WebViewStateModel
         
-        init(_ progress: Binding<Double>) {
-            self.progress = progress
+        init(stateModel: WebViewStateModel) {
+            self.stateModel = stateModel
         }
         
-        override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        override func observeValue(
+            forKeyPath keyPath: String?,
+            of object: Any?,
+            change: [NSKeyValueChangeKey : Any]?,
+            context: UnsafeMutableRawPointer?
+        ) {
             guard keyPath == #keyPath(WKWebView.estimatedProgress), let webView = object as? WKWebView else { return }
-            progress.wrappedValue = webView.estimatedProgress
+            stateModel.progress = webView.estimatedProgress
         }
         
     }

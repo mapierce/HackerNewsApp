@@ -10,7 +10,7 @@ import SwiftUI
 struct StoryView: View {
     
     @ObservedObject var viewModel: StoryViewModel
-    @State private var progress = 0.0
+    @ObservedObject var stateModel: WebViewStateModel
     
     var body: some View {
         VStack {
@@ -18,8 +18,8 @@ struct StoryView: View {
             case .loading: ProgressView()
             case .web(let request):
                 VStack {
-                    ProgressView("", value: progress, total: 1)
-                    WebView(progress: $progress, request: request)
+                    ProgressView("", value: stateModel.progress, total: 1)
+                    WebView(stateModel: stateModel, request: request)
                 }
             case .native: Text("native")
             case .error: ErrorView { print("retry") }
@@ -41,7 +41,7 @@ struct StoryView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         
         var body: some View {
-            StoryView(viewModel: StoryViewModel(itemId: 8863, itemRepository: setupRepository()))
+            StoryView(viewModel: StoryViewModel(itemId: 8863, itemRepository: setupRepository()), stateModel: WebViewStateModel())
         }
         
         func setupRepository() -> ItemRespository {
