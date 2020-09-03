@@ -22,6 +22,7 @@ struct StoryView: View {
                     if stateModel.progress < 1 {
                         VStack {
                             ProgressView("", value: stateModel.progress, total: 1)
+                                .offset(y: -18.0)
                             Spacer()
                         }
                     }
@@ -30,6 +31,7 @@ struct StoryView: View {
             case .error: ErrorView { print("retry") }
             }
         }
+        .edgesIgnoringSafeArea(.bottom)
         .navigationBarTitle(viewModel.title, displayMode: .inline)
         .onAppear {
             viewModel.fetch()
