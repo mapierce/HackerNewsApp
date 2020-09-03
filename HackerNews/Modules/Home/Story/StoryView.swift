@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Snap
 
 struct StoryView: View {
     
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @ObservedObject var viewModel: StoryViewModel
     @ObservedObject var stateModel: WebViewStateModel
     
@@ -26,13 +28,25 @@ struct StoryView: View {
                             Spacer()
                         }
                     }
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            BurgerButton {
+                                print("Tapped")
+                            }
+                            .frame(width: 50, height: 50)
+                            Spacer().frame(width: 16)
+                        }
+                        Spacer().frame(height: 16)
+                    }
                 }
             case .native: Text("native")
             case .error: ErrorView { print("retry") }
             }
         }
-        .edgesIgnoringSafeArea(.bottom)
-        .navigationBarTitle(viewModel.title, displayMode: .inline)
+        .edgesIgnoringSafeArea(.all)
+        .navigationBarHidden(true)
         .onAppear {
             viewModel.fetch()
         }

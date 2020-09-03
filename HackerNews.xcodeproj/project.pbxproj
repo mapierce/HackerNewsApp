@@ -50,9 +50,9 @@
 		345750FB24F5C5DF009718C1 /* StoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345750FA24F5C5DF009718C1 /* StoryViewModel.swift */; };
 		3457DB0624D334F6009D616F /* ImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3457DB0524D334F6009D616F /* ImageError.swift */; };
 		345A0ECB24DB6B0000AA695C /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 345A0ECA24DB6B0000AA695C /* SwiftSoup */; };
+		3463DA6E2501A10200C3F25C /* BurgerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3463DA6D2501A10200C3F25C /* BurgerButton.swift */; };
 		34748FF624D1EA330053BB22 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34748FF524D1EA330053BB22 /* ImageRepository.swift */; };
 		34871629250157FB0005B6E7 /* Snap in Frameworks */ = {isa = PBXBuildFile; productRef = 34871628250157FB0005B6E7 /* Snap */; };
-		3487162D2501588B0005B6E7 /* FloatingTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3487162C2501588B0005B6E7 /* FloatingTabBar.swift */; };
 		349633EB24C8A70D0047CE77 /* View+utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633EA24C8A70D0047CE77 /* View+utility.swift */; };
 		349633EE24C8B1690047CE77 /* ActiveSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633ED24C8B1690047CE77 /* ActiveSegmentView.swift */; };
 		349633F124C8B2340047CE77 /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633F024C8B2340047CE77 /* SizePreferenceKey.swift */; };
@@ -137,8 +137,8 @@
 		345750F824F5C388009718C1 /* StoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryView.swift; sourceTree = "<group>"; };
 		345750FA24F5C5DF009718C1 /* StoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewModel.swift; sourceTree = "<group>"; };
 		3457DB0524D334F6009D616F /* ImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageError.swift; sourceTree = "<group>"; };
+		3463DA6D2501A10200C3F25C /* BurgerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurgerButton.swift; sourceTree = "<group>"; };
 		34748FF524D1EA330053BB22 /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
-		3487162C2501588B0005B6E7 /* FloatingTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingTabBar.swift; sourceTree = "<group>"; };
 		349633EA24C8A70D0047CE77 /* View+utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+utility.swift"; sourceTree = "<group>"; };
 		349633ED24C8B1690047CE77 /* ActiveSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSegmentView.swift; sourceTree = "<group>"; };
 		349633F024C8B2340047CE77 /* SizePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferenceKey.swift; sourceTree = "<group>"; };
@@ -452,12 +452,12 @@
 			path = "Web View";
 			sourceTree = "<group>";
 		};
-		3487162B250158700005B6E7 /* Floating Tab Bar */ = {
+		3487162B250158700005B6E7 /* Burger Button */ = {
 			isa = PBXGroup;
 			children = (
-				3487162C2501588B0005B6E7 /* FloatingTabBar.swift */,
+				3463DA6D2501A10200C3F25C /* BurgerButton.swift */,
 			);
-			path = "Floating Tab Bar";
+			path = "Burger Button";
 			sourceTree = "<group>";
 		};
 		348B756A24C768A300936B63 /* Home */ = {
@@ -543,7 +543,7 @@
 		34EC2E2E24F65F6900167A07 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				3487162B250158700005B6E7 /* Floating Tab Bar */,
+				3487162B250158700005B6E7 /* Burger Button */,
 				3487162A2501586A0005B6E7 /* Web View */,
 			);
 			path = Subviews;
@@ -732,6 +732,7 @@
 				34144B2D24C751E50056ABF6 /* HomeView.swift in Sources */,
 				34144B6524C757340056ABF6 /* String+utility.swift in Sources */,
 				3404DCCB24EC63AF00D34ACA /* ItemPlaceholderImage.swift in Sources */,
+				3463DA6E2501A10200C3F25C /* BurgerButton.swift in Sources */,
 				34EC2E3024F65F7700167A07 /* WebView.swift in Sources */,
 				349633EE24C8B1690047CE77 /* ActiveSegmentView.swift in Sources */,
 				3412743124C8FD180049824D /* SegmentViewModel.swift in Sources */,
@@ -746,7 +747,6 @@
 				3434206924EEDDDC00905CC5 /* ItemListView.swift in Sources */,
 				34144B6E24C7583F0056ABF6 /* NetworkError.swift in Sources */,
 				34144B2B24C751E50056ABF6 /* HackerNewsApp.swift in Sources */,
-				3487162D2501588B0005B6E7 /* FloatingTabBar.swift in Sources */,
 				340D031624CB305F000A128C /* ItemInterface.swift in Sources */,
 				34BF61C924CF47A700236C65 /* ItemCache.swift in Sources */,
 				34144B6B24C758130056ABF6 /* Transport.swift in Sources */,
