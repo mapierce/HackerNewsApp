@@ -51,6 +51,8 @@
 		3457DB0624D334F6009D616F /* ImageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3457DB0524D334F6009D616F /* ImageError.swift */; };
 		345A0ECB24DB6B0000AA695C /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 345A0ECA24DB6B0000AA695C /* SwiftSoup */; };
 		34748FF624D1EA330053BB22 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34748FF524D1EA330053BB22 /* ImageRepository.swift */; };
+		34871629250157FB0005B6E7 /* Snap in Frameworks */ = {isa = PBXBuildFile; productRef = 34871628250157FB0005B6E7 /* Snap */; };
+		3487162D2501588B0005B6E7 /* FloatingTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3487162C2501588B0005B6E7 /* FloatingTabBar.swift */; };
 		349633EB24C8A70D0047CE77 /* View+utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633EA24C8A70D0047CE77 /* View+utility.swift */; };
 		349633EE24C8B1690047CE77 /* ActiveSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633ED24C8B1690047CE77 /* ActiveSegmentView.swift */; };
 		349633F124C8B2340047CE77 /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349633F024C8B2340047CE77 /* SizePreferenceKey.swift */; };
@@ -136,6 +138,7 @@
 		345750FA24F5C5DF009718C1 /* StoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewModel.swift; sourceTree = "<group>"; };
 		3457DB0524D334F6009D616F /* ImageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageError.swift; sourceTree = "<group>"; };
 		34748FF524D1EA330053BB22 /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
+		3487162C2501588B0005B6E7 /* FloatingTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingTabBar.swift; sourceTree = "<group>"; };
 		349633EA24C8A70D0047CE77 /* View+utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+utility.swift"; sourceTree = "<group>"; };
 		349633ED24C8B1690047CE77 /* ActiveSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSegmentView.swift; sourceTree = "<group>"; };
 		349633F024C8B2340047CE77 /* SizePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferenceKey.swift; sourceTree = "<group>"; };
@@ -159,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34871629250157FB0005B6E7 /* Snap in Frameworks */,
 				345A0ECB24DB6B0000AA695C /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,6 +443,23 @@
 			path = Story;
 			sourceTree = "<group>";
 		};
+		3487162A2501586A0005B6E7 /* Web View */ = {
+			isa = PBXGroup;
+			children = (
+				34EC2E2F24F65F7700167A07 /* WebView.swift */,
+				34345A922500540A008B4217 /* WebViewStateModel.swift */,
+			);
+			path = "Web View";
+			sourceTree = "<group>";
+		};
+		3487162B250158700005B6E7 /* Floating Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
+				3487162C2501588B0005B6E7 /* FloatingTabBar.swift */,
+			);
+			path = "Floating Tab Bar";
+			sourceTree = "<group>";
+		};
 		348B756A24C768A300936B63 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,8 +543,8 @@
 		34EC2E2E24F65F6900167A07 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				34EC2E2F24F65F7700167A07 /* WebView.swift */,
-				34345A922500540A008B4217 /* WebViewStateModel.swift */,
+				3487162B250158700005B6E7 /* Floating Tab Bar */,
+				3487162A2501586A0005B6E7 /* Web View */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -557,6 +578,7 @@
 			name = HackerNews;
 			packageProductDependencies = (
 				345A0ECA24DB6B0000AA695C /* SwiftSoup */,
+				34871628250157FB0005B6E7 /* Snap */,
 			);
 			productName = HackerNews;
 			productReference = 34144B2724C751E50056ABF6 /* HackerNews.app */;
@@ -631,6 +653,7 @@
 			mainGroup = 34144B1E24C751E50056ABF6;
 			packageReferences = (
 				345A0EC924DB6B0000AA695C /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				34871627250157FB0005B6E7 /* XCRemoteSwiftPackageReference "Snap" */,
 			);
 			productRefGroup = 34144B2824C751E50056ABF6 /* Products */;
 			projectDirPath = "";
@@ -723,6 +746,7 @@
 				3434206924EEDDDC00905CC5 /* ItemListView.swift in Sources */,
 				34144B6E24C7583F0056ABF6 /* NetworkError.swift in Sources */,
 				34144B2B24C751E50056ABF6 /* HackerNewsApp.swift in Sources */,
+				3487162D2501588B0005B6E7 /* FloatingTabBar.swift in Sources */,
 				340D031624CB305F000A128C /* ItemInterface.swift in Sources */,
 				34BF61C924CF47A700236C65 /* ItemCache.swift in Sources */,
 				34144B6B24C758130056ABF6 /* Transport.swift in Sources */,
@@ -1058,6 +1082,14 @@
 				minimumVersion = 2.3.2;
 			};
 		};
+		34871627250157FB0005B6E7 /* XCRemoteSwiftPackageReference "Snap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nerdsupremacist/Snap";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1065,6 +1097,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 345A0EC924DB6B0000AA695C /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
+		};
+		34871628250157FB0005B6E7 /* Snap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 34871627250157FB0005B6E7 /* XCRemoteSwiftPackageReference "Snap" */;
+			productName = Snap;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
