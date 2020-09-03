@@ -13,6 +13,7 @@ struct StoryView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @ObservedObject var viewModel: StoryViewModel
     @ObservedObject var stateModel: WebViewStateModel
+    @State private var showMenu = false
     
     var body: some View {
         VStack {
@@ -32,10 +33,21 @@ struct StoryView: View {
                         Spacer()
                         HStack {
                             Spacer()
-                            BurgerButton {
-                                print("Tapped")
+                            ZStack {
+                                ForEach(0..<MenuButtonItem.allCases.count) { index in
+                                    MenuButton(systemImageName: MenuButtonItem.allCases[index].rawValue) {
+                                        viewModel.handle(button: MenuButtonItem.allCases[index])
+                                    }
+                                    .frame(width: 40, height: 40)
+                                    .offset(x: showMenu ? CGFloat((-50 * (index + 1))) : 0)
+                                }
+                                BurgerButton {
+                                    withAnimation {
+                                        showMenu.toggle()
+                                    }
+                                }
+                                .frame(width: 40, height: 40)
                             }
-                            .frame(width: 50, height: 50)
                             Spacer().frame(width: 16)
                         }
                         Spacer().frame(height: 16)

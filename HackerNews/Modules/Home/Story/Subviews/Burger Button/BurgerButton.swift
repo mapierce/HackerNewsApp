@@ -18,7 +18,9 @@ struct BurgerButton: View {
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                Circle().fill(Color("orangeColor"))
+                Circle()
+                    .fill(Color("orangeColor"))
+                    .shadow(radius: 3)
                 VStack(alignment: .center, spacing: 0) {
                     Line(size: geo.size)
                         .offset(y: collapse ? geo.size.height * 0.18 : 0)

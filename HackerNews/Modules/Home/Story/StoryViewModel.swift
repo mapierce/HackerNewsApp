@@ -15,6 +15,15 @@ enum ViewType {
     case error
 }
 
+enum MenuButtonItem: String, CaseIterable {
+    case reload = "arrow.clockwise"
+    case forwards = "chevron.right"
+    case back = "chevron.left"
+    case reminder = "bell"
+    case bookmark
+    case home = "house"
+}
+
 class StoryViewModel: ObservableObject {
     
     private struct Constants {
@@ -51,6 +60,17 @@ class StoryViewModel: ObservableObject {
     
     func fetch() {
         itemRepository.fetch(by: itemId)
+    }
+    
+    func handle(button: MenuButtonItem) {
+        switch button {
+        case .home: print("home")
+        case .bookmark: print("bookmark")
+        case .reminder: print("reminder")
+        case .back: print("back")
+        case .forwards: print("forwards")
+        case .reload: print("reload")
+        }
     }
     
     // MARK: - Private methods
