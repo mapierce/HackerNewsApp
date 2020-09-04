@@ -38,7 +38,11 @@ struct StoryView: View {
                             Spacer()
                             ZStack {
                                 ForEach(0..<MenuButtonItem.allCases.count) { index in
-                                    MenuButton(systemImageName: MenuButtonItem.allCases[index].rawValue, showMenu: $showMenu) {
+                                    MenuButton(
+                                        systemImageName: MenuButtonItem.allCases[index].rawValue,
+                                        showMenu: $showMenu,
+                                        enabled: configure(enabled: MenuButtonItem.allCases[index])
+                                    ) {
                                         handle(button: MenuButtonItem.allCases[index])
                                     }
                                     .frame(width: 40, height: 40)
@@ -73,9 +77,17 @@ struct StoryView: View {
         case .home: mode.wrappedValue.dismiss()
         case .bookmark: return
         case .reminder: return
-        case .back: return
-        case .forwards: return
-        case .reload: return
+        case .back: stateModel.goBack.toggle()
+        case .forwards: stateModel.goForwards.toggle()
+        case .reload: stateModel.reload.toggle()
+        }
+    }
+    
+    private func configure(enabled item: MenuButtonItem) -> Bool {
+        switch item {
+        case .back: return stateModel.canGoBack
+        case .forwards: return stateModel.canGoForwards
+        default: return true
         }
     }
     
