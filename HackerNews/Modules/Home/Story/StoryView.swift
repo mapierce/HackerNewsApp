@@ -10,13 +10,8 @@ import Snap
 
 struct StoryView: View {
     
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @ObservedObject var viewModel: StoryViewModel
-    @ObservedObject var stateModel: WebViewStateModel
-    @State private var showMenu = false
-    private var menuClicked: Bool {
-        return showMenu
-    }
+    @ObservedObject var webStateModel: WebViewStateModel
     
     var body: some View {
         VStack {
@@ -24,42 +19,15 @@ struct StoryView: View {
             case .loading: ProgressView()
             case .web(let request):
                 ZStack {
-                    WebView(stateModel: stateModel, request: request)
-                    if stateModel.progress < 1 {
+                    WebView(stateModel: webStateModel, request: request)
+                    if webStateModel.progress < 1 {
                         VStack {
-                            ProgressView("", value: stateModel.progress, total: 1)
+                            ProgressView("", value: webStateModel.progress, total: 1)
                                 .offset(y: -18.0)
                             Spacer()
                         }
                     }
-                    VStack {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            ZStack {
-                                ForEach(0..<MenuButtonItem.allCases.count) { index in
-                                    MenuButton(
-                                        systemImageName: MenuButtonItem.allCases[index].rawValue,
-                                        showMenu: $showMenu,
-                                        enabled: configure(enabled: MenuButtonItem.allCases[index])
-                                    ) {
-                                        handle(button: MenuButtonItem.allCases[index])
-                                    }
-                                    .frame(width: 40, height: 40)
-                                    .offset(x: showMenu ? CGFloat((-50 * (index + 1))) : 0)
-                                    
-                                }
-                                BurgerButton {
-                                    withAnimation {
-                                        showMenu.toggle()
-                                    }
-                                }
-                                .frame(width: 40, height: 40)
-                            }
-                            Spacer().frame(width: 16)
-                        }
-                        Spacer().frame(height: 16)
-                    }
+                    Menu(webStateModel: webStateModel)
                 }
             case .native: Text("native")
             case .error: ErrorView { print("retry") }
@@ -71,26 +39,6 @@ struct StoryView: View {
             viewModel.fetch()
         }
     }
-    
-    private func handle(button: MenuButtonItem) {
-        switch button {
-        case .home: mode.wrappedValue.dismiss()
-        case .bookmark: return
-        case .reminder: return
-        case .back: stateModel.goBack.toggle()
-        case .forwards: stateModel.goForwards.toggle()
-        case .reload: stateModel.reload.toggle()
-        }
-    }
-    
-    private func configure(enabled item: MenuButtonItem) -> Bool {
-        switch item {
-        case .back: return stateModel.canGoBack
-        case .forwards: return stateModel.canGoForwards
-        default: return true
-        }
-    }
-    
 }
 
 struct StoryView_Previews: PreviewProvider {
@@ -102,7 +50,7 @@ struct StoryView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         
         var body: some View {
-            StoryView(viewModel: StoryViewModel(itemId: 8863, itemRepository: setupRepository()), stateModel: WebViewStateModel())
+            StoryView(viewModel: StoryViewModel(itemId: 8863, itemRepository: setupRepository()), webStateModel: WebViewStateModel())
         }
         
         func setupRepository() -> ItemRespository {

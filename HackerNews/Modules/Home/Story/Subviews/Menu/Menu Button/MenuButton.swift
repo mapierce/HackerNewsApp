@@ -20,6 +20,7 @@ struct MenuButton: View {
                 Circle()
                     .background(Circle().foregroundColor(Color.white))
                     .shadow(color: Color.gray.opacity(showMenu ? 0.5 : 0), radius: 3)
+                    .opacity(enabled ? 1 : 0.7)
                 Image(systemName: systemImageName)
                     .font(.title2)
                     .foregroundColor(enabled ? Color("orangeColor") : Color.gray)
