@@ -62,17 +62,6 @@ class StoryViewModel: ObservableObject {
         itemRepository.fetch(by: itemId)
     }
     
-    func handle(button: MenuButtonItem) {
-        switch button {
-        case .home: print("home")
-        case .bookmark: print("bookmark")
-        case .reminder: print("reminder")
-        case .back: print("back")
-        case .forwards: print("forwards")
-        case .reload: print("reload")
-        }
-    }
-    
     // MARK: - Private methods
     
     private func handleItemRepository() {

@@ -39,7 +39,7 @@ struct StoryView: View {
                             ZStack {
                                 ForEach(0..<MenuButtonItem.allCases.count) { index in
                                     MenuButton(systemImageName: MenuButtonItem.allCases[index].rawValue, showMenu: $showMenu) {
-                                        viewModel.handle(button: MenuButtonItem.allCases[index])
+                                        handle(button: MenuButtonItem.allCases[index])
                                     }
                                     .frame(width: 40, height: 40)
                                     .offset(x: showMenu ? CGFloat((-50 * (index + 1))) : 0)
@@ -65,6 +65,17 @@ struct StoryView: View {
         .navigationBarHidden(true)
         .onAppear {
             viewModel.fetch()
+        }
+    }
+    
+    private func handle(button: MenuButtonItem) {
+        switch button {
+        case .home: mode.wrappedValue.dismiss()
+        case .bookmark: return
+        case .reminder: return
+        case .back: return
+        case .forwards: return
+        case .reload: return
         }
     }
     
