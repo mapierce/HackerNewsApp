@@ -82,7 +82,9 @@ struct WebView: UIViewRepresentable {
         ) {
             guard let webView = object as? WKWebView else { return }
             if keyPath == Constants.estimatedProgress {
-                stateModel.progress = webView.estimatedProgress
+                withAnimation {
+                    stateModel.progress = webView.estimatedProgress
+                }
             } else if keyPath == Constants.canGoBack {
                 stateModel.canGoBack = webView.canGoBack
             } else if keyPath == Constants.canGoForward {

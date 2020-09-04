@@ -20,20 +20,14 @@ struct StoryView: View {
             case .web(let request):
                 ZStack {
                     WebView(stateModel: webStateModel, request: request)
-                    if webStateModel.progress < 1 {
-                        VStack {
-                            ProgressView("", value: webStateModel.progress, total: 1)
-                                .offset(y: -18.0)
-                            Spacer()
-                        }
-                    }
+                        .edgesIgnoringSafeArea(.all)
+                    Loader(webStateModel: webStateModel)
                     Menu(webStateModel: webStateModel)
                 }
             case .native: Text("native")
             case .error: ErrorView { print("retry") }
             }
         }
-        .edgesIgnoringSafeArea(.all)
         .navigationBarHidden(true)
         .onAppear {
             viewModel.fetch()
