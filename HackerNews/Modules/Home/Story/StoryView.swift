@@ -14,6 +14,9 @@ struct StoryView: View {
     @ObservedObject var viewModel: StoryViewModel
     @ObservedObject var stateModel: WebViewStateModel
     @State private var showMenu = false
+    private var menuClicked: Bool {
+        return showMenu
+    }
     
     var body: some View {
         VStack {
@@ -35,11 +38,12 @@ struct StoryView: View {
                             Spacer()
                             ZStack {
                                 ForEach(0..<MenuButtonItem.allCases.count) { index in
-                                    MenuButton(systemImageName: MenuButtonItem.allCases[index].rawValue) {
+                                    MenuButton(systemImageName: MenuButtonItem.allCases[index].rawValue, showMenu: $showMenu) {
                                         viewModel.handle(button: MenuButtonItem.allCases[index])
                                     }
                                     .frame(width: 40, height: 40)
                                     .offset(x: showMenu ? CGFloat((-50 * (index + 1))) : 0)
+                                    
                                 }
                                 BurgerButton {
                                     withAnimation {
