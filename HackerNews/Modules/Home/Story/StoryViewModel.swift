@@ -15,15 +15,6 @@ enum ViewType {
     case error
 }
 
-enum MenuButtonItem: String, CaseIterable {
-    case reload = "arrow.clockwise"
-    case forwards = "chevron.right"
-    case back = "chevron.left"
-    case reminder = "bell"
-    case bookmark
-    case home = "house"
-}
-
 class StoryViewModel: ObservableObject {
     
     private struct Constants {
