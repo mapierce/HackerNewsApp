@@ -25,7 +25,9 @@ struct Loader: View {
                         .frame(height: 0)
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: Constants.height / 2)
+                            .fill(Color.white)
                             .frame(height: Constants.height)
+                            .shadow(radius: 3)
                         RoundedRectangle(cornerRadius: Constants.height / 2)
                             .fill(Color.green)
                             .frame(width: CGFloat(Double(geo.size.width) * webStateModel.progress), height: Constants.height)
@@ -36,7 +38,6 @@ struct Loader: View {
                             .offset(x: Constants.height / 2)
                     }
                     .padding(.horizontal)
-                    .shadow(radius: 3)
                     Spacer()
                 }
             }
