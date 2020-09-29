@@ -22,7 +22,7 @@ struct CommentListView: View {
                         .fontWeight(.bold)
                     Spacer()
                 }
-                .padding()s
+                .padding()
                 if let commentIds = viewModel.commentIds {
                     ScrollView {
                         LazyVStack {
