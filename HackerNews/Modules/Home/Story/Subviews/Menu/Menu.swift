@@ -15,6 +15,7 @@ struct Menu: View {
         static let smallButtonSize: CGFloat = 40
         static let bigButtonSize: CGFloat = 50
         static let doubleWidth: CGFloat = 16
+        static let quadrupleSpacing: CGFloat = 32
         static let singleOffset = -50
         static let largeOffset: CGFloat = -60
         
@@ -55,7 +56,7 @@ struct Menu: View {
                 }
                 Spacer().frame(width: Constants.doubleWidth)
             }
-            Spacer().frame(height: Constants.doubleWidth)
+            Spacer().frame(height: Constants.quadrupleSpacing)
         }
     }
     

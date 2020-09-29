@@ -12,6 +12,7 @@ struct StoryView: View {
     
     @ObservedObject var viewModel: StoryViewModel
     @ObservedObject var webStateModel: WebViewStateModel
+    @State private var drawerState: AppleMapsSnapState = .tiny
     
     var body: some View {
         VStack {
@@ -22,6 +23,7 @@ struct StoryView: View {
                     WebView(stateModel: webStateModel, request: request)
                         .edgesIgnoringSafeArea(.all)
                     Loader(webStateModel: webStateModel)
+                    CommentListView(viewModel: CommentListViewModel(commentIds: viewModel.commentIds))
                     Menu(webStateModel: webStateModel)
                 }
             case .native: Text("native")

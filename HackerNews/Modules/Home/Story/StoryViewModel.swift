@@ -27,6 +27,7 @@ class StoryViewModel: ObservableObject {
     
     @Published private(set) var viewType: ViewType = .loading
     @Published private(set) var title = ""
+    @Published private(set) var commentIds: [Int]? = nil
     private let itemId: Int
     private let itemRepository: ItemRespository
     private var cancellables: Set<AnyCancellable> = []
@@ -74,6 +75,7 @@ class StoryViewModel: ObservableObject {
             viewTypeInternal = .error
             return
         }
+        commentIds = item.kids
         switch item {
         case .story(let storyItem):
             if let url = storyItem.url {
