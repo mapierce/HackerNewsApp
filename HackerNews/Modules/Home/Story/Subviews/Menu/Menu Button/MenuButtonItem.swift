@@ -13,5 +13,4 @@ enum MenuButtonItem: String, CaseIterable {
     case back = "chevron.left"
     case reminder = "bell"
     case bookmark
-    case home = "house"
 }

@@ -11,9 +11,12 @@ struct Menu: View {
     
     private struct Constants {
         
-        static let buttonSize: CGFloat = 40
+        static let houseImageName = "house"
+        static let smallButtonSize: CGFloat = 40
+        static let bigButtonSize: CGFloat = 50
         static let doubleWidth: CGFloat = 16
         static let singleOffset = -50
+        static let largeOffset: CGFloat = -60
         
     }
     
@@ -27,6 +30,11 @@ struct Menu: View {
             HStack {
                 Spacer()
                 ZStack {
+                    MenuButton(systemImageName: Constants.houseImageName, showMenu: Binding.constant(true), enabled: true) {
+                        mode.wrappedValue.dismiss()
+                    }
+                    .frame(width: Constants.bigButtonSize, height: Constants.bigButtonSize)
+                    .offset(y: showMenu ? CGFloat(Constants.singleOffset * (MenuButtonItem.allCases.count + 1)) : Constants.largeOffset)
                     ForEach(0..<MenuButtonItem.allCases.count) { index in
                         MenuButton(
                             systemImageName: MenuButtonItem.allCases[index].rawValue,
@@ -35,16 +43,15 @@ struct Menu: View {
                         ) {
                             handle(button: MenuButtonItem.allCases[index])
                         }
-                        .frame(width: Constants.buttonSize, height: Constants.buttonSize)
-                        .offset(x: showMenu ? CGFloat((Constants.singleOffset * (index + 1))) : 0)
-                        
+                        .frame(width: Constants.smallButtonSize, height: Constants.smallButtonSize)
+                        .offset(y: showMenu ? CGFloat(Constants.singleOffset * (index + 1)) : 0)
                     }
                     BurgerButton {
                         withAnimation {
                             showMenu.toggle()
                         }
                     }
-                    .frame(width: Constants.buttonSize, height: Constants.buttonSize)
+                    .frame(width: Constants.bigButtonSize, height: Constants.bigButtonSize)
                 }
                 Spacer().frame(width: Constants.doubleWidth)
             }
@@ -64,7 +71,6 @@ struct Menu: View {
     
     private func handle(button: MenuButtonItem) {
         switch button {
-        case .home: mode.wrappedValue.dismiss()
         case .back: webStateModel.goBack.toggle()
         case .forwards: webStateModel.goForwards.toggle()
         case .reload: webStateModel.reload.toggle()
