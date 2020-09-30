@@ -13,6 +13,8 @@ struct Loader: View {
         
         static let height: CGFloat = 20
         static let quadrupleSpace: CGFloat = 32
+        static let loadingText = "Loading..."
+        static let loadingTextColor = "loadingGrey"
         
     }
     
@@ -32,10 +34,10 @@ struct Loader: View {
                         RoundedRectangle(cornerRadius: Constants.height / 2)
                             .fill(Color.green)
                             .frame(width: CGFloat(Double(geo.size.width) * webStateModel.progress), height: Constants.height)
-                        Text("Loading...")
+                        Text(Constants.loadingText)
                             .font(.subheadline)
                             .fontWeight(.bold)
-                            .foregroundColor(Color("loadingGrey"))
+                            .foregroundColor(Color(Constants.loadingTextColor))
                             .offset(x: Constants.height / 2)
                     }
                     .padding(.horizontal)
