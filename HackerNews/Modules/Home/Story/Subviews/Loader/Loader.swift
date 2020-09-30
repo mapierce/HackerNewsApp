@@ -12,6 +12,7 @@ struct Loader: View {
     private struct Constants {
         
         static let height: CGFloat = 20
+        static let quadrupleSpace: CGFloat = 32
         
     }
     
@@ -22,7 +23,7 @@ struct Loader: View {
             if webStateModel.progress < 1 {
                 VStack {
                     Spacer()
-                        .frame(height: 0)
+                        .frame(height: Constants.quadrupleSpace)
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: Constants.height / 2)
                             .fill(Color.white)
