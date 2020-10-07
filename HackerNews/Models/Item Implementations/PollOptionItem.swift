@@ -18,6 +18,11 @@ struct PollOptionItem: ItemInterface {
     let kids: [Int]?
     let parent: Int?
     let score: Int?
+    let title: String = "Poll Option" 
+    
+    var tags: [TagTypes] {
+        return (dead ?? false) ? [.dead] : []
+    }
     
     private enum CodingKeys: String, CodingKey {
         case id, deleted, by, time, dead, kids, parent, score

@@ -18,8 +18,12 @@ struct StoryItem: ItemInterface {
     let kids: [Int]?
     let descendants: Int?
     let score: Int?
-    let title: String?
+    let title: String
     let url: String?
+    
+    var tags: [TagTypes] {
+        return (dead ?? false) ? [.dead] : []
+    }
     
     private enum CodingKeys: String, CodingKey {
         case id, deleted, by, time, dead, kids, descendants, score, title, url
@@ -35,7 +39,7 @@ struct StoryItem: ItemInterface {
         kids = try container.decodeIfPresent([Int].self, forKey: .kids)
         descendants = try container.decodeIfPresent(Int.self, forKey: .descendants)
         score = try container.decodeIfPresent(Int.self, forKey: .score)
-        title = try container.decodeIfPresent(String.self, forKey: .title)
+        title = try container.decodeIfPresent(String.self, forKey: .title) ?? "HackerNews: Story"
         url = try container.decodeIfPresent(String.self, forKey: .url)
     }
     

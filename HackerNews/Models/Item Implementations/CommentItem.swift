@@ -18,6 +18,12 @@ struct CommentItem: ItemInterface {
     let kids: [Int]?
     let parent: Int?
     let text: String?
+    let title: String = "Comment"
+    let score: Int? = nil
+    
+    var tags: [TagTypes] {
+        return (dead ?? false) ? [.dead] : []
+    }
     
     private enum CodingKeys: String, CodingKey {
         case id, deleted, by, time, dead, kids, parent, text

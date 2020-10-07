@@ -18,7 +18,12 @@ struct JobItem: ItemInterface {
     let kids: [Int]?
     let text: String?
     let url: String?
-    let title: String?
+    let title: String
+    let score: Int? = nil
+    
+    var tags: [TagTypes] {
+        return (dead ?? false) ? [.dead, .job] : [.job]
+    }
     
     private enum CodingKeys: String, CodingKey {
         case id, deleted, by, time, dead, kids, text, url, title
@@ -34,7 +39,7 @@ struct JobItem: ItemInterface {
         kids = try container.decodeIfPresent([Int].self, forKey: .kids)
         text = try container.decodeIfPresent(String.self, forKey: .text)
         url = try container.decodeIfPresent(String.self, forKey: .url)
-        title = try container.decodeIfPresent(String.self, forKey: .title)
+        title = try container.decodeIfPresent(String.self, forKey: .title) ?? "HackerNews: Job"
     }
     
 }

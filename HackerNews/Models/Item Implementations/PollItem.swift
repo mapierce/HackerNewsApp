@@ -19,8 +19,12 @@ struct PollItem: ItemInterface {
     let parts: [Int]?
     let descendants: Int?
     let score: Int?
-    let title: String?
+    let title: String
     let text: String?
+    
+    var tags: [TagTypes] {
+        return (dead ?? false) ? [.dead, .poll] : [.poll]
+    }
     
     private enum CodingKeys: String, CodingKey {
         case id, deleted, by, time, dead, kids, parts, descendants, score, title, text
@@ -37,7 +41,7 @@ struct PollItem: ItemInterface {
         parts = try container.decode([Int]?.self, forKey: .parts)
         descendants = try container.decodeIfPresent(Int.self, forKey: .descendants)
         score = try container.decodeIfPresent(Int.self, forKey: .score)
-        title = try container.decodeIfPresent(String.self, forKey: .title)
+        title = try container.decodeIfPresent(String.self, forKey: .title) ?? "HackerNews: Poll"
         text = try container.decodeIfPresent(String.self, forKey: .text)
     }
     

@@ -16,5 +16,8 @@ protocol ItemInterface: Decodable {
     var time: Int? { get }
     var dead: Bool? { get }
     var kids: [Int]? { get }
-
+    var title: String { get }
+    var tags: [TagTypes] { get }
+    var score: Int? { get }
+    
 }
