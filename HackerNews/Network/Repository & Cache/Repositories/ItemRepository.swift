@@ -10,12 +10,12 @@ import Combine
 
 class ItemRespository: Repository, ObservableObject {
     
-    private let subject = PassthroughSubject<Item?, Error>()
+    private let subject = PassthroughSubject<(id: Int, value: Item?), Never>()
     private let transport: Transport
     private let cache: ItemCache
-    private var cancellable: AnyCancellable?
+    private var cancellables: [Int: AnyCancellable] = [:]
     
-    var publisher: AnyPublisher<Item?, Error> {
+    var publisher: AnyPublisher<(id: Int, value: Item?), Never> {
         subject.eraseToAnyPublisher()
     }
     
@@ -29,26 +29,18 @@ class ItemRespository: Repository, ObservableObject {
     // MARK: - Repository methods
     
     func fetch(by identifier: Int, forceRefresh: Bool = false) {
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let strongSelf = self else { return }
-            if let existingItem = strongSelf.cache.read(id: identifier) {
-                strongSelf.subject.send(existingItem)
-                return
-            }
-            let request = URLRequest(path: Path.item.rawValue.format(identifier))
-            strongSelf.cancellable = strongSelf.transport
-                .checkingStatusCode()
-                .send(request: request)
-                .replaceError(with: nil)
-                .sink { completion in
-                    switch completion {
-                    case .failure(let error): strongSelf.subject.send(completion: .failure(error))
-                    case .finished: break
-                    }
-                } receiveValue: { response in
-                    strongSelf.updateStoredResponse(response)
-                }
+        if let existingItem = cache.read(id: identifier) {
+            subject.send((identifier, existingItem))
+            return
         }
+        let request = URLRequest(path: Path.item.rawValue.format(identifier))
+        cancellables[identifier] = transport
+            .checkingStatusCode()
+            .send(request: request)
+            .replaceError(with: nil)
+            .sink(receiveValue: { [weak self] response in
+                self?.updateStoredResponse(for: identifier, item: response)
+            })
     }
     
     func clearCache() {
@@ -57,14 +49,15 @@ class ItemRespository: Repository, ObservableObject {
     
     // MARK: - Public methods
     
-    func cancel() {
-        cancellable?.cancel()
+    func cancel(by identifier: Int) {
+        guard let cancellable = cancellables[identifier] else { return }
+        cancellable.cancel()
     }
     
     // MARK: - Private methods
     
-    private func updateStoredResponse(_ item: Item?) {
-        defer { subject.send(item) }
+    private func updateStoredResponse(for identifier: Int, item: Item?) {
+        defer { subject.send((identifier, item)) }
         guard let item = item else { return }
         cache.write(item, for: item.id)
     }

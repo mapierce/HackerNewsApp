@@ -13,7 +13,7 @@ protocol Repository {
     associatedtype RepositoryItem
     associatedtype Identifier
     
-    var publisher: AnyPublisher<RepositoryItem, Error> { get }
+    var publisher: AnyPublisher<RepositoryItem, Never> { get }
     
     func fetch(by identifier: Identifier, forceRefresh: Bool)
     func clearCache()

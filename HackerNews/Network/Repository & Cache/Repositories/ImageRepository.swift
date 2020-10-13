@@ -21,13 +21,13 @@ class ImageRepository: Repository, ObservableObject {
 
     typealias Identifier = (id: Int, endpoint: URL?)
     
-    private let subject = PassthroughSubject<Image, Error>()
+    private let subject = PassthroughSubject<Image, Never>()
     private let transport: Transport
     private let cache: ImageCache
     private let placeholderImageLoader: PlaceholderImageLoader
     private var cancellable: AnyCancellable?
     
-    var publisher: AnyPublisher<Image, Error> {
+    var publisher: AnyPublisher<Image, Never> {
         subject.eraseToAnyPublisher()
     }
     
