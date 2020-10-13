@@ -12,8 +12,6 @@ struct ItemLoadableView: View {
     
     private struct Constants {
         
-        static let placeholderTitle = "Placeholder title"
-        static let placeholderMetadata = "Placeholder metadata"
         static let backgroundColorName = "itemBackgroundColor"
         
     }
@@ -23,36 +21,21 @@ struct ItemLoadableView: View {
     var body: some View {
         Group {
             switch itemState {
-            case .loading:
-                VStack {
-                    ItemImageView(image: nil, tags: [])
-                    Spacer()
-                    ItemDetailView(title: Constants.placeholderTitle, metadata: Constants.placeholderMetadata)
-                    Spacer()
-                }
-                .background(Color(Constants.backgroundColorName))
-                .redacted(reason: .placeholder)
+            case .loading: ItemView(item: nil, image: nil)
+            case .complete(let item): ItemView(item: item, image: nil)
             case .error:
                 GeometryReader { geo in
                     ItemReloadView()
                         .frame(width: geo.size.width, height: geo.size.height)
                         .background(Color(Constants.backgroundColorName))
                 }
-            case .complete(let item):
-                VStack(alignment: .leading) {
-                    ItemImageView(image: nil, tags: item.tags)
-                    Spacer()
-                    ItemDetailView(title: item.title, metadata: item.buildMetadata())
-                    Spacer()
-                }
-                .background(Color(Constants.backgroundColorName))
             }
         }
     }
     
 }
 
-struct ItemView_Previews: PreviewProvider {
+struct ItemLoadableView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {

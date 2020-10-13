@@ -17,13 +17,6 @@ enum ViewType {
 
 class StoryViewModel: ObservableObject {
     
-    private struct Constants {
-        
-        static let fallbackStoryTitle = "HackerNews: Story"
-        static let fallbackJobTitle = "HackerNews: Job"
-        static let fallbackPollTitle = "HackerNews: Poll"
-        
-    }
     
     @Published private(set) var viewType: ViewType = .loading
     @Published private(set) var title = ""
@@ -59,13 +52,8 @@ class StoryViewModel: ObservableObject {
     private func handleItemRepository() {
         itemRepository.publisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                switch completion {
-                case .failure: self?.viewTypeInternal = .error
-                case .finished: break
-                }
-            } receiveValue: { [weak self] item in
-                self?.handle(item)
+            .sink { [weak self] (id, value) in
+                self?.handle(value)
             }
             .store(in: &cancellables)
     }
@@ -83,16 +71,16 @@ class StoryViewModel: ObservableObject {
             } else {
                 viewTypeInternal = .native
             }
-            title = storyItem.title ?? Constants.fallbackStoryTitle
+            title = storyItem.title
         case .job(let jobItem):
             if let url = jobItem.url {
                 viewTypeInternal = .web(URLRequest(string: url))
             } else {
                 viewTypeInternal = .native
             }
-            title = jobItem.title ?? Constants.fallbackJobTitle
+            title = jobItem.title
         case .poll(let pollItem):
-            title = pollItem.title ?? Constants.fallbackPollTitle
+            title = pollItem.title
             viewTypeInternal = .native
         default:
             viewTypeInternal = .error

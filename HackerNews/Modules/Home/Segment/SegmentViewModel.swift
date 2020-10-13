@@ -12,6 +12,14 @@ class SegmentViewModel: ObservableObject {
     
     @Published private(set) var itemIds = [Int]()
     @Published private(set) var viewState: ViewState = .loading
+    @Published var items: [ItemViewState] = []
+    private let transport: Transport
+    private let segment: Segment
+    private let itemRepository: ItemRespository
+    private let imageRepository: ImageRepository
+    private var cancellables: Set<AnyCancellable> = []
+    private let loadCount = 10
+    
     private var viewStateInternal: ViewState = .loading {
         willSet {
             withAnimation {
@@ -19,15 +27,20 @@ class SegmentViewModel: ObservableObject {
             }
         }
     }
-    private let transport: Transport
-    private let segment: Segment
-    private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Initialization
     
-    init(transport: Transport = URLSession.shared, segment: Segment) {
+    init(
+        transport: Transport = URLSession.shared,
+        segment: Segment,
+        itemRepository: ItemRespository = ItemRespository(),
+        imageRepository: ImageRepository = ImageRepository()
+    ) {
         self.transport = transport
         self.segment = segment
+        self.itemRepository = itemRepository
+        self.imageRepository = imageRepository
+        handleItemRepository()
         fetchIds()
     }
     
@@ -36,6 +49,15 @@ class SegmentViewModel: ObservableObject {
     func retry() {
         viewStateInternal = .loading
         fetchIds()
+    }
+    
+    func cellAppear(_ index: Int) {
+        fetchItems(from: index)
+    }
+    
+    func cellDisappear(_ index: Int) {
+        guard index > loadCount else { return }
+        itemRepository.cancel(by: itemIds[index])
     }
     
     // MARK: - Private methods
@@ -59,7 +81,26 @@ class SegmentViewModel: ObservableObject {
     
     private func handle(response: [Int]) {
         itemIds = response
+        itemIds.forEach { [unowned self] _ in self.items.append(.loading) }
+        fetchItems(from: 0)
+    }
+    
+    private func fetchItems(from startIndex: Int) {
+        for index in startIndex..<startIndex + loadCount {
+            guard index < itemIds.count else { return }
+            itemRepository.fetch(by: itemIds[index])
+        }
         viewStateInternal = .complete
+    }
+    
+    private func handleItemRepository() {
+        itemRepository.publisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (id, value) in
+                guard let index = self?.itemIds.firstIndex(of: id), let item = value else { return }
+                self?.items[index] = .complete(item)
+            })
+            .store(in: &cancellables)
     }
     
 }
