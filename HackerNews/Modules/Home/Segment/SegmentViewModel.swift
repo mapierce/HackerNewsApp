@@ -13,6 +13,7 @@ class SegmentViewModel: ObservableObject {
     @Published private(set) var itemIds = [Int]()
     @Published private(set) var viewState: ViewState = .loading
     @Published var items: [ItemViewState] = []
+    @Published var images: [Image?] = []
     private let transport: Transport
     private let segment: Segment
     private let itemRepository: ItemRespository
@@ -86,7 +87,10 @@ class SegmentViewModel: ObservableObject {
     
     private func handle(response: [Int]) {
         itemIds = response
-        itemIds.forEach { [unowned self] _ in self.items.append(.loading) }
+        itemIds.forEach { [unowned self] _ in
+            self.items.append(.loading)
+            self.images.append(nil)
+        }
         fetchItems(from: 0)
     }
     

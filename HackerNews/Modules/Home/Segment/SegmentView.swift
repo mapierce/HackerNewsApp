@@ -35,7 +35,7 @@ struct SegmentView: View {
                                                     viewModel: StoryViewModel(itemId: viewModel.itemIds[index]),
                                                     webStateModel: WebViewStateModel())
                                     ) {
-                                        ItemView(item: item, image: nil)
+                                        ItemView(item: item, image: viewModel.images[index])
                                             .onAppear { viewModel.cellAppeared(at: index) }
                                             .onDisappear { viewModel.cellDisappeared(at: index) }
                                     }
