@@ -20,6 +20,7 @@ struct CommentItem: ItemInterface {
     let text: String?
     let title: String = "Comment"
     let score: Int? = nil
+    let url: String? = nil
     
     var tags: [TagTypes] {
         return (dead ?? false) ? [.dead] : []

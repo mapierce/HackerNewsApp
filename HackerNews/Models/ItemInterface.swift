@@ -19,5 +19,6 @@ protocol ItemInterface: Decodable {
     var title: String { get }
     var tags: [TagTypes] { get }
     var score: Int? { get }
+    var url: String? { get }
     
 }

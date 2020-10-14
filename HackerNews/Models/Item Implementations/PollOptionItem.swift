@@ -18,7 +18,8 @@ struct PollOptionItem: ItemInterface {
     let kids: [Int]?
     let parent: Int?
     let score: Int?
-    let title: String = "Poll Option" 
+    let title: String = "Poll Option"
+    let url: String? = nil
     
     var tags: [TagTypes] {
         return (dead ?? false) ? [.dead] : []

@@ -21,6 +21,7 @@ struct PollItem: ItemInterface {
     let score: Int?
     let title: String
     let text: String?
+    let url: String? = nil
     
     var tags: [TagTypes] {
         return (dead ?? false) ? [.dead, .poll] : [.poll]
