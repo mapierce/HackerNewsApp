@@ -12,24 +12,38 @@ struct ItemReloadView: View {
     private struct Constants {
         
         static let imageName = "arrow.clockwise"
+        static let backgroundColorName = "itemBackgroundColor"
         static let retryText = "Looks like we had some trouble loading that story, tap to retry"
         static let imageHeight: CGFloat = 50
+        static let paddingHeight: CGFloat = 66.5
         static let spacerHeight: CGFloat = 20
+        static let doubleSpace: CGFloat = 16
     }
     
     var body: some View {
-        VStack {
-            Image(systemName: "arrow.clockwise")
-                .resizable()
-                .scaledToFit()
-                .frame(width: Constants.imageHeight)
-            Spacer().frame(height: Constants.spacerHeight)
-            Text(Constants.retryText)
-                .italic()
-                .font(.caption)
-                .multilineTextAlignment(.center)
+        HStack {
+            Spacer()
+            VStack {
+                Spacer().frame(height: Constants.paddingHeight)
+                Image(systemName: Constants.imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: Constants.imageHeight)
+                Spacer().frame(height: Constants.spacerHeight)
+                HStack {
+                    Spacer().frame(width: Constants.doubleSpace)
+                    Text(Constants.retryText)
+                        .italic()
+                        .font(.caption)
+                        .multilineTextAlignment(.center)
+                    Spacer().frame(width: Constants.doubleSpace)
+                }
+                Spacer().frame(height: Constants.paddingHeight)
+            }
+            Spacer()
         }
         .foregroundColor(.gray)
+        .background(Color(Constants.backgroundColorName))
     }
     
 }

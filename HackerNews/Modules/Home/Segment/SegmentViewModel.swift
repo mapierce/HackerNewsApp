@@ -97,8 +97,12 @@ class SegmentViewModel: ObservableObject {
         itemRepository.publisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] (id, value) in
-                guard let index = self?.itemIds.firstIndex(of: id), let item = value else { return }
-                self?.items[index] = .complete(item)
+                guard let index = self?.itemIds.firstIndex(of: id) else { return }
+                if let item = value {
+                    self?.items[index] = .complete(item)
+                } else {
+                    self?.items[index] = .error
+                }
             })
             .store(in: &cancellables)
     }

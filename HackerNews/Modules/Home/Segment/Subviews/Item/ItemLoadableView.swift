@@ -10,12 +10,6 @@ import Combine
 
 struct ItemLoadableView: View {
     
-    private struct Constants {
-        
-        static let backgroundColorName = "itemBackgroundColor"
-        
-    }
-    
     @Binding var itemState: ItemViewState
     
     var body: some View {
@@ -23,12 +17,7 @@ struct ItemLoadableView: View {
             switch itemState {
             case .loading: ItemView(item: nil, image: nil)
             case .complete(let item): ItemView(item: item, image: nil)
-            case .error:
-                GeometryReader { geo in
-                    ItemReloadView()
-                        .frame(width: geo.size.width, height: geo.size.height)
-                        .background(Color(Constants.backgroundColorName))
-                }
+            case .error: ItemReloadView()
             }
         }
     }
