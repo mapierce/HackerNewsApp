@@ -27,19 +27,27 @@ struct SegmentView: View {
                 ScrollView {
                     LazyVStack {
                         ForEach(0..<viewModel.itemIds.count, id: \.self) { index in
-                            NavigationLink(destination: StoryView(viewModel: StoryViewModel(itemId: viewModel.itemIds[index]), webStateModel: WebViewStateModel())) {
-                                ItemLoadableView(itemState: $viewModel.items[index])
-                                    .cornerRadius(Constants.cornerRadius)
-                                    .padding()
-                                    .shadow(radius: Constants.shadowRadius)
-                                    .foregroundColor(Color.primary)
+                            Group {
+                                switch viewModel.items[index] {
+                                case .loading: ItemView(item: nil, image: nil)
+                                case .complete(let item):
+                                    NavigationLink(destination: StoryView(
+                                                    viewModel: StoryViewModel(itemId: viewModel.itemIds[index]),
+                                                    webStateModel: WebViewStateModel())
+                                    ) {
+                                        ItemView(item: item, image: nil)
+                                            .onAppear { viewModel.cellAppeared(at: index) }
+                                            .onDisappear { viewModel.cellDisappeared(at: index) }
+                                    }
+                                case .error:
+                                    ItemReloadView()
+                                        .onTapGesture { viewModel.reloadItem(at: index) }
+                                }
                             }
-                            .onAppear {
-                                viewModel.cellAppear(index)
-                            }
-                            .onDisappear {
-                                viewModel.cellDisappear(index)
-                            }
+                            .cornerRadius(Constants.cornerRadius)
+                            .padding()
+                            .shadow(radius: Constants.shadowRadius)
+                            .foregroundColor(Color.primary)
                         }
                     }
                 }

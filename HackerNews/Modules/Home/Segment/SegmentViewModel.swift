@@ -51,13 +51,18 @@ class SegmentViewModel: ObservableObject {
         fetchIds()
     }
     
-    func cellAppear(_ index: Int) {
+    func cellAppeared(at index: Int) {
         fetchItems(from: index)
     }
     
-    func cellDisappear(_ index: Int) {
+    func cellDisappeared(at index: Int) {
         guard index > loadCount else { return }
         itemRepository.cancel(by: itemIds[index])
+    }
+    
+    func reloadItem(at index: Int) {
+        items[index] = .loading
+        itemRepository.fetch(by: itemIds[index])
     }
     
     // MARK: - Private methods
