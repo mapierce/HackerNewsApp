@@ -36,9 +36,9 @@ struct SegmentView: View {
                                                     webStateModel: WebViewStateModel())
                                     ) {
                                         ItemView(item: item, image: viewModel.images[index])
-                                            .onAppear { viewModel.cellAppeared(at: index) }
-                                            .onDisappear { viewModel.cellDisappeared(at: index) }
                                     }
+                                    .onAppear { viewModel.cellAppeared(at: index) }
+                                    .onDisappear { viewModel.cellDisappeared(at: index) }
                                 case .error:
                                     ItemReloadView()
                                         .onTapGesture { viewModel.reloadItem(at: index) }
