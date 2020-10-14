@@ -41,6 +41,7 @@ class SegmentViewModel: ObservableObject {
         self.segment = segment
         self.itemRepository = itemRepository
         self.imageRepository = imageRepository
+        handleImageRepository()
         handleItemRepository()
         fetchIds()
     }
@@ -95,24 +96,36 @@ class SegmentViewModel: ObservableObject {
     }
     
     private func fetchItems(from startIndex: Int) {
+        defer { viewStateInternal = .complete }
         for index in startIndex..<startIndex + loadCount {
             guard index < itemIds.count else { return }
             itemRepository.fetch(by: itemIds[index])
         }
-        viewStateInternal = .complete
     }
     
     private func handleItemRepository() {
         itemRepository.publisher
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (id, value) in
+            .sink { [weak self] (id, value) in
                 guard let index = self?.itemIds.firstIndex(of: id) else { return }
                 if let item = value {
                     self?.items[index] = .complete(item)
+                    let imageUrl = URL(string: item.url ?? "")
+                    self?.imageRepository.fetch(by: (id, imageUrl), forceRefresh: false)
                 } else {
                     self?.items[index] = .error
                 }
-            })
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func handleImageRepository() {
+        imageRepository.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (id, image) in
+                guard let index = self?.itemIds.firstIndex(of: id) else { return }
+                self?.images[index] = image
+            }
             .store(in: &cancellables)
     }
     

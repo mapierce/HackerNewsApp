@@ -21,13 +21,13 @@ class ImageRepository: Repository, ObservableObject {
 
     typealias Identifier = (id: Int, endpoint: URL?)
     
-    private let subject = PassthroughSubject<Image, Never>()
+    private let subject = PassthroughSubject<(id: Int, image: Image), Never>()
     private let transport: Transport
     private let cache: ImageCache
     private let placeholderImageLoader: PlaceholderImageLoader
-    private var cancellable: AnyCancellable?
+    private var cancellables: [Int: AnyCancellable] = [:]
     
-    var publisher: AnyPublisher<Image, Never> {
+    var publisher: AnyPublisher<(id: Int, image: Image), Never> {
         subject.eraseToAnyPublisher()
     }
     
@@ -49,27 +49,26 @@ class ImageRepository: Repository, ObservableObject {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let strongSelf = self else { return }
             if let existingImage = strongSelf.cache.read(id: identifier.id) {
-                strongSelf.subject.send(existingImage)
+                strongSelf.subject.send((identifier.id, existingImage))
                 return
             }
             guard let endpoint = identifier.endpoint, let imageURL = strongSelf.getImageURL(from: endpoint) else {
                 let image = strongSelf.placeholderImageLoader.getNextPlaceholderImage()
-                strongSelf.subject.send(image)
+                strongSelf.subject.send((identifier.id, image))
                 strongSelf.cache.write(image, for: identifier.id)
                 return
             }
             let request = URLRequest(url: imageURL)
-            strongSelf.cancellable = strongSelf.transport
+            strongSelf.cancellables[identifier.id] = strongSelf.transport
                 .checkingStatusCode()
                 .send(request: request)
                 .tryMap({ (data, _) -> Image in try strongSelf.dataToImage(data) })
                 .catch({ _ -> Just<Image> in Just(strongSelf.placeholderImageLoader.getNextPlaceholderImage()) })
                 .sink(receiveValue: { image in
-                    strongSelf.subject.send(image)
+                    strongSelf.subject.send((identifier.id, image))
                     strongSelf.cache.write(image, for: identifier.id)
                 })
         }
-        
     }
     
     func clearCache() {
