@@ -30,6 +30,8 @@ struct SegmentView: View {
                             Group {
                                 switch viewModel.items[index] {
                                 case .loading: ItemView(item: nil, image: nil)
+                                    .onAppear { viewModel.cellAppeared(at: index) }
+                                    .onDisappear { viewModel.cellDisappeared(at: index) }
                                 case .complete(let item):
                                     NavigationLink(destination: StoryView(
                                                     viewModel: StoryViewModel(itemId: viewModel.itemIds[index]),

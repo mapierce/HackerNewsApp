@@ -60,6 +60,7 @@ class SegmentViewModel: ObservableObject {
     func cellDisappeared(at index: Int) {
         guard index > loadCount else { return }
         itemRepository.cancel(by: itemIds[index])
+        imageRepository.cancel(by: itemIds[index])
     }
     
     func reloadItem(at index: Int) {

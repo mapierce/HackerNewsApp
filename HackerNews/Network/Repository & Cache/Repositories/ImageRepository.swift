@@ -21,6 +21,7 @@ class ImageRepository: Repository, ObservableObject {
 
     typealias Identifier = (id: Int, endpoint: URL?)
     
+    private let backgroundSyncQueue = DispatchQueue(label: "backgroundSyncQueue")
     private let subject = PassthroughSubject<(id: Int, image: Image), Never>()
     private let transport: Transport
     private let cache: ImageCache
@@ -46,7 +47,7 @@ class ImageRepository: Repository, ObservableObject {
     // MARK: - Repository methods
     
     func fetch(by identifier: Identifier, forceRefresh: Bool) {
-        DispatchQueue.global(qos: .background).async { [weak self] in
+        DispatchQueue.global(qos: .utility).async { [weak self] in
             guard let strongSelf = self else { return }
             if let existingImage = strongSelf.cache.read(id: identifier.id) {
                 strongSelf.subject.send((identifier.id, existingImage))
@@ -55,19 +56,23 @@ class ImageRepository: Repository, ObservableObject {
             guard let endpoint = identifier.endpoint, let imageURL = strongSelf.getImageURL(from: endpoint) else {
                 let image = strongSelf.placeholderImageLoader.getNextPlaceholderImage()
                 strongSelf.subject.send((identifier.id, image))
-                strongSelf.cache.write(image, for: identifier.id)
+                strongSelf.backgroundSyncQueue.sync {
+                    strongSelf.cache.write(image, for: identifier.id)
+                }
                 return
             }
             let request = URLRequest(url: imageURL)
-            strongSelf.cancellables[identifier.id] = strongSelf.transport
-                .checkingStatusCode()
-                .send(request: request)
-                .tryMap({ (data, _) -> Image in try strongSelf.dataToImage(data) })
-                .catch({ _ -> Just<Image> in Just(strongSelf.placeholderImageLoader.getNextPlaceholderImage()) })
-                .sink(receiveValue: { image in
-                    strongSelf.subject.send((identifier.id, image))
-                    strongSelf.cache.write(image, for: identifier.id)
-                })
+            strongSelf.backgroundSyncQueue.sync {
+                strongSelf.cancellables[identifier.id] = strongSelf.transport
+                    .checkingStatusCode()
+                    .send(request: request)
+                    .tryMap({ (data, _) -> Image in try strongSelf.dataToImage(data) })
+                    .catch({ _ -> Just<Image> in Just(strongSelf.placeholderImageLoader.getNextPlaceholderImage()) })
+                    .sink(receiveValue: { image in
+                        strongSelf.subject.send((identifier.id, image))
+                        strongSelf.cache.write(image, for: identifier.id)
+                    })
+            }
         }
     }
     
@@ -77,8 +82,9 @@ class ImageRepository: Repository, ObservableObject {
     
     // MARK: - Public methods
     
-    func cancel() {
-        cancellable?.cancel()
+    func cancel(by identifier: Int) {
+        guard let cancellable = cancellables[identifier] else { return }
+        cancellable.cancel()
     }
     
     // MARK: - Private methods
