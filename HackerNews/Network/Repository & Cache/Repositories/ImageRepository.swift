@@ -11,6 +11,9 @@ import SwiftSoup
 
 class ImageRepository: Repository, ObservableObject {
     
+    // TODO: - Use ImageDataProvider to load local images, and use Prefetch to load others. Then the subject should
+    // return the item id and a KFImage
+    
     private struct Constants {
         
         static let propertyAttribute = "property"
