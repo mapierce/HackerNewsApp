@@ -29,7 +29,7 @@ struct SegmentView: View {
                         ForEach(0..<viewModel.itemIds.count, id: \.self) { index in
                             Group {
                                 switch viewModel.items[index] {
-                                case .loading: ItemView(item: nil, image: nil)
+                                case .loading: ItemView(item: nil, imageType: nil)
                                     .onAppear { viewModel.cellAppeared(at: index) }
                                     .onDisappear { viewModel.cellDisappeared(at: index) }
                                 case .complete(let item):
@@ -37,7 +37,7 @@ struct SegmentView: View {
                                                     viewModel: StoryViewModel(itemId: viewModel.itemIds[index]),
                                                     webStateModel: WebViewStateModel())
                                     ) {
-                                        ItemView(item: item, image: viewModel.images[index])
+                                        ItemView(item: item, imageType: viewModel.imageTypes[index])
                                     }
                                     .onAppear { viewModel.cellAppeared(at: index) }
                                     .onDisappear { viewModel.cellDisappeared(at: index) }

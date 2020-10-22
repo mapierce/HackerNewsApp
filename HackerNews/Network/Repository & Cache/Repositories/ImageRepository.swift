@@ -25,13 +25,13 @@ class ImageRepository: Repository, ObservableObject {
     typealias Identifier = (id: Int, endpoint: URL?)
     
     private let backgroundSyncQueue = DispatchQueue(label: "backgroundSyncQueue")
-    private let subject = PassthroughSubject<(id: Int, image: Image), Never>()
+    private let subject = PassthroughSubject<(id: Int, image: ImageType), Never>()
     private let transport: Transport
     private let cache: ImageCache
     private let placeholderImageLoader: PlaceholderImageLoader
     private var cancellables: [Int: AnyCancellable] = [:]
     
-    var publisher: AnyPublisher<(id: Int, image: Image), Never> {
+    var publisher: AnyPublisher<(id: Int, image: ImageType), Never> {
         subject.eraseToAnyPublisher()
     }
     
@@ -52,30 +52,18 @@ class ImageRepository: Repository, ObservableObject {
     func fetch(by identifier: Identifier, forceRefresh: Bool) {
         DispatchQueue.global(qos: .utility).async { [weak self] in
             guard let strongSelf = self else { return }
-            if let existingImage = strongSelf.cache.read(id: identifier.id) {
-                strongSelf.subject.send((identifier.id, existingImage))
+            if let existingImageType = strongSelf.cache.read(id: identifier.id) {
+                strongSelf.subject.send((identifier.id, existingImageType))
                 return
             }
-            guard let endpoint = identifier.endpoint, let imageURL = strongSelf.getImageURL(from: endpoint) else {
-                let image = strongSelf.placeholderImageLoader.getNextPlaceholderImage()
-                strongSelf.subject.send((identifier.id, image))
-                strongSelf.backgroundSyncQueue.sync {
-                    strongSelf.cache.write(image, for: identifier.id)
-                }
+            if let endpoint = identifier.endpoint, let imageURL = strongSelf.getImageURL(from: endpoint) {
+                strongSelf.cache.write(.remote(imageURL), for: identifier.id)
+                strongSelf.subject.send((identifier.id, .remote(imageURL)))
                 return
             }
-            let request = URLRequest(url: imageURL)
-            strongSelf.backgroundSyncQueue.sync {
-                strongSelf.cancellables[identifier.id] = strongSelf.transport
-                    .checkingStatusCode()
-                    .send(request: request)
-                    .tryMap({ (data, _) -> Image in try strongSelf.dataToImage(data) })
-                    .catch({ _ -> Just<Image> in Just(strongSelf.placeholderImageLoader.getNextPlaceholderImage()) })
-                    .sink(receiveValue: { image in
-                        strongSelf.subject.send((identifier.id, image))
-                        strongSelf.cache.write(image, for: identifier.id)
-                    })
-            }
+            let placeHolderImageName = strongSelf.placeholderImageLoader.getNextPlaceholderImageName()
+            strongSelf.subject.send((identifier.id, .local(placeHolderImageName)))
+            strongSelf.cache.write(.local(placeHolderImageName), for: identifier.id)
         }
     }
     

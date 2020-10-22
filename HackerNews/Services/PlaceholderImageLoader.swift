@@ -17,13 +17,13 @@ class PlaceholderImageLoader {
     
     // MARK: - Public methods
     
-    func getNextPlaceholderImage() -> Image {
+    func getNextPlaceholderImageName() -> String {
         if currentPlacholderIndex == placeholderImages.count {
             currentPlacholderIndex = 0
         }
-        let placeholderImage = Image(placeholderImages[currentPlacholderIndex])
+        let placeholderImageName = placeholderImages[currentPlacholderIndex]
         currentPlacholderIndex += 1
-        return placeholderImage
+        return placeholderImageName
     }
     
 }

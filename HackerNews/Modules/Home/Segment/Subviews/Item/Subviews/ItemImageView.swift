@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import KingfisherSwiftUI
+import struct Kingfisher.DownsamplingImageProcessor
 
 struct ItemImageView: View {
     
@@ -19,15 +21,32 @@ struct ItemImageView: View {
         
     }
     
-    var image: Image?
+    var imageType: ImageType?
     var tags: [TagTypes]
     
     var body: some View {
         ZStack {
-            if let loadedImage = image {
-                loadedImage
+            if let loadedImageType = imageType {
+                switch loadedImageType {
+                case .local(let imageName):
+                    Image(imageName)
+                        .resizable()
+                        .frame(height: Constants.imageFrameHeight)
+                case .remote(let url):
+                    KFImage(
+                        url,
+                        options: [
+                            .processor(DownsamplingImageProcessor(size: CGSize(width: UIScreen.main.bounds.width, height: Constants.imageFrameHeight))),
+                            .scaleFactor(UIScreen.main.scale)
+                        ]
+                    )
+                    .cancelOnDisappear(true)
+                    .placeholder {
+                        ItemPlaceholderImage()
+                    }
                     .resizable()
                     .frame(height: Constants.imageFrameHeight)
+                }
             } else {
                 ItemPlaceholderImage()
             }
@@ -60,7 +79,7 @@ struct ItemImageView: View {
 
 struct ItemImageView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemImageView(image: nil, tags: [.poll, .job, .dead])
+        ItemImageView(imageType: nil, tags: [.poll, .job, .dead])
             .previewLayout(.fixed(width: 300, height: 155))
             .environment(\.colorScheme, .dark)
     }

@@ -10,15 +10,15 @@ import SwiftUI
 final class ImageCache: Cache {
     
     static let shared = ImageCache()
-    private var cache: [Int: Image] = [:]
+    private var cache: [Int: ImageType] = [:]
     
     // MARK: - Cache methods
     
-    func write(_ item: Image, for id: Int) {
+    func write(_ item: ImageType, for id: Int) {
         cache[id] = item
     }
     
-    func read(id: Int) -> Image? {
+    func read(id: Int) -> ImageType? {
         cache[id]
     }
     

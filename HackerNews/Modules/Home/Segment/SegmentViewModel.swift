@@ -13,7 +13,7 @@ class SegmentViewModel: ObservableObject {
     @Published private(set) var itemIds = [Int]()
     @Published private(set) var viewState: ViewState = .loading
     @Published var items: [ItemViewState] = []
-    @Published var images: [Image?] = []
+    @Published var imageTypes: [ImageType?] = []
     private let transport: Transport
     private let segment: Segment
     private let itemRepository: ItemRespository
@@ -91,7 +91,7 @@ class SegmentViewModel: ObservableObject {
         itemIds = response
         itemIds.forEach { [unowned self] _ in
             self.items.append(.loading)
-            self.images.append(nil)
+            self.imageTypes.append(nil)
         }
         fetchItems(from: 0)
     }
@@ -125,7 +125,7 @@ class SegmentViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (id, image) in
                 guard let index = self?.itemIds.firstIndex(of: id) else { return }
-                self?.images[index] = image
+                self?.imageTypes[index] = image
             }
             .store(in: &cancellables)
     }

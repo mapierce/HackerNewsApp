@@ -18,11 +18,11 @@ struct ItemView: View {
     }
     
     let item: Item?
-    let image: Image?
+    let imageType: ImageType?
     
     var body: some View {
         VStack {
-            ItemImageView(image: image, tags: item?.tags ?? [])
+            ItemImageView(imageType: imageType, tags: item?.tags ?? [])
             Spacer()
             ItemDetailView(
                 title: item?.title ?? Constants.placeholderTitle,
@@ -40,6 +40,6 @@ struct ItemView: View {
 
 struct ItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemView(item: nil, image: nil)
+        ItemView(item: nil, imageType: nil)
     }
 }
