@@ -23,6 +23,7 @@ struct ItemImageView: View {
     
     var imageType: ImageType?
     var tags: [TagTypes]
+    private let imageDownsampleSize = CGSize(width: UIScreen.main.bounds.width, height: Constants.imageFrameHeight)
     
     var body: some View {
         ZStack {
@@ -36,7 +37,7 @@ struct ItemImageView: View {
                     KFImage(
                         url,
                         options: [
-                            .processor(DownsamplingImageProcessor(size: CGSize(width: UIScreen.main.bounds.width, height: Constants.imageFrameHeight))),
+                            .processor(DownsamplingImageProcessor(size: imageDownsampleSize)),
                             .scaleFactor(UIScreen.main.scale)
                         ]
                     )
