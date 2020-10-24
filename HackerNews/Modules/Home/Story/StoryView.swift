@@ -10,9 +10,14 @@ import Snap
 
 struct StoryView: View {
     
+    private struct Constants {
+        
+        static let bottomPadding: CGFloat = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0 > 20 ? 120 : 100
+        
+    }
+    
     @ObservedObject var viewModel: StoryViewModel
     @ObservedObject var webStateModel: WebViewStateModel
-    @State private var drawerState: AppleMapsSnapState = .tiny
     
     var body: some View {
         VStack {
@@ -20,8 +25,11 @@ struct StoryView: View {
             case .loading: ProgressView()
             case .web(let request):
                 ZStack {
-                    WebView(stateModel: webStateModel, request: request)
-                        .edgesIgnoringSafeArea(.all)
+                    VStack {
+                        WebView(stateModel: webStateModel, request: request)
+                            .edgesIgnoringSafeArea(.top)
+                        Spacer().frame(height: Constants.bottomPadding)
+                    }
                     Loader(webStateModel: webStateModel)
                     CommentListView(viewModel: CommentListViewModel(commentIds: viewModel.commentIds))
                     Menu(webStateModel: webStateModel)
@@ -31,9 +39,6 @@ struct StoryView: View {
             }
         }
         .navigationBarHidden(true)
-        .onAppear {
-            viewModel.fetch()
-        }
     }
 }
 
