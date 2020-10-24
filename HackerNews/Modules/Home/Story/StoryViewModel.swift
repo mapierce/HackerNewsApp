@@ -26,9 +26,9 @@ class StoryViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     
     private var viewTypeInternal: ViewType = .loading {
-        willSet {
+        didSet {
             withAnimation {
-                viewType = newValue
+                viewType = viewTypeInternal
             }
         }
     }
@@ -39,11 +39,6 @@ class StoryViewModel: ObservableObject {
         self.itemId = itemId
         self.itemRepository = itemRepository
         handleItemRepository()
-    }
-    
-    // MARK: - Public methods
-    
-    func fetch() {
         itemRepository.fetch(by: itemId)
     }
     
