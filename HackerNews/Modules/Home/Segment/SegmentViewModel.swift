@@ -54,6 +54,7 @@ class SegmentViewModel: ObservableObject {
     }
     
     func cellAppeared(at index: Int) {
+        if case .complete(_) = items[index] { return }
         fetchItems(from: index)
     }
     
