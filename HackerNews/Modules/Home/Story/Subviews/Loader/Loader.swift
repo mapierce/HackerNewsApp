@@ -22,7 +22,7 @@ struct Loader: View {
     
     var body: some View {
         GeometryReader { geo in
-            if webStateModel.progress < 1 {
+            if 0.01..<1 ~= webStateModel.progress {
                 VStack {
                     Spacer()
                         .frame(height: Constants.quadrupleSpace)
