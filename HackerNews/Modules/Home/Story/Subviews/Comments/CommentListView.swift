@@ -27,7 +27,7 @@ struct CommentListView: View {
                     ScrollView {
                         LazyVStack {
                             ForEach(commentIds, id: \.self) { id in
-                                Text("\(id)")
+                                CommentItemView(viewModel: CommentItemViewModel(commentId: id))
                             }
                         }
                     }
