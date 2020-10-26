@@ -27,13 +27,13 @@ struct StoryView: View {
                 ZStack {
                     VStack {
                         WebView(stateModel: webStateModel, request: request)
-                            .edgesIgnoringSafeArea(.top)
                         Spacer().frame(height: Constants.bottomPadding)
                     }
                     Loader(webStateModel: webStateModel)
                     CommentListView(viewModel: CommentListViewModel(commentIds: viewModel.commentIds))
                     Menu(webStateModel: webStateModel)
                 }
+                .edgesIgnoringSafeArea(.top)
             case .native: Text("native")
             case .error: ErrorView { print("retry") }
             }
