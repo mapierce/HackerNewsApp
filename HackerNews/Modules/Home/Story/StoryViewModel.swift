@@ -17,7 +17,6 @@ enum ViewType {
 
 class StoryViewModel: ObservableObject {
     
-    
     @Published private(set) var viewType: ViewType = .loading
     @Published private(set) var title = ""
     @Published private(set) var commentIds: [Int]? = nil
