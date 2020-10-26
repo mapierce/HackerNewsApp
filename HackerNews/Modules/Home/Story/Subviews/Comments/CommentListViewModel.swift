@@ -10,11 +10,13 @@ import Foundation
 class CommentListViewModel: ObservableObject {
     
     let commentIds: [Int]?
+    private let itemRepository: ItemRespository
     
     // MARK: - Initialization
     
-    init(commentIds: [Int]?) {
+    init(commentIds: [Int]?, itemRepository: ItemRespository = ItemRespository()) {
         self.commentIds = commentIds
+        self.itemRepository = itemRepository
     }
     
 }
