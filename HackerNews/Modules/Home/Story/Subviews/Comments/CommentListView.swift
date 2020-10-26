@@ -32,7 +32,9 @@ struct CommentListView: View {
                         }
                     }
                 } else {
+                    Spacer()
                     Text("No Comments")
+                    Spacer()
                 }
             }
         }
