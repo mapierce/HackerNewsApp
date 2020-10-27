@@ -39,6 +39,7 @@ struct SegmentView: View {
                                     ) {
                                         ItemView(item: item, imageType: viewModel.imageTypes[index])
                                     }
+                                    .buttonStyle(PlainButtonStyle())
                                     .onAppear { viewModel.cellAppeared(at: index) }
                                     .onDisappear { viewModel.cellDisappeared(at: index) }
                                 case .error:
