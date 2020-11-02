@@ -17,29 +17,40 @@ struct ItemView: View {
         
     }
     
-    let item: Item?
-    let imageType: ImageType?
+    @ObservedObject var viewModel: ItemViewModel
     
     var body: some View {
-        VStack {
-            ItemImageView(imageType: imageType, tags: item?.tags ?? [])
-            Spacer()
-            ItemDetailView(
-                title: item?.title ?? Constants.placeholderTitle,
-                metadata: item?.buildMetadata() ?? Constants.placeholderMetadata
-            )
-            Spacer()
-        }
-        .background(Color(Constants.backgroundColorName))
-        .applyIf(item == nil) {
-            $0.redacted(reason: .placeholder)
+        if viewModel.error {
+            ItemReloadView().onTapGesture {
+                viewModel.reload()
+            }
+        } else {
+            let storyView = StoryView(viewModel: StoryViewModel(itemId: viewModel.itemId), webStateModel: WebViewStateModel())
+            NavigationLink(destination: storyView) {
+                VStack {
+                    ItemImageView(imageType: viewModel.image, tags: [])
+                    Spacer()
+                    ItemDetailView(
+                        title: viewModel.item?.title ?? Constants.placeholderTitle,
+                        metadata: viewModel.item?.buildMetadata() ?? Constants.placeholderMetadata
+                    )
+                    Spacer()
+                }
+            }
+            .background(Color(Constants.backgroundColorName))
+            .applyIf(viewModel.item == nil) {
+                $0.redacted(reason: .placeholder)
+            }
+            .onAppear {
+                viewModel.onAppeared()
+            }
         }
     }
     
 }
 
-struct ItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        ItemView(item: nil, imageType: nil)
-    }
-}
+//struct ItemView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ItemView(item: nil, imageType: nil)
+//    }
+//}

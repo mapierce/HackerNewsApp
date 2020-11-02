@@ -12,12 +12,9 @@ class SegmentViewModel: ObservableObject {
     
     @Published private(set) var itemIds = [Int]()
     @Published private(set) var viewState: ViewState = .loading
-    @Published var items: [ItemViewState] = []
-    @Published var imageTypes: [ImageType?] = []
     private let transport: Transport
     private let segment: Segment
     private let itemRepository: ItemRespository
-    private let imageRepository: ImageRepository
     private var cancellables: Set<AnyCancellable> = []
     private let loadCount = 10
     
@@ -34,15 +31,11 @@ class SegmentViewModel: ObservableObject {
     init(
         transport: Transport = URLSession.shared,
         segment: Segment,
-        itemRepository: ItemRespository = ItemRespository(),
-        imageRepository: ImageRepository = ImageRepository()
+        itemRepository: ItemRespository = ItemRespository()
     ) {
         self.transport = transport
         self.segment = segment
         self.itemRepository = itemRepository
-        self.imageRepository = imageRepository
-        handleImageRepository()
-        handleItemRepository()
         fetchIds()
     }
     
@@ -54,19 +47,12 @@ class SegmentViewModel: ObservableObject {
     }
     
     func cellAppeared(at index: Int) {
-        if case .complete(_) = items[index] { return }
         fetchItems(from: index)
     }
     
     func cellDisappeared(at index: Int) {
         guard index > loadCount else { return }
         itemRepository.cancel(by: itemIds[index])
-        imageRepository.cancel(by: itemIds[index])
-    }
-    
-    func reloadItem(at index: Int) {
-        items[index] = .loading
-        itemRepository.fetch(by: itemIds[index])
     }
     
     // MARK: - Private methods
@@ -89,46 +75,16 @@ class SegmentViewModel: ObservableObject {
     }
     
     private func handle(response: [Int]) {
+        viewStateInternal = .complete
         itemIds = response
-        itemIds.forEach { [unowned self] _ in
-            self.items.append(.loading)
-            self.imageTypes.append(nil)
-        }
         fetchItems(from: 0)
     }
     
     private func fetchItems(from startIndex: Int) {
-        defer { viewStateInternal = .complete }
         for index in startIndex..<startIndex + loadCount {
             guard index < itemIds.count else { return }
             itemRepository.fetch(by: itemIds[index])
         }
-    }
-    
-    private func handleItemRepository() {
-        itemRepository.publisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (id, value) in
-                guard let index = self?.itemIds.firstIndex(of: id) else { return }
-                if let item = value {
-                    self?.items[index] = .complete(item)
-                    let imageUrl = URL(string: item.url ?? "")
-                    self?.imageRepository.fetch(by: (id, imageUrl), forceRefresh: false)
-                } else {
-                    self?.items[index] = .error
-                }
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func handleImageRepository() {
-        imageRepository.publisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (id, image) in
-                guard let index = self?.itemIds.firstIndex(of: id) else { return }
-                self?.imageTypes[index] = image
-            }
-            .store(in: &cancellables)
     }
     
 }
