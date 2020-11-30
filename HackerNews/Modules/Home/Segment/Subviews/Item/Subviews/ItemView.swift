@@ -32,7 +32,8 @@ struct ItemView: View {
                     Spacer()
                     ItemDetailView(
                         title: viewModel.item?.title ?? Constants.placeholderTitle,
-                        metadata: viewModel.item?.buildMetadata() ?? Constants.placeholderMetadata
+                        metadata: viewModel.item?.buildMetadata() ?? Constants.placeholderMetadata,
+                        shareURL: viewModel.item?.shareURL
                     )
                     Spacer()
                 }

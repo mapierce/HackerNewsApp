@@ -13,14 +13,14 @@ struct ItemDetailView: View {
         
         static let singleSpace: CGFloat = 8
         static let doubleSpace: CGFloat = 16
-        static let emptyBookmarkImageName = "bookmark"
-        static let emptyBellImageName = "bell"
-        static let iconSize: CGFloat = 20
+        static let shareImageName = "square.and.arrow.up"
+        static let iconSize: CGFloat = 24
         
     }
     
     let title: String
     let metadata: String
+    let shareURL: String?
     
     var body: some View {
         HStack(alignment: .top) {
@@ -32,9 +32,7 @@ struct ItemDetailView: View {
             Spacer()
             VStack {
                 Spacer()
-                bookmarkButton
-                Spacer()
-                bellButton
+                shareButton
                 Spacer()
             }
             .font(.system(size: Constants.iconSize, weight: .light))
@@ -46,27 +44,21 @@ struct ItemDetailView: View {
                             trailing: Constants.doubleSpace))
     }
     
-    var bookmarkButton: some View {
+    var shareButton: some View {
         Button(action: {
-            print("Bookmark tapped")
-        }) {
-            Image(systemName: Constants.emptyBookmarkImageName)
-        }
-    }
-    
-    var bellButton: some View {
-        Button(action: {
-            print("Bell tapped")
-        }) {
-            Image(systemName: Constants.emptyBellImageName)
-        }
+            guard let url = shareURL, let data = URL(string: url) else { return }
+            let activityView = UIActivityViewController(activityItems: [data], applicationActivities: nil)
+            UIApplication.shared.windows.first?.rootViewController?.present(activityView, animated: true, completion: nil)
+        }, label: {
+            Image(systemName: Constants.shareImageName)
+        })
     }
     
 }
 
 struct ItemDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemDetailView(title: "Item title", metadata: "details below about item")
+        ItemDetailView(title: "Item title", metadata: "details below about item", shareURL: "https://www.apple.com")
             .previewLayout(.fixed(width: 343, height: 60))
             .previewDisplayName("iPhone 11 Pro Max")
     }

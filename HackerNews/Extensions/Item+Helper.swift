@@ -25,6 +25,10 @@ private struct Constants {
 
 extension Item {
     
+    var shareURL: String {
+        return self.url ?? "https://news.ycombinator.com/item?id=\(self.uuid)"
+    }
+    
     func buildMetadata() -> String {
         var metadata = ""
         if let score = self.score {
