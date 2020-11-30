@@ -50,6 +50,7 @@ class ImageRepository: Repository, ObservableObject {
     // MARK: - Repository methods
     
     func fetch(by identifier: Identifier, forceRefresh: Bool) {
+        // FIXME: Ensure correct queueing
         DispatchQueue.global(qos: .utility).async { [weak self] in
             guard let strongSelf = self else { return }
             if let existingImageType = strongSelf.cache.read(id: identifier.id) {
@@ -57,13 +58,17 @@ class ImageRepository: Repository, ObservableObject {
                 return
             }
             if let endpoint = identifier.endpoint, let imageURL = strongSelf.getImageURL(from: endpoint) {
-                strongSelf.cache.write(.remote(imageURL), for: identifier.id)
-                strongSelf.subject.send((identifier.id, .remote(imageURL)))
-                return
+//                strongSelf.backgroundSyncQueue.sync {
+                    strongSelf.cache.write(.remote(imageURL), for: identifier.id)
+                    strongSelf.subject.send((identifier.id, .remote(imageURL)))
+                    return
+//                }
             }
             let placeHolderImageName = strongSelf.placeholderImageLoader.getNextPlaceholderImageName()
-            strongSelf.subject.send((identifier.id, .local(placeHolderImageName)))
-            strongSelf.cache.write(.local(placeHolderImageName), for: identifier.id)
+//            strongSelf.backgroundSyncQueue.sync {
+                strongSelf.cache.write(.local(placeHolderImageName), for: identifier.id)
+                strongSelf.subject.send((identifier.id, .local(placeHolderImageName)))
+//            }
         }
     }
     
