@@ -8,6 +8,7 @@
 import SwiftUI
 import KingfisherSwiftUI
 import struct Kingfisher.DownsamplingImageProcessor
+import class Kingfisher.ImageCache
 
 struct ItemImageView: View {
     
@@ -24,6 +25,11 @@ struct ItemImageView: View {
     var imageType: ImageType?
     var tags: [TagTypes]
     private let imageDownsampleSize = CGSize(width: UIScreen.main.bounds.width, height: Constants.imageFrameHeight)
+    private var cache: Kingfisher.ImageCache {
+        let defaultCache = Kingfisher.ImageCache.default
+        defaultCache.diskStorage.config.expiration = .days(1)
+        return defaultCache
+    }
     
     var body: some View {
         ZStack {
@@ -37,6 +43,7 @@ struct ItemImageView: View {
                     KFImage(
                         url,
                         options: [
+                            .originalCache(cache),
                             .processor(DownsamplingImageProcessor(size: imageDownsampleSize)),
                             .scaleFactor(UIScreen.main.scale)
                         ]
