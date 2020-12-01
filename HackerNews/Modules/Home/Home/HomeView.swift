@@ -22,6 +22,7 @@ struct HomeView: View {
                     }
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .edgesIgnoringSafeArea(.bottom)
             }
             .navigationBarTitle("Home")
         }
