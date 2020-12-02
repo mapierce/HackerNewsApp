@@ -7,10 +7,12 @@
 
 import Foundation
 import Combine
+import SwiftSoup
 
 class CommentItemViewModel: ObservableObject {
     
     @Published private(set) var text = ""
+    @Published private(set) var metadata = "Unknown"
     private let commentId: Int
     private let itemRepository: ItemRespository
     private var cancellables: Set<AnyCancellable> = []
@@ -37,7 +39,14 @@ class CommentItemViewModel: ObservableObject {
     
     private func handle(_ item: Item?) {
         guard case .comment(let commentItem) = item, let commentText = commentItem.text else { return }
-        text = commentText
+        if let data = item?.buildMetadata() {
+            metadata = data
+        }
+        do {
+            text = try SwiftSoup.parse(commentText).text()
+        } catch {
+            text = "Comment couldn't be loaded"
+        }
     }
     
 }

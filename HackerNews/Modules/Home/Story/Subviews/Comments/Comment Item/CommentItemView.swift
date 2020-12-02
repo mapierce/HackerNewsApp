@@ -12,7 +12,17 @@ struct CommentItemView: View {
     @StateObject var viewModel: CommentItemViewModel
     
     var body: some View {
-        Text(viewModel.text)
+        VStack(alignment: .leading) {
+            Text(viewModel.metadata)
+                .fontWeight(.thin)
+                .font(.system(size: 12))
+                .italic()
+            Text(viewModel.text)
+            Rectangle()
+                .frame(height: 0.5)
+                .background(Color.secondary)
+        }
+        .padding()
     }
     
 }
