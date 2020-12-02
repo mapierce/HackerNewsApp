@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CommentItemView: View {
     
-    @ObservedObject var viewModel: CommentItemViewModel
+    @StateObject var viewModel: CommentItemViewModel
     
     var body: some View {
         Text(viewModel.text)
