@@ -13,6 +13,7 @@ class CommentItemViewModel: ObservableObject {
     
     @Published private(set) var text = ""
     @Published private(set) var metadata = "Unknown"
+    @Published private(set) var commentCount = 0
     private let commentId: Int
     private let itemRepository: ItemRespository
     private var cancellables: Set<AnyCancellable> = []
@@ -39,6 +40,7 @@ class CommentItemViewModel: ObservableObject {
     
     private func handle(_ item: Item?) {
         guard case .comment(let commentItem) = item, let commentText = commentItem.text else { return }
+        commentCount = commentItem.kids?.count ?? 0
         if let data = item?.buildMetadata() {
             metadata = data
         }
