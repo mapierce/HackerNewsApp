@@ -23,7 +23,7 @@ class CommentItemViewModel: ObservableObject {
     
     @Published private(set) var text = ""
     @Published private(set) var metadata = ""
-    @Published private(set) var commentCount = 0
+    @Published private(set) var commentIds: [Int]? = nil
     @Published private(set) var viewState: ViewState = .loading
     private let commentId: Int
     private let itemRepository: ItemRespository
@@ -63,7 +63,7 @@ class CommentItemViewModel: ObservableObject {
             return
         }
         viewStateInternal = .complete
-        commentCount = commentItem.kids?.count ?? 0
+        commentIds = commentItem.kids
         metadata = item?.buildMetadata() ?? Constants.metadataFallback
         text = (try? SwiftSoup.parse(commentText).text()) ?? Constants.commentFallback
     }

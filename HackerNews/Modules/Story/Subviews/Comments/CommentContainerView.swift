@@ -37,19 +37,7 @@ struct CommentContainerView: View {
                     Spacer()
                 }
                 .padding()
-                if let commentIds = viewModel.commentIds {
-                    ScrollView {
-                        LazyVStack(alignment: .leading) {
-                            ForEach(commentIds, id: \.self) { id in
-                                CommentItemView(viewModel: CommentItemViewModel(commentId: id))
-                            }
-                        }
-                    }
-                } else {
-                    Spacer()
-                    Text(Constants.noCommentsPlaceholder)
-                    Spacer()
-                }
+                CommentListView(commentIds: viewModel.commentIds, nestingLevel: 0)
             }
         }
     }
