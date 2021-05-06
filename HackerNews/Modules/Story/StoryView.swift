@@ -30,7 +30,7 @@ struct StoryView: View {
                         Spacer().frame(height: Constants.bottomPadding)
                     }
                     Loader(webStateModel: webStateModel)
-                    CommentListView(viewModel: CommentListViewModel(commentIds: viewModel.commentIds))
+                    CommentContainerView(viewModel: CommentContainerViewModel(commentIds: viewModel.commentIds))
                     Menu(webStateModel: webStateModel)
                 }
                 .edgesIgnoringSafeArea(.top)

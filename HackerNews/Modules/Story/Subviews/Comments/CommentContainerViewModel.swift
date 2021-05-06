@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CommentListViewModel: ObservableObject {
+class CommentContainerViewModel: ObservableObject {
     
     let commentIds: [Int]?
     private let itemRepository: ItemRespository

@@ -8,7 +8,7 @@
 import SwiftUI
 import Snap
 
-struct CommentListView: View {
+struct CommentContainerView: View {
     
     private struct Constants {
         
@@ -18,7 +18,7 @@ struct CommentListView: View {
         
     }
     
-    @ObservedObject var viewModel: CommentListViewModel
+    @ObservedObject var viewModel: CommentContainerViewModel
     @State private var drawerState: AppleMapsSnapState = .tiny
     
     var body: some View {
@@ -56,8 +56,8 @@ struct CommentListView: View {
     
 }
 
-struct CommentListView_Previews: PreviewProvider {
+struct CommentContainerView_Previews: PreviewProvider {
     static var previews: some View {
-        CommentListView(viewModel: CommentListViewModel(commentIds: nil))
+        CommentContainerView(viewModel: CommentContainerViewModel(commentIds: nil))
     }
 }

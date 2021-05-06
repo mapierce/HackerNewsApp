@@ -46,8 +46,8 @@
 		3436ABAF2547429A00C0AC63 /* CommentItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3436ABAE2547429A00C0AC63 /* CommentItemView.swift */; };
 		3436ABB7254742A300C0AC63 /* CommentItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3436ABB6254742A300C0AC63 /* CommentItemViewModel.swift */; };
 		34377865252390F300178018 /* UINavigationController+UIGestureRecognizerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34377864252390F300178018 /* UINavigationController+UIGestureRecognizerDelegate.swift */; };
-		3437786B2523987100178018 /* CommentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3437786A2523987100178018 /* CommentListView.swift */; };
-		34377873252398F200178018 /* CommentListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34377872252398F200178018 /* CommentListViewModel.swift */; };
+		3437786B2523987100178018 /* CommentContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3437786A2523987100178018 /* CommentContainerView.swift */; };
+		34377873252398F200178018 /* CommentContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34377872252398F200178018 /* CommentContainerViewModel.swift */; };
 		3442C7832502AF15008FAC3C /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3442C7822502AF15008FAC3C /* Menu.swift */; };
 		3442C7862502B358008FAC3C /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3442C7852502B358008FAC3C /* Loader.swift */; };
 		344C29E5251E4DAE00C5C0D7 /* MenuButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344C29E4251E4DAE00C5C0D7 /* MenuButtonItem.swift */; };
@@ -142,8 +142,8 @@
 		3436ABAE2547429A00C0AC63 /* CommentItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentItemView.swift; sourceTree = "<group>"; };
 		3436ABB6254742A300C0AC63 /* CommentItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentItemViewModel.swift; sourceTree = "<group>"; };
 		34377864252390F300178018 /* UINavigationController+UIGestureRecognizerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+UIGestureRecognizerDelegate.swift"; sourceTree = "<group>"; };
-		3437786A2523987100178018 /* CommentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListView.swift; sourceTree = "<group>"; };
-		34377872252398F200178018 /* CommentListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListViewModel.swift; sourceTree = "<group>"; };
+		3437786A2523987100178018 /* CommentContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentContainerView.swift; sourceTree = "<group>"; };
+		34377872252398F200178018 /* CommentContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentContainerViewModel.swift; sourceTree = "<group>"; };
 		3442C7822502AF15008FAC3C /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		3442C7852502B358008FAC3C /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		344C29E4251E4DAE00C5C0D7 /* MenuButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonItem.swift; sourceTree = "<group>"; };
@@ -460,8 +460,8 @@
 			isa = PBXGroup;
 			children = (
 				3436ABAD2547428700C0AC63 /* Comment Item */,
-				3437786A2523987100178018 /* CommentListView.swift */,
-				34377872252398F200178018 /* CommentListViewModel.swift */,
+				3437786A2523987100178018 /* CommentContainerView.swift */,
+				34377872252398F200178018 /* CommentContainerViewModel.swift */,
 			);
 			path = Comments;
 			sourceTree = "<group>";
@@ -789,14 +789,14 @@
 				34144B7124C758C40056ABF6 /* StatusCodeCheckingTransport.swift in Sources */,
 				340D031C24CB30A5000A128C /* CommentItem.swift in Sources */,
 				34D1374524C8D42B002CA0EC /* SegmentedControl.swift in Sources */,
-				3437786B2523987100178018 /* CommentListView.swift in Sources */,
+				3437786B2523987100178018 /* CommentContainerView.swift in Sources */,
 				3412742C24C8F6A90049824D /* URLSession+Transport.swift in Sources */,
 				3434206F24EEEEDE00905CC5 /* ItemReloadView.swift in Sources */,
 				34377865252390F300178018 /* UINavigationController+UIGestureRecognizerDelegate.swift in Sources */,
 				3442C7832502AF15008FAC3C /* Menu.swift in Sources */,
 				340D031E24CB30B5000A128C /* PollItem.swift in Sources */,
 				3463E24326444A9300D113C2 /* CommentMetadata.swift in Sources */,
-				34377873252398F200178018 /* CommentListViewModel.swift in Sources */,
+				34377873252398F200178018 /* CommentContainerViewModel.swift in Sources */,
 				34144B2D24C751E50056ABF6 /* HomeView.swift in Sources */,
 				34144B6524C757340056ABF6 /* String+utility.swift in Sources */,
 				3404DCCB24EC63AF00D34ACA /* ItemPlaceholderImage.swift in Sources */,
