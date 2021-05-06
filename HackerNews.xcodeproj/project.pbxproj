@@ -233,22 +233,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		3412742D24C8FC630049824D /* Home */ = {
+		3412743224C8FD590049824D /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				34144B2C24C751E50056ABF6 /* HomeView.swift */,
-				3412742E24C8FC6F0049824D /* HomeViewModel.swift */,
-				3412743224C8FD590049824D /* Views */,
+				34D1374A24C8D8E1002CA0EC /* Segment */,
+				3463E240264444DE00D113C2 /* Segmented Control */,
 			);
-			path = Home;
-			sourceTree = "<group>";
-		};
-		3412743224C8FD590049824D /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				34D1374424C8D42B002CA0EC /* SegmentedControl.swift */,
-			);
-			path = Views;
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		34144B1E24C751E50056ABF6 = {
@@ -335,6 +326,7 @@
 		34144B5824C752520056ABF6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				345750F724F5C36F009718C1 /* Story */,
 				348B756A24C768A300936B63 /* Home */,
 			);
 			path = Modules;
@@ -506,6 +498,14 @@
 			path = "Menu Button";
 			sourceTree = "<group>";
 		};
+		3463E240264444DE00D113C2 /* Segmented Control */ = {
+			isa = PBXGroup;
+			children = (
+				34D1374424C8D42B002CA0EC /* SegmentedControl.swift */,
+			);
+			path = "Segmented Control";
+			sourceTree = "<group>";
+		};
 		3487162A2501586A0005B6E7 /* Web View */ = {
 			isa = PBXGroup;
 			children = (
@@ -526,9 +526,9 @@
 		348B756A24C768A300936B63 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				3412742D24C8FC630049824D /* Home */,
-				34D1374A24C8D8E1002CA0EC /* Segment */,
-				345750F724F5C36F009718C1 /* Story */,
+				34144B2C24C751E50056ABF6 /* HomeView.swift */,
+				3412742E24C8FC6F0049824D /* HomeViewModel.swift */,
+				3412743224C8FD590049824D /* Subviews */,
 			);
 			path = Home;
 			sourceTree = "<group>";
