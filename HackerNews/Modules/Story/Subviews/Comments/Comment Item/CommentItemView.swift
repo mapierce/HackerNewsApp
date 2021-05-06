@@ -17,6 +17,7 @@ struct CommentItemView: View {
     }
     
     @StateObject var viewModel: CommentItemViewModel
+    @State private var showComments = false
     
     var body: some View {
         VStack {
@@ -34,7 +35,10 @@ struct CommentItemView: View {
                     CommentMetadata(metadata: viewModel.metadata)
                     Text(viewModel.text)
                     if viewModel.commentCount > 0 {
-                        CommentShowThreadButton(commentCount: viewModel.commentCount)
+                        CommentShowThreadButton(showComments: $showComments, commentCount: viewModel.commentCount)
+                        if showComments {
+                            Text("Comment!")
+                        }
                     }
                 }
                 .padding()

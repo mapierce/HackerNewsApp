@@ -16,7 +16,7 @@ struct CommentShowThreadButton: View {
         
     }
     
-    @State var showComments = false
+    @Binding var showComments: Bool
     let commentCount: Int
     
     var body: some View {
@@ -45,7 +45,11 @@ struct CommentShowThreadButton: View {
 }
 
 struct CommentShowThreadButton_Previews: PreviewProvider {
+    
+    @State static var showComments = false
+    
     static var previews: some View {
-        CommentShowThreadButton(commentCount: 1)
+        CommentShowThreadButton(showComments: $showComments, commentCount: 1)
     }
+    
 }
