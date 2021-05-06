@@ -13,6 +13,8 @@ struct CommentListView: View {
     private struct Constants {
         
         static let titleFontSize: CGFloat = 34
+        static let title = "Comments"
+        static let noCommentsPlaceholder = "No comments"
         
     }
     
@@ -29,7 +31,7 @@ struct CommentListView: View {
         ) { state in
             VStack {
                 HStack {
-                    Text("Comments")
+                    Text(Constants.title)
                         .font(.system(size: Constants.titleFontSize))
                         .fontWeight(.bold)
                     Spacer()
@@ -45,7 +47,7 @@ struct CommentListView: View {
                     }
                 } else {
                     Spacer()
-                    Text("No Comments")
+                    Text(Constants.noCommentsPlaceholder)
                     Spacer()
                 }
             }
