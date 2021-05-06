@@ -8,15 +8,34 @@
 import Foundation
 import Combine
 import SwiftSoup
+import SwiftUI
 
 class CommentItemViewModel: ObservableObject {
     
+    // MARK: - Constants
+    
+    private struct Constants {
+        
+        static let commentFallback = "Comment couldn't be loaded"
+        static let metadataFallback = "Unknown"
+        
+    }
+    
     @Published private(set) var text = ""
-    @Published private(set) var metadata = "Unknown"
+    @Published private(set) var metadata = ""
     @Published private(set) var commentCount = 0
+    @Published private(set) var viewState: ViewState = .loading
     private let commentId: Int
     private let itemRepository: ItemRespository
     private var cancellables: Set<AnyCancellable> = []
+    
+    private var viewStateInternal: ViewState = .loading {
+        willSet {
+            withAnimation {
+                viewState = newValue
+            }
+        }
+    }
     
     // MARK: - Initialization
     
@@ -39,16 +58,14 @@ class CommentItemViewModel: ObservableObject {
     }
     
     private func handle(_ item: Item?) {
-        guard case .comment(let commentItem) = item, let commentText = commentItem.text else { return }
+        guard case .comment(let commentItem) = item, let commentText = commentItem.text else {
+            viewStateInternal = .error
+            return
+        }
+        viewStateInternal = .complete
         commentCount = commentItem.kids?.count ?? 0
-        if let data = item?.buildMetadata() {
-            metadata = data
-        }
-        do {
-            text = try SwiftSoup.parse(commentText).text()
-        } catch {
-            text = "Comment couldn't be loaded"
-        }
+        metadata = item?.buildMetadata() ?? Constants.metadataFallback
+        text = (try? SwiftSoup.parse(commentText).text()) ?? Constants.commentFallback
     }
     
 }
