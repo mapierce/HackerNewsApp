@@ -15,6 +15,7 @@ class SegmentViewModel: ObservableObject {
     private let transport: Transport
     private let segment: Segment
     private let itemRepository: ItemRespository
+    private let imageRepository: ImageRepository
     private var cancellables: Set<AnyCancellable> = []
     private let loadCount = 10
     
@@ -31,11 +32,13 @@ class SegmentViewModel: ObservableObject {
     init(
         transport: Transport = URLSession.shared,
         segment: Segment,
-        itemRepository: ItemRespository = ItemRespository()
+        itemRepository: ItemRespository = ItemRespository(),
+        imageRepository: ImageRepository = ImageRepository()
     ) {
         self.transport = transport
         self.segment = segment
         self.itemRepository = itemRepository
+        self.imageRepository = imageRepository
         fetchIds()
     }
     
@@ -44,6 +47,24 @@ class SegmentViewModel: ObservableObject {
     func retry() {
         viewStateInternal = .loading
         fetchIds()
+    }
+    
+    func reload() async {
+        itemIds.forEach {
+            itemRepository.cancel(by: $0)
+            imageRepository.cancel(by: $0)
+        }
+        itemIds = []
+        return await withCheckedContinuation { [unowned self] continuation in
+            fetchIds { result in
+                switch result {
+                case .success(let newIds):
+                    itemIds = newIds
+                    continuation.resume(returning: ())
+                case .failure: viewStateInternal = .error
+                }
+            }
+        }
     }
     
     func cellAppeared(at index: Int) {
@@ -58,20 +79,29 @@ class SegmentViewModel: ObservableObject {
     // MARK: - Private methods
     
     private func fetchIds() {
+        fetchIds { [weak self] result in
+            switch result {
+            case .success(let itemIds): self?.handle(response: itemIds)
+            case .failure: self?.viewStateInternal = .error
+            }
+        }
+    }
+    
+    private func fetchIds(with completion: @escaping (Result<[Int], Error>) -> Void) {
         let request = URLRequest(path: segment.associatedPath)
         transport
             .checkingStatusCode()
             .send(request: request)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                switch completion {
-                case .failure: self?.viewStateInternal = .error
+            .sink { completionHandler in
+                switch completionHandler {
+                case .failure(let error): completion(.failure(error))
                 case .finished: break
                 }
-        } receiveValue: { [weak self] response in
-            self?.handle(response: response)
-        }
-        .store(in: &cancellables)
+            } receiveValue: { response in
+                completion(.success(response))
+            }
+            .store(in: &cancellables)
     }
     
     private func handle(response: [Int]) {

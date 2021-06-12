@@ -24,18 +24,21 @@ struct SegmentView: View {
             case .loading: ProgressView()
             case .error: ErrorView { viewModel.retry() }
             case .complete:
-                ScrollView {
-                    LazyVStack {
-                        ForEach(0..<viewModel.itemIds.count, id: \.self) { index in
-                            ItemView(viewModel: ItemViewModel(itemId: viewModel.itemIds[index]))
-                                .cornerRadius(Constants.cornerRadius)
-                                .padding()
-                                .shadow(radius: Constants.shadowRadius)
-                                .foregroundColor(Color.primary)
-                                .onAppear { viewModel.cellAppeared(at: index) }
-                                .onDisappear { viewModel.cellDisappeared(at: index) }
-                        }
+                List {
+                    ForEach(0..<viewModel.itemIds.count, id: \.self) { index in
+                        ItemView(viewModel: ItemViewModel(itemId: viewModel.itemIds[index]))
+                            .listRowSeparator(.hidden)
+                            .cornerRadius(Constants.cornerRadius)
+                            .padding(.bottom, 10)
+                            .shadow(radius: Constants.shadowRadius)
+                            .foregroundColor(Color.primary)
+                            .onAppear { viewModel.cellAppeared(at: index) }
+                            .onDisappear { viewModel.cellDisappeared(at: index) }
                     }
+                }
+                .listStyle(.plain)
+                .refreshable {
+                    await viewModel.reload()
                 }
             }
         }
