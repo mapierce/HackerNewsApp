@@ -32,6 +32,7 @@ struct SegmentView: View {
                             .padding(.bottom, 10)
                             .shadow(radius: Constants.shadowRadius)
                             .foregroundColor(Color.primary)
+                            .buttonStyle(.borderless)
                             .onAppear { viewModel.cellAppeared(at: index) }
                             .onDisappear { viewModel.cellDisappeared(at: index) }
                     }
