@@ -38,6 +38,11 @@ class StoryViewModel: ObservableObject {
         self.itemId = itemId
         self.itemRepository = itemRepository
         handleItemRepository()
+    }
+    
+    // MARK: - Public methods
+    
+    func onAppear() {
         itemRepository.fetch(by: itemId)
     }
     

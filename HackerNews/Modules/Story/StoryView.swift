@@ -38,6 +38,9 @@ struct StoryView: View {
             case .error: ErrorView { print("retry") }
             }
         }
+        .onAppear {
+            viewModel.onAppear()
+        }
         .navigationBarHidden(true)
     }
 }
