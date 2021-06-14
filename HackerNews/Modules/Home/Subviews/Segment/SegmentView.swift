@@ -33,7 +33,10 @@ struct SegmentView: View {
                             .shadow(radius: Constants.shadowRadius)
                             .foregroundColor(Color.primary)
                             .buttonStyle(.borderless)
-                            .onAppear { viewModel.cellAppeared(at: index) }
+                            .onAppear {
+                                viewModel.cellAppeared(at: index)
+                                UITableViewCell.appearance().selectionStyle = .none
+                            }
                             .onDisappear { viewModel.cellDisappeared(at: index) }
                     }
                 }
