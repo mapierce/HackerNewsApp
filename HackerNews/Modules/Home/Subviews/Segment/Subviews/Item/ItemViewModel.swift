@@ -13,7 +13,6 @@ class ItemViewModel: ObservableObject {
     @Published private(set) var item: Item?
     @Published private(set) var image: ImageType?
     @Published private(set) var error = false
-    private var viewAppeared = false
     let itemId: Int
     private let transport: Transport
     private let itemRepository: ItemRespository
@@ -39,9 +38,8 @@ class ItemViewModel: ObservableObject {
     // MARK: - Public methods
     
     func onAppeared() {
-        guard !viewAppeared else { return }
+        guard item == nil else { return }
         itemRepository.fetch(by: itemId)
-        viewAppeared = true
     }
     
     func reload() {

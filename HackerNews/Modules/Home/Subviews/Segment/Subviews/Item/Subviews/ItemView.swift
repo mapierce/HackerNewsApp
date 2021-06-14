@@ -26,7 +26,12 @@ struct ItemView: View {
             }
         } else {
             let storyView = StoryView(viewModel: StoryViewModel(itemId: viewModel.itemId), webStateModel: WebViewStateModel())
-            NavigationLink(destination: storyView) {
+            ZStack {
+                NavigationLink(destination: storyView) {
+                    EmptyView()
+                }
+                .opacity(0.0)
+                .buttonStyle(.plain)
                 VStack {
                     ItemImageView(imageType: viewModel.image, tags: [])
                     Spacer()
@@ -38,6 +43,7 @@ struct ItemView: View {
                     Spacer()
                 }
             }
+            .listRowBackground(Color.clear)
             .background(Color(Constants.backgroundColorName))
             .applyIf(viewModel.item == nil) {
                 $0.redacted(reason: .placeholder)
